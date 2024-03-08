@@ -1,0 +1,24 @@
+[
+    { "id": "1", "name": "Adville Excretious", "imageUrl": "../../bp.png",
+      "price": 200,
+      "description": "Justo laoreet sit amet cursus sit. Quam adipiscing vitae proin sagittis nisl rhoncus mattis rhoncus urna.  Elit ullamcorper dignissim cras tincidunt lobortis feugiat. Ut enim blandit volutpat maecenas volutpat blandit aliquam. Adipiscing commodo elit at imperdiet dui accumsan sit. Tristique senectus et netus et malesuada fames ac. Feugiat in fermentum posuere urna nec tincidunt praesent semper. Placerat orci nulla pellentesque dignissim. Dictumst quisque sagittis purus sit amet volutpat consequat mauris. Urna duis convallis convallis tellus id. Rutrum quisque non tellus orci ac auctor augue mauris. In aliquam sem fringilla ut. Ut tristique et egestas quis ipsum. Mattis rhoncus urna neque viverra justo nec ultrices. Tellus orci ac auctor augue mauris. Cras fermentum odio eu feugiat pretium nibh ipsum consequat nisl. Sit amet risus nullam eget felis eget nunc. Velit sed ullamcorper morbi tincidunt ornare massa eget. Sed libero enim sed faucibus turpis in." },
+      
+
+
+    { "id": "2", "name": "B", "imageUrl": "path/to/image", "description": "lad",  "price": 100},
+    { "id": "3", "name": "C", "imageUrl": "path/to/image", "description": "grad", "price": 400 },
+    { "id": "4", "name": "D", "imageUrl": "path/to/image", "description": "opt", "price": 500 },
+    { "id": "5", "name": "E", "imageUrl": "path/to/image", "description": "riu", "price": 600 },
+    { "id": "6", "name": "F", "imageUrl": "path/to/image", "description": "viu", "price": 900 },
+    { "id": "7", "name": "G", "imageUrl": "path/to/image", "description": "lit", "price": 1100 },
+    { "id": "8", "name": "H", "imageUrl": "path/to/image", "description": "yo", "price": 550 },
+    { "id": "9", "name": "I", "imageUrl": "path/to/image", "description": "bro", "price": 1000 },
+    { "id": "10", "name": "J", "imageUrl": "path/to/image", "description": "ty", "price": 1050 },
+    { "id": "11", "name": "K", "imageUrl": "path/to/image", "description": "ht", "price": 4600 },
+    { "id": "12", "name": "L", "imageUrl": "path/to/image", "description": "op", "price": 5500 },
+    { "id": "13", "name": "M", "imageUrl": "path/to/image", "description": "biop", "price": 6800 },
+    { "id": "14", "name": "N", "imageUrl": "path/to/image", "description": "witt", "price": 9600 },
+    { "id": "15", "name": "O", "imageUrl": "path/to/image", "description": "Bittt", "price": 1700 },
+    { "id": "16", "name": "P", "imageUrl": "path/to/image", "description": "littt", "price": 5050 }
+
+  ]
