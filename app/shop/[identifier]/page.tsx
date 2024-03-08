@@ -100,7 +100,7 @@ const ProductPage = ({params}:any) => {
           <Flex shrink={0}>
           <InputGroup size='sm' className="nodrag">
                 <InputLeftElement width='1.8rem' justifyContent={'start'} ms={2}>
-                    <IconButton icon={<LiaTimesSolid />} aria-label={'close'} size={'xs'} h='1rem' mt={0} variant={'outline'} onClick={handleClick} rounded={2} />
+                    <IconButton icon={<LiaTimesSolid />} aria-label={'close'} size={'xs'} h='1rem' mt={0} variant={'outline'}  rounded={2} />
                 </InputLeftElement>
                 <Input ps={5} type={'text'} id={'text_value'} placeholder={'Option Text'} autoComplete={'off'}  textAlign={'end'}/>
             </InputGroup>
