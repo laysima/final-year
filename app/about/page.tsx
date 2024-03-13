@@ -16,7 +16,7 @@ const about = () => {
   return (
     <>
        {/* ///////////////////////////////some other section  part 1/////////////////////////*/}
-    <Flex bg={'#F9F9F8'}>
+    <Flex bg={'#F9F9F8'} mt={10}>
     <Flex p={'30px'} direction={'column'} maxW={'50%'} >
       <Heading color={'#175873'} fontFamily={'"Outfit", sans-serif'} fontSize={'4xl'}>
         Excellent Medical Professionals With Significant 
@@ -70,7 +70,7 @@ const about = () => {
       </Flex>
       
     </Flex>
-     <Image src='doctors.avif' mr={12} width={'50%'} height={'70vh'}></Image>
+     <Image src='healthprof.jpg' mr={12} width={'50%'} height={'70vh'}></Image>
     </Flex>
 
   {/*/////////////////////////////// Core Values ///////////////////////////////////////*/}

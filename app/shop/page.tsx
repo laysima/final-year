@@ -2,9 +2,10 @@
 import React from 'react'
 import NextLink from 'next/link'
 import { useState } from 'react';
-import { IconButton ,Center, Select, Heading, Button, Text, Image, Flex, Box, VStack, SimpleGrid, Stack, ButtonGroup} from '@chakra-ui/react'
+import { IconButton ,Center, Select, Heading, Button, Text, Image, Flex, Box, VStack, SimpleGrid, Stack, ButtonGroup, Link} from '@chakra-ui/react'
 import { FaHeart, FaAngleRight} from 'react-icons/fa';
-import Link from 'next/link';
+import { usePathname, useRouter } from 'next/navigation';
+
 
 
 const initialProducts = require('../datasource.json');
@@ -12,6 +13,7 @@ const initialProducts = require('../datasource.json');
 const itemsPerPage = 8;
   
 const page = () => {
+  const pathname = usePathname()
     const [products, setProducts] = useState(initialProducts);
     const [currentPage, setCurrentPage] = useState(1);
 
@@ -54,8 +56,8 @@ const page = () => {
     <Box mb={10}>
     <Center flexDirection={'column'} p={40} bgImage={"cate1.jpg"} textAlign={'center'} bgSize={'cover'} bgRepeat={'no-repeat'} >
         <Heading fontFamily={'"PT Sans", sans-serif'} color={'white'}>Shop</Heading>
-        <Flex alignItems={'center'} textAlign={'center'} mt={3}>
-        <Link style={{color:'white', fontSize:'1.5em'}} href="/"> Home </Link>
+        <Flex mt={3} alignItems={'center'}>
+        <Link fontSize={'1.4em'} color={"white"}  _hover={{color:"teal", transition:'0.2s'}} as={NextLink} className={`link ${pathname === '/' ? 'active' : ''}`}  href="/" >Home </Link>
         <FaAngleRight style={{color:'white', fontSize:'1em'}}  />
         <Text color={'white'} fontSize={'1.2em'}>Shop</Text>
         </Flex>
@@ -74,7 +76,7 @@ const page = () => {
       <SimpleGrid columns={[2, null, 3, 4]} spacing="5"  >
         {currentItems.map((product:any) => (
           <Box bg={'#F9F9F8'} _hover={{ shadow: "md", transform: "translateY(-5px)", transition: "all .3s ease" , color:'teal'}} >
-          <Link key={product.id} href={`/shop/${product.id}`} passHref>
+          <Link key={product.id} href={`/shop/${product.id}`} >
         <Box 
             bg={'#F9F9F8'} 
             border={'none'}
@@ -112,7 +114,7 @@ const page = () => {
         </Box>
         </Link>
         <Box p={'7px'}>
-        <Link  key={product?.id} href={`/shop/payment/${product?.id}`} passHref>
+        <Link key={product?.id} href={`/shop/payment/${product?.id}`}>
         <Button colorScheme="teal" fontSize={'l'} size="sm" >ADD TO CART</Button>
         </Link>
         </Box>

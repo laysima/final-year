@@ -3,6 +3,7 @@ import { useCartStore } from "@/zustand/store"
 import { useState } from 'react';
 import NextLink from 'next/link'
 import { useRouter } from 'next/navigation';
+import { usePathname } from 'next/navigation'
 import { Box, Text, Heading, Center, Flex, Link, 
   Image, Icon, IconButton, Button, useDisclosure, Divider, Input, Tabs,TabList,Tab,TabPanels, TabPanel, InputGroup,InputLeftElement} from '@chakra-ui/react';
 import {LiaTimesSolid} from "react-icons/lia"
@@ -14,6 +15,7 @@ import { FiMinus } from "react-icons/fi";
 
 
 const ProductPage = ({params}:any) => {
+  const pathname = usePathname()
   const identifier = params.identifier
   const products = require('../../datasource.json');
   const product = products.find((product:any) => product.id === identifier);
@@ -55,7 +57,8 @@ const ProductPage = ({params}:any) => {
       <Center flexDirection={'column'} p={40} bgImage={"../../shop.jpeg"} textAlign={'center'} bgSize={'cover'} bgRepeat={'no-repeat'} >
         <Heading fontFamily={'"Outfit", sans-serif'} color={'white'}>{product?.name}</Heading>
         <Flex alignItems={'center'} textAlign={'center'} mt={3}>
-        <Link as={NextLink} textDecoration={'none'} style={{color:'white', fontSize:'1.5em'}} href="/shop"> All </Link>
+        {/* <Link as={NextLink} textDecoration={'none'} style={{color:'white', fontSize:'1.5em'}} href="/shop"> All </Link> */}
+        <Link fontSize={'1.5em'} color={"white"}  _hover={{color:"teal", transition:'0.2s'}} as={NextLink} className={`link ${pathname === '/shop' ? 'active' : ''}`}  href="/shop" >All </Link>
         <FaAngleRight style={{color:'white', fontSize:'1em'}}   />
         <Text color={'white'} fontSize={'1.2em'}>{product?.name}</Text>
         </Flex>
@@ -125,7 +128,7 @@ const ProductPage = ({params}:any) => {
             
          </Box> */}
      </Flex>
-        <Link as={NextLink} key={product?.id} href={`/shop/payment/${product?.id}`} passHref>
+        <Link _hover={{color:"teal", transition:'0.2s'}} as={NextLink} key={product?.id} href={`/shop/payment/${product?.id}`} passHref>
           <Button textDecorationLine={'none'} width={'350px'} colorScheme="teal" borderRadius={0}>
             BUY IT NOW
           </Button>
@@ -179,7 +182,7 @@ const ProductPage = ({params}:any) => {
           </Flex>
           <Divider orientation='horizontal' border={'0.5px solid ash'}/>
 
-  {/*/////////////////////////////////////// wiashlist main section //////////////////////////// */}
+  {/*/////////////////////////////////////// wishlist main section //////////////////////////// */}
       <Flex p={30} gap={10} >
         <Image src={product?.imageUrl} w={'30%'} h={'15vh'}></Image>
 

@@ -1,7 +1,7 @@
 'use client'
 import { useState } from 'react'
 import NextLink from 'next/link'
-import { Box, Button, Flex, Text, SimpleGrid, GridItem, Divider, Image, Heading, Link, LinkOverlay} from '@chakra-ui/react'
+import { Box, Button, Flex, Text, SimpleGrid, GridItem, Divider, Image, Heading, Link, LinkOverlay, Icon, Center} from '@chakra-ui/react'
 import { PiHandshakeLight } from "react-icons/pi";
 import { IoMdHeartEmpty } from "react-icons/io";
 import { GoPersonAdd } from "react-icons/go";
@@ -10,9 +10,12 @@ import { FaCheckCircle, FaDumbbell } from "react-icons/fa";
 import { FaHandsHoldingChild } from "react-icons/fa6";
 import { TbDentalBroken } from "react-icons/tb";
 import { MdOutlineHealthAndSafety } from "react-icons/md";
-import './globals.css'
-import Head from 'next/head'
-import { relative } from 'path';
+import './globals.css'  
+
+/////////////////////// hoooks //////////////////////
+import { Suspense } from 'react';
+import { BiX } from 'react-icons/bi';
+
 
 export default function Home({params}:any) {
   const [openedItemId, setOpenedItemId] = useState(null);
@@ -25,10 +28,7 @@ export default function Home({params}:any) {
       // Open the clicked item and close others
       setOpenedItemId(itemId);
     }
-  };
-
-
-
+  }
 
   const faqItems = [
     { id: 1, question: "What kind of services do you offer?", answer: "Track orders and deliveries: Provide real-time updates on the status of prescriptions and medication deliveries, keeping patients informed and reducing anxiety." },
@@ -380,7 +380,50 @@ export default function Home({params}:any) {
     </Flex>
       
     </Flex>
-    
+
+    {/* section for newsletter and newsproduction section, based on current information or news that thr websites has gone through  */}
+
+    <Heading textAlign={'center'} p={'30px'} fontFamily={'"Outfit", sans-serif'} >Newsletter and More information on customer support</Heading>
+ 
+    <Flex gap={4} h={'25vh'} mb={5} justifyContent={'center'} p={'30px'} id='section 2'>
+      <Box border={'1px solid teal'} w={'50%'} p={'15px'}>
+        <Flex>
+          <Text >
+            we need payers to mane the encyclopedia and do not need ot engaege in the particualr sections of tyhe news brinswicj institution, pleas do not resist
+          </Text>
+          <Icon as={GoPersonAdd}  /> 
+        </Flex>
+      </Box>
+
+      <Box border={'1px solid teal'} w={'50%'} p={'15px'}>
+        <Flex>
+          <Text>
+            we need payers to mane the encyclopedia and do not need ot engaege in the particualr sections of tyhe news brinswicj institution, pleas do not resist
+          </Text>
+          <Icon as={GoPersonAdd}  /> 
+        </Flex>
+      </Box>
+
+      <Box border={'1px solid teal'} w={'50%'} p={'15px'}>
+        <Flex>
+          <Text>
+            we need payers to mane the encyclopedia and do not need ot engaege in the particualr sections of tyhe news brinswicj institution, pleas do not resist
+          </Text>
+          <Icon as={GoPersonAdd}  /> 
+        </Flex>
+      </Box>
+
+      <Box border={'1px solid teal'} w={'50%'} p={'15px'}>
+        <Flex>
+          <Text>
+            we need payers to mane the encyclopedia and do not need ot engaege in the particualr sections of tyhe news brinswicj institution, pleas do not resist
+          </Text>
+          <Icon as={GoPersonAdd}  /> 
+        </Flex>
+      </Box>
+
+
+    </Flex>
     </>
   )
 }

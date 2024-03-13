@@ -1,14 +1,17 @@
 'use client' 
 import React from 'react'
 import { useState, useRef, useEffect } from 'react';
-import { Box, Flex, Heading, Text, InputGroup, InputRightElement,Input, Divider, IconButton} from '@chakra-ui/react'
+import { Box, Flex, Heading, Text, InputGroup, InputRightElement,Input, Divider, IconButton, Icon, Link} from '@chakra-ui/react'
 import { FaPhoneAlt, FaCalendarAlt, FaGlobe, FaTwitter, FaFacebookF, FaInstagram, FaYoutube, FaTelegramPlane} from "react-icons/fa";
 import { IoMdMail} from "react-icons/io";
 import { FaArrowUp } from "react-icons/fa6";
+import NextLink from 'next/link'
+import { usePathname } from 'next/navigation'
 
 
 
 export const Footer = () => {
+  const pathname = usePathname()
   const [showScrollButton, setShowScrollButton] = useState(false);
 
   useEffect(() => {
@@ -79,28 +82,27 @@ export const Footer = () => {
       
       <Flex direction={'column'} fontSize={'20px'} justifyContent={'space-around'}>
         <Heading fontWeight={900}>Company</Heading>
-        <Text>About</Text>
-        <Text>Plans</Text>
-        <Text>Products</Text>
+        <Link _hover={{color:"#A45F66", transition:'0.2s'}} as={NextLink} href="/about">About </Link>
+        <Link _hover={{color:"#A45F66", transition:'0.2s'}} as={NextLink} href="/shop" >Products</Link>
         <Text>Privacy Policy</Text>
+        <Link _hover={{color:"#A45F66", transition:'0.2s'}} as={NextLink} href="#section 1" >Locate Us</Link>
       </Flex>
 
       <Flex direction={'column'} fontSize={'20px'} justifyContent={'space-around'}>
         <Heading fontWeight={900}>Help & Support</Heading>
         <Text>Support</Text>
-        <Text>Locate Us</Text>
-        <Text>Contact Us</Text>
-        <Text>Login</Text>
-        <Text>Faq</Text>
+        <Link _hover={{color:"#A45F66", transition:'0.2s'}} as={NextLink} href="/contact">Contact Us</Link>
+        <Link _hover={{color:"#A45F66", transition:'0.2s'}} as={NextLink} href="/login">Login</Link>
+        <Link _hover={{color:"#A45F66", transition:'0.2s'}} as={NextLink} href="#section 2">faq</Link>
       </Flex>
 
       <Flex direction={'column'} fontSize={'20px'} justifyContent={'space-around'}>
         <Heading fontWeight={900}>Newsletter</Heading>
         <Text>Subscribe our Newsletter to get the latest news and insights</Text>
         <Text>By subscribing, you accept the Privacy Policy</Text>
-        <InputGroup mt={'45px'}>
-                  <InputRightElement width={'250px'}>
-                  <FaTelegramPlane color='black' style={{marginTop:"8px", padding:"2px", fontSize:'25px', marginRight:"10px"}} />
+        <InputGroup mt={'45px'} >
+                  <InputRightElement width={'300px'}>
+                  <Icon alignSelf={'center'} color={'teal'} mt={'10px'} as={FaTelegramPlane} />
                 </InputRightElement>  
               <Input 
               color={'black'}
