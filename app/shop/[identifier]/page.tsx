@@ -128,7 +128,7 @@ const ProductPage = ({params}:any) => {
             
          </Box> */}
      </Flex>
-        <Link _hover={{color:"teal", transition:'0.2s'}} as={NextLink} key={product?.id} href={`/shop/payment/${product?.id}`} passHref>
+        <Link textDecorationLine={'teal'} _hover={{color:"teal", transition:'0.2s'}} as={NextLink} key={product?.id} href={`/shop/payment/${product?.id}`} passHref>
           <Button textDecorationLine={'none'} width={'350px'} colorScheme="teal" borderRadius={0}>
             BUY IT NOW
           </Button>

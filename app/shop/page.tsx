@@ -8,8 +8,7 @@ import { usePathname, useRouter } from 'next/navigation';
 
 
 
-const initialProducts = require('../datasource.json');
-
+const initialProducts = require('../datasource.json')
 const itemsPerPage = 8;
   
 const page = () => {

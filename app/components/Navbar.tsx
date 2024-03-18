@@ -1,8 +1,8 @@
 'use client'
-import {Box,Link,Center, Flex, Grid, Image, InputRightElement, } from '@chakra-ui/react'
+import {Box,Link,IconButton, Flex, Grid, Image, InputRightElement, Text, ListItem, UnorderedList } from '@chakra-ui/react'
 import { useState, useRef, useEffect } from 'react';
 import { usePathname } from 'next/navigation'
-
+import { FaTwitter, FaFacebookF, FaInstagram, FaYoutube, FaTelegramPlane} from "react-icons/fa";
 import NextLink from 'next/link'
 import React from 'react'
 // import { useRouter } from 'next/navigation';
@@ -27,11 +27,27 @@ export const Navbar = () => {
         // Function to hide the dropdown menu
         const hideMenu = () => setIsOpen(false);
 
-  
+  /////////////////////////// search button available keywords////////////////////////////////////////////
+ 
+
 
   return (
-    <nav style={{ position: 'sticky', top: 0, left: 0, width: '100%', zIndex: 10, fontSize: '20px', background:'white' }}
-    >
+  
+    <nav>
+    <Flex bg={'teal'} color={'white'} alignItems={'center'} p={'10px'} >
+    <Flex gap={10} grow={1}  > 
+        <IconButton aria-label='direct right' icon={<FaTwitter />} color={'teal'} padding={5} borderRadius={'50%'} bgColor={'white'} />
+        <IconButton aria-label='direct right' icon={<FaFacebookF />} color={'teal'} padding={5} borderRadius={'50%'} bgColor={'white'} />
+        <IconButton aria-label='direct right' icon={<FaInstagram />} color={'teal'} padding={5} borderRadius={'50%'} bgColor={'white'} />
+        <IconButton aria-label='direct right' icon={<FaYoutube />} color={'teal'} padding={5} borderRadius={'50%'} bgColor={'white'} />
+        </Flex>
+        
+        <Text flexShrink={0}>
+        No: 58 A, East Madison Street, Baltimore, MD, USA 4508
+        </Text>   
+      </Flex>
+
+    <nav style={{ position: 'sticky', top: 0, left: 0, width: '100%', zIndex: 10, fontSize: '18px', background:'white' }}>
 
    <Flex alignItems={'center'} >
             <Flex shrink={0} alignItems={'center'}>
@@ -79,29 +95,41 @@ export const Navbar = () => {
             <Flex shrink={0}  alignItems={'center'} justifyContent={'center'} gap={10} mr={50}>
                  <Box textAlign={'center'}>
                     <InputGroup>
-                        <InputRightElement>
+                        <InputRightElement> 
+                        <Button>
                         <BiSearch style={{marginTop:"8px", padding:"2px", fontSize:'25px', marginRight:"10px"}} />
+                        </Button>
                         </InputRightElement>  
-                        <Input 
+                        <Input id='input-box'
+                        type='text'
+                        autoComplete='off'
                         border='0.5px solid'
-                        borderColor='#0C1446' 
+                        borderColor='grey' 
                         borderRadius={"20px"}
                         width={'300px'}
                         p={7}/>
                     </InputGroup>
+
+                    <Box position={'absolute'} textColor={'black'} borderTop={'1px solid white'} p={'5px'} bg={'white'} width={'300px'} mt={3} borderRadius={'5px'} shadow= "2px 2px 4px #000000" className='result-box'>
+                      {/* <UnorderedList listStyleType='none' cursor='pointer' textAlign='left'>
+                        <ListItem _hover={{background:'teal', transition:'0.5s'}} p={10}>Javascript</ListItem>
+                        <ListItem _hover={{background:'teal', transition:'0.5s'}} p={10}>web dev</ListItem>
+                        <ListItem _hover={{background:'teal', transition:'0.5s'}} p={10}>web dev</ListItem>
+                        <ListItem _hover={{background:'teal', transition:'0.5s'}} p={10}>web dev</ListItem>
+                      </UnorderedList> */}
+                    </Box>
                   </Box>
             <Flex gap={7}>
-            <Button  _hover={{ color:"teal",fontWeight:'bold', transition:'0.3s'}} fontSize='26px' ><Link as={NextLink} href="/shop/identifier/payment"><LiaShoppingBagSolid /></Link></Button>
-            <Button  _hover={{ color:"teal",fontWeight:'bold', transition:'0.3s'}} fontSize='26px' ><Link as={NextLink} href="/shop"><BsCart2/></Link></Button>
-            <Button  _hover={{ color:"teal",fontWeight:'bold', transition:'0.3s'}} fontSize='26px' ><Link as={NextLink} href="/login"><GoPerson /></Link></Button>
+            <Link fontSize='26px'  _hover={{color:"teal", transition:'0.2s'}} as={NextLink} className={`link ${pathname === '/shop/identifier/payment' ? 'active' : ''}`} href="/shop/identifier/payment"><LiaShoppingBagSolid /></Link>
+            <Link fontSize='26px'  _hover={{color:"teal", transition:'0.2s'}} as={NextLink} className={`link ${pathname === '/shop' ? 'active' : ''}`} href="/shop"><BsCart2 /></Link>
+            <Link fontSize='26px'  _hover={{color:"teal", transition:'0.2s'}} as={NextLink} className={`link ${pathname === '/login' ? 'active' : ''}`} href="/login"><GoPerson /></Link>
             </Flex>
           </Flex>
         </Flex>
-
-
-    
-        
         </nav>
+    </nav>
+        
+
   )
 }
 export default Navbar;

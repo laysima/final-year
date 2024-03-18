@@ -16,9 +16,9 @@ const about = () => {
   return (
     <>
        {/* ///////////////////////////////some other section  part 1/////////////////////////*/}
-    <Flex bg={'#F9F9F8'} mt={10}>
+       <Flex>
     <Flex p={'30px'} direction={'column'} maxW={'50%'} >
-      <Heading color={'#175873'} fontFamily={'"Outfit", sans-serif'} fontSize={'4xl'}>
+      <Heading color={'#175873'} fontFamily={'"Outfit", sans-serif'} fontSize={'3xl'}>
         Excellent Medical Professionals With Significant 
         Experience
       </Heading>
@@ -28,42 +28,41 @@ const about = () => {
        Viverra orci sagittis eu volutpat odio facilisis mauris sit amet. 
       Imperdiet proin fermentum leo vel orci porta non pulvinar.
       </Text>
-      
-      <Link as={NextLink} href='/'>
-        <Button mt={5} width={'200px'} mr={3} colorScheme="teal" borderRadius={'0px'}>SHOP NOW</Button>
+      <Link as={NextLink}  href="/">
+      <Button mt={5} width={'200px'} mr={3} colorScheme="teal" borderRadius={'0px'} >SHOP NOW</Button>
       </Link>
       
-      <Flex mt={10}>
-        <Flex>
+      <Flex mt={10} gap={'50px'}>
+        <Flex alignItems={'center'} gap={2}>
       <PiHandshakeLight fontSize={'45px'} />
       <Flex direction={'column'}>
-        <Heading color={'#175873'} fontFamily={'"Outfit", sans-serif'}>200k +</Heading>
+        <Heading color={'#175873'} fontSize={'2xl'}  fontFamily={'"Outfit", sans-serif'}>200k +</Heading>
         <Text color={'ash'}>Happy clients</Text>
       </Flex>
       </Flex>
 
-      <Flex ml={20}>
+      <Flex alignItems={'center'} gap={2}>
       <IoMdHeartEmpty fontSize={'45px'} />
       <Flex direction={'column'}>
-        <Heading color={'#175873'}  fontFamily={'"Outfit", sans-serif'}>50k +</Heading>
+        <Heading color={'#175873'} fontSize={'2xl'}  fontFamily={'"Outfit", sans-serif'}>50k +</Heading>
         <Text color={'ash'}>Orders delivered</Text>
       </Flex>
       </Flex>
       </Flex>
 
-      <Flex mt={10}>
-        <Flex>
+      <Flex mt={10} gap={'60px'}>
+        <Flex alignItems={'center'} gap={2}>
       <GoPersonAdd fontSize={'45px'} />
       <Flex direction={'column'}>
-        <Heading  color={'#175873'} fontFamily={'"Outfit", sans-serif'}>80 +</Heading>
+        <Heading  color={'#175873'} fontSize={'2xl'} fontFamily={'"Outfit", sans-serif'}>80 +</Heading>
         <Text color={'ash'}>Area Served</Text>
       </Flex>
       </Flex>
 
-      <Flex ml={24}>
+      <Flex alignItems={'center'} gap={2}>
       <IoTrophyOutline fontSize={'45px'} />
       <Flex direction={'column'}>
-        <Heading color={'#175873'} fontFamily={'"Outfit", sans-serif'}>5L</Heading>
+        <Heading color={'#175873'} fontSize={'2xl'} fontFamily={'"Outfit", sans-serif'}>5L</Heading>
         <Text color={'ash'}>Medicines</Text>
       </Flex>
       </Flex>
@@ -75,7 +74,7 @@ const about = () => {
 
   {/*/////////////////////////////// Core Values ///////////////////////////////////////*/}
     <Box p={'30px'}>
-      <Heading fontFamily={'"Outfit", sans-serif'} textAlign={'center'}>
+      <Heading fontFamily={'"Outfit", sans-serif'} color={'#175873'} fontSize={'3xl'} textAlign={'center'}>
         Our Core Values
       </Heading>
       <Text fontSize={'xl'} textAlign={'center'}>
@@ -130,7 +129,7 @@ const about = () => {
     {/* /////////////////////////////// Staff Reach Out/////////////////////////*/}
     <Flex mt={20}>
     <Flex p={'30px'} direction={'column'} maxW={'50%'} >
-      <Heading color={'#175873'} fontFamily={'"Outfit", sans-serif'} fontSize={'4xl'}>
+      <Heading color={'#175873'} fontFamily={'"Outfit", sans-serif'} fontSize={'3xl'}>
        Reach Out To Our Staff
       </Heading>
       <Text mt={5} fontSize={'xl'}>

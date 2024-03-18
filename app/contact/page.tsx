@@ -11,25 +11,25 @@ const page = () => {
     <Box p={'2px'} bg={'#F9F9F8'} >
         <Flex gap={5} justifyContent={'center'} mt={10} p={12} >
        <Box border={'1px solid teal'} p={'50px'} borderRadius={'5px'} _hover={{border:'2px solid #29A0B1', cursor:'pointer', transform: 'scale(1.05)', transition: 'transform 0.2s ease-in-out'}}>
-            <Heading textColor={'teal'} fontSize={'30px'} fontFamily={'"Outfit", sans-serif'}>Address</Heading>
+            <Heading textColor={'teal'} fontSize={'3xl'} fontFamily={'"Outfit", sans-serif'}>Address</Heading>
             <Text fontSize={'20px'}>P.O.BOX CT6924</Text>
             <Text fontSize={'20px'}>GREATER ACCRA</Text>
        </Box>
 
        <Box border={'1px solid teal'} p={'50px'} borderRadius={'5px'} _hover={{border:'2px solid #29A0B1', cursor:'pointer', transform: 'scale(1.05)', transition: 'transform 0.2s ease-in-out'}}>
-            <Heading textColor={'teal'} fontSize={'30px'} fontFamily={'"Outfit", sans-serif'}>Call Us</Heading>
+            <Heading textColor={'teal'} fontSize={'3xl'} fontFamily={'"Outfit", sans-serif'}>Call Us</Heading>
             <Text fontSize={'20px'}>+233 50 924 6726</Text>
-            <Text fontSize={'20px'}>+233 59M 811 9295</Text>
+            <Text fontSize={'20px'}>+233 59 811 9295</Text>
        </Box>
 
        <Box border={'1px solid teal'} p={'50px'} borderRadius={'5px'} _hover={{border:'2px solid #29A0B1', cursor:'pointer', transform: 'scale(1.05)', transition: 'transform 0.2s ease-in-out'}}>
-            <Heading textColor={'teal'} fontSize={'30px'} fontFamily={'"Outfit", sans-serif'}>Mail Id</Heading>
+            <Heading textColor={'teal'} fontSize={'3xl'} fontFamily={'"Outfit", sans-serif'}>Mail Id</Heading>
             <Text fontSize={'20px'}>shakur@gmail.com</Text>
             <Text fontSize={'20px'}>example@gmail.com</Text>
        </Box>
 
        <Box border={'1px solid teal'} p={'50px'} borderRadius={'5px'} _hover={{border:'2px solid #29A0B1', cursor:'pointer', transform: 'scale(1.05)', transition: 'transform 0.2s ease-in-out'}}>
-            <Heading textColor={'teal'} fontSize={'30px'} fontFamily={'"Outfit", sans-serif'}> Working Hours</Heading>  
+            <Heading textColor={'teal'} fontSize={'3xl'} fontFamily={'"Outfit", sans-serif'}> Working Hours</Heading>  
             <Text fontSize={'20px'}> Monday - Saturday : </Text>
             <Text fontSize={'20px'}>08:00 - 22:00</Text>
             <Text fontSize={'20px'}>Sunday - Holiday</Text>   
@@ -39,7 +39,7 @@ const page = () => {
 
     <Flex mt={20}>
     <Flex p={'30px'} direction={'column'} maxW={'50%'} >
-      <Heading color={'#175873'} fontFamily={'"Outfit", sans-serif'} fontSize={'4xl'}>
+      <Heading color={'#175873'} fontFamily={'"Outfit", sans-serif'} fontSize={'3xl'}>
        Get In Touch With Our Team
       </Heading>
       <Text mt={5} fontSize={'xl'}>
@@ -68,8 +68,8 @@ const page = () => {
 
 
     {/* ////////////////////////////////////our Branches At section ///////////////////////////////// */}
-    <Box mt={20}>
-        <Heading fontFamily={'"Outfit", sans-serif'} textAlign={'center'}>
+    <Box mt={15}>
+        <Heading fontFamily={'"Outfit", sans-serif'} color={'#175873'} fontSize={'3xl'} textAlign={'center'}>
          Our Branches At
         </Heading>
         <Text fontSize={'xl'} textAlign={'center'}>
@@ -79,7 +79,7 @@ const page = () => {
    
         <Flex gap={5} justifyContent={'center'} mt={3} p={12} >
        <Box border={'1px solid teal'} p={'50px'} bg={'teal.50'} borderRadius={'5px'} _hover={{border:'2px solid #29A0B1', cursor:'pointer', transform: 'scale(1.05)', transition: 'transform 0.2s ease-in-out'}}>
-            <Heading textColor={'teal'} fontSize={'30px'} fontFamily={'"Outfit", sans-serif'}>Address</Heading>
+            <Heading textColor={'teal'} fontSize={'2xl'} fontFamily={'"Outfit", sans-serif'}>Address</Heading>
 
             <Flex alignItems={'center'} gap={2}>
             <Icon as={FaLocationDot} />
@@ -99,7 +99,7 @@ const page = () => {
        </Box>
 
        <Box border={'1px solid teal'} p={'50px'} bg={'teal.50'} borderRadius={'5px'} _hover={{border:'2px solid #29A0B1', cursor:'pointer', transform: 'scale(1.05)', transition: 'transform 0.2s ease-in-out'}}>
-            <Heading textColor={'teal'} fontSize={'30px'} fontFamily={'"Outfit", sans-serif'}>Call Us</Heading>
+            <Heading textColor={'teal'} fontSize={'2xl'} fontFamily={'"Outfit", sans-serif'}>Call Us</Heading>
             <Text fontSize={'20px'}>+233 50 924 6726</Text>
             <Text fontSize={'20px'}>+233 59 811 9295</Text>
        </Box>

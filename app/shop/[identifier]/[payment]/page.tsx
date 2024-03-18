@@ -1,7 +1,7 @@
 'use client'
 import React from 'react'
 import { Box, Text, Grid, GridItem, InputGroup,
-    Heading,Input, Image,Icon, Flex, Link, InputRightElement, Button, Divider, IconButton } from '@chakra-ui/react'
+    Heading,Input, Image,Icon, Flex, Link, InputRightElement, Button, Divider, IconButton, FormControl } from '@chakra-ui/react'
 import { FaCreditCard} from "react-icons/fa";
 import { LiaShoppingBagSolid } from "react-icons/lia";
 import { GoLock } from "react-icons/go";
@@ -24,7 +24,7 @@ export default function payment({params}:any)  {
     const [show, setShow] = useState(false)
   return (
     <>
-<Box mb={3} bg="#E3E7F1"   >  
+<Box mb={3} bg="#E3E7F1">  
 <Box>
 <Button bg={"#E3E7F1"} _hover={{ color:"teal",fontWeight:'bold', transition:'0.3s'}} ml={'90px'} fontSize='26px'><Link as={NextLink} href="/shop/identifier/payment"><LiaShoppingBagSolid /></Link></Button>
 <Divider border={'0.5px solid grey'} orientation='horizontal' />
@@ -56,25 +56,33 @@ export default function payment({params}:any)  {
             <Text fontWeight={'bold'} flexGrow={1}>Credit Card</Text>
             <Icon flexShrink={0} fontSize={'20px'} as={FaCreditCard} />
         </Flex>
-        <Box p={4}>
-            <InputGroup >
+        <FormControl p={4} isRequired>
+            <InputGroup alignItems={'center'} >
                 <Input
-                  h={'6vh'}
+                type='text'
+                maxLength={16}
+                required
+                p={5}
                     bg={'white'}  borderRadius={0}
-                    type={show ? 'text' : 'password'}
-                    placeholder='Card Number'
                 />
-                    <InputRightElement>
-                        <Icon  fontSize={'20px'} as={GoLock}/>
+                    <InputRightElement alignItems={'center'}>
+                        <Icon as={GoLock}/>
                     </InputRightElement>
             </InputGroup>
 
             <Flex mt={4} gap={4}>
                 <Input h={'6vh'}  placeholder="Select Date" size="md" type="date" bg={'white'} borderRadius={0}/>
-                <Input h={'6vh'} placeholder="Security Code" bg={'white'}  borderRadius={0}/>
+                <InputGroup >
+                <Input
+                  h={'6vh'}
+                    bg={'white'}  borderRadius={0}
+                    type={show ? 'text' : 'password'}
+                    placeholder='Security Code'
+                />
+            </InputGroup>
             </Flex>
             <Input h={'6vh'} mt={4} placeholder="Name on Card" bg={'white'}  borderRadius={0}/>
-        </Box>
+        </FormControl>
 
         </Box>
         <Button h={'5vh'} mt={4} w={'100%'} colorScheme='teal'>Pay Now</Button>
@@ -93,7 +101,7 @@ export default function payment({params}:any)  {
             <Flex alignItems={'center'} >
             <Flex alignItems={'center'} flexGrow={1}>
                 <Box position="relative" w="100px" h="100px" p={5} border={'0.5px solid grey'} borderRadius={'5px'}> 
-                    <Image justifyContent={'center'} src={product?.imageUrl} boxSize={'60px'} />
+                    <Image justifyContent={'center'} src={product.imageUrl} boxSize={'60px'} />
                     {/* Number Badge */}
                     <Box position="absolute" top="-2"  right="-2" bg="red"
                         color="white" borderRadius="full" 

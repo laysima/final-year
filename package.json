@@ -6,7 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint", 
+    "lint": "next lint",
     "tsc:w": "tsc -w"
   },
   "dependencies": {
@@ -29,6 +29,7 @@
   },
   "devDependencies": {
     "@types/node": "20.11.24",
-    "@types/react": "18.2.63"
+    "@types/react": "18.2.63",
+    "prisma": "^5.11.0"
   }
 }
