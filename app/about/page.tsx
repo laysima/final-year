@@ -16,8 +16,8 @@ const about = () => {
   return (
     <>
        {/* ///////////////////////////////some other section  part 1/////////////////////////*/}
-       <Flex>
-    <Flex p={'30px'} direction={'column'} maxW={'50%'} >
+       <Flex p={30} px={'100px'} >
+    <Flex direction={'column'} maxW={'50%'} >
       <Heading color={'#175873'} fontFamily={'"Outfit", sans-serif'} fontSize={'3xl'}>
         Excellent Medical Professionals With Significant 
         Experience
@@ -73,7 +73,7 @@ const about = () => {
     </Flex>
 
   {/*/////////////////////////////// Core Values ///////////////////////////////////////*/}
-    <Box p={'30px'}>
+    <Box p={30} px={'100px'}>
       <Heading fontFamily={'"Outfit", sans-serif'} color={'#175873'} fontSize={'3xl'} textAlign={'center'}>
         Our Core Values
       </Heading>
@@ -127,7 +127,7 @@ const about = () => {
 
 
     {/* /////////////////////////////// Staff Reach Out/////////////////////////*/}
-    <Flex mt={20}>
+    <Flex mt={20} p={30} px={'70px'} >
     <Flex p={'30px'} direction={'column'} maxW={'50%'} >
       <Heading color={'#175873'} fontFamily={'"Outfit", sans-serif'} fontSize={'3xl'}>
        Reach Out To Our Staff
@@ -149,7 +149,7 @@ const about = () => {
       <Button borderRadius={'none'} mt={5} w={'70px'} colorScheme='teal'>SEND</Button>
 
     </Flex>
-     <Image src='reach.jpg' mr={12} width={'50%'} height={'70vh'}></Image>
+     <Image src='reach.jpg' mr={12}  height={'70vh'}></Image>
     </Flex>
     </>
   )

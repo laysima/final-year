@@ -11,6 +11,7 @@ import { usePathname } from 'next/navigation'
 
 
 export const Footer = () => {
+  
   const pathname = usePathname()
   const [showScrollButton, setShowScrollButton] = useState(false);
 
@@ -38,7 +39,7 @@ export const Footer = () => {
 
   return (
   <footer style={{width:'100%'}}>
-    <Box p={'50px'} bg={'teal'} color={'white'}>
+    <Box p={30} px={'100px'}  bg={'teal'} color={'white'}>
     <Flex gap={30} justifyContent={'space-between'}>
       <Flex direction={'column'} fontSize={'20px'}>
       <Heading fontWeight={900} fontFamily={'"PT Sans", sans-serif'}fontSize='50px'>PharmaInc</Heading>

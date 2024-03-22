@@ -36,9 +36,12 @@ export default function Home({params}:any) {
     { id: 3, question: "How can I book an appointment?", answer: "You can book an appointment through our website or by calling our customer service hotline." },
     { id: 4, question: "Do you offer online consultations?", answer: "Yes, we provide online consultations with our medical specialists to ensure your health concerns are addressed promptly." }
   ];
+
+  
   
   return (
     <>
+    <Box>
     <Box bg={'#F9F9F8'}>
     <Box position="relative" width="100%" height="100%">
       {/* Background Image */}
@@ -55,7 +58,7 @@ export default function Home({params}:any) {
       />
 
       {/* Content */}
-      <Flex p={30} alignItems="center" px={10} position="relative" zIndex="1">
+      <Flex p={30} alignItems="center" px={'100px'} position="relative" zIndex="1">
         <Flex shrink={0} width="60%">
           <Box>
             <Heading color="White" fontFamily='"Outfit", sans-serif' fontSize="2xl" as="b">
@@ -69,20 +72,20 @@ export default function Home({params}:any) {
       </Flex>
 
       {/* Linking Buttons */}
-      <Box mb={10} position="relative" zIndex="1">
+      <Flex gap={5} p={30} px={'100px'} mb={10} position="relative" zIndex="1">
         <Link as={NextLink} href='/shop'>
-          <Button mx={10} colorScheme="teal" borderRadius={0}>SHOP NOW</Button>
+          <Button colorScheme="teal" borderRadius={0}>SHOP NOW</Button>
         </Link>
         <Button colorScheme="teal" borderRadius={0} >
           <Link  as={NextLink} href="/">CHAT WITH A BOT</Link>
         </Button>
-      </Box>
+      </Flex>
     </Box>
 
 
     {/* /////////////////////////////////////// Offers  Grids /////////////////////////////////*/}
     <Box mt={10}>
-    <SimpleGrid p={'30px'}
+    <SimpleGrid p={30} px={'100px'}
     spacing={'20px'}
     minChildWidth={{ base: "50%", md: "300px" }} 
     columns={{base:6, md:2, xl:1}}
@@ -190,7 +193,7 @@ export default function Home({params}:any) {
 
       {/*////////////////////////////////// Categories ////////////////////////////////// */}
 
-    <Box p={{ base: '20px', md: '30px' }} mt={{ base: 15, md: 15 }}>
+    <Box p={{ base: '20px', md: '30px' }} mt={{ base: 15, md: 15 }} px={'100px'}>
       <Heading textAlign={'center'} fontFamily={'"Outfit", sans-serif'} fontSize={'3xl'} color={'#175873'}>
         Shop Our Categories
       </Heading>
@@ -238,8 +241,8 @@ export default function Home({params}:any) {
 
 
     {/* ///////////////////////////////some other section  part 1/////////////////////////*/}
-    <Flex mt={20}>
-    <Flex p={'30px'} direction={'column'} maxW={'50%'} >
+    <Flex mt={20} px={'100px'} >
+    <Flex direction={'column'} maxW={'50%'} >
       <Heading color={'#175873'} fontFamily={'"Outfit", sans-serif'} fontSize={'3xl'}>
         Excellent Medical Professionals With Significant 
         Experience
@@ -251,7 +254,7 @@ export default function Home({params}:any) {
       Imperdiet proin fermentum leo vel orci porta non pulvinar.
       </Text>
       <Link as={NextLink}  href="/">
-      <Button mt={5} width={'200px'} mr={3} colorScheme="teal" borderRadius={'0px'}>SHOP NOW</Button>
+      <Button mt={5} width={'200px'} colorScheme="teal" borderRadius={'0px'}>SHOP NOW</Button>
       </Link>
       
       <Flex mt={10} gap={'50px'}>
@@ -295,13 +298,13 @@ export default function Home({params}:any) {
     </Flex>
 
       {/* //////////////////////////////// hover list section ///////////////////////////////////////*/}
-    <Box p={{ base: '20px', md: '30px' }} mt={{ base: 10, md: 15 }}> 
-      <Flex gap={5} justifyContent={'space-evenly'}  textColor={'#0C1446'} _hover={{cursor:'pointer'}}>
+    <Box p={{ base: 30 , md: '30px' }} mt={{ base: 10, md: 15 }} px={'100px'}> 
+      <Flex justifyContent={'space-evenly'}  textColor={'#0C1446'} _hover={{cursor:'pointer'}}>
 
         {/* float 1 */}
       <Flex position="relative" height={'10vh'}
       _before={{content: '""',position: "absolute",right: 0, height: "100%",width: "0%",bgColor: ' #ECECEB',
-      transition:'width 0.5s ease-in-out',zIndex: 0}} _hover={{ border:'0.5px solid',_before: { width: "100%", },
+      transition:'width 0.5s ease-in-out',zIndex: 0}} _hover={{ border:'0.5px solid',_before: { width: "100%"},
         }}>
       <Flex p={2} alignItems={'center'}>
       <Flex position={'relative'} borderRadius={'50%'} mr={3} p={3} alignItems={'center'} fontSize={'50px'} bg={'#527D53'} color={'white'}>
@@ -360,7 +363,7 @@ export default function Home({params}:any) {
 
 
   {/* ///////////////////// some other section part part 2 ///////////////////////// */}
-      <Flex p={'30px'} gap={10} >
+      <Flex p={'30px'} px={'100px'} gap={10} >
       <Flex mt={20}>
       <Image src='stet.jpeg' bgRepeat={'no-repeat'} ></Image>
     </Flex>
@@ -385,9 +388,9 @@ export default function Home({params}:any) {
 
     {/* section for newsletter and newsproduction section, based on current information or news that thr websites has gone through  */}
 
-    <Heading textAlign={'center'} p={'30px'} fontFamily={'"Outfit", sans-serif'} fontSize={'3xl'} >Newsletter and More information</Heading>
+    <Heading p={30} px={'100px'}  textAlign={'center'} fontFamily={'"Outfit", sans-serif'} fontSize={'3xl'} >Newsletter and More information</Heading>
  
-    <Flex gap={4}  mb={5} justifyContent={'center'} p={'30px'} id='section 2'>
+    <Flex p={30} px={'100px'}  gap={4}  mb={5} justifyContent={'center'} id='section 2'>
       <Box border={'1px solid teal'} p ={'30px'}>
         <Flex>
           <Text>
@@ -422,9 +425,8 @@ export default function Home({params}:any) {
           <IconButton aria-label='direct right' icon={<FaArrowRight/>}  borderRadius={'50%'} fontSize={'1.5em'} bottom={'-40px'} bgColor={'teal'} /> 
         </Flex>
       </Box>
-
-
     </Flex>
+    </Box>
     </>
   )
 }

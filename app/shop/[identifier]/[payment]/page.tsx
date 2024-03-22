@@ -6,7 +6,7 @@ import { FaCreditCard} from "react-icons/fa";
 import { LiaShoppingBagSolid } from "react-icons/lia";
 import { GoLock } from "react-icons/go";
 import NextLink from 'next/link'
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useCartStore } from "@/zustand/store"
 
 
@@ -15,16 +15,61 @@ export default function payment({params}:any)  {
     const products = require('../../../datasource.json');
     const product = products.find((product:any) => product.id === identifier);
 
-    const [counter, setCounter] = useState(1); // This tracks the sequential number
-    const [subtotal, setSubtotal] = useState(product?.price || 0);
-    const productPrice = product?.price;
+     const [counter, setCounter] = useState(1); // This tracks the sequential number
+    // const [subtotal, setSubtotal] = useState(product?.price || 0);
+    // const productPrice = product?.price;
 
-    const { add_to_cart, cart, empty_cart } = useCartStore()
+    const { add_to_cart, cart, empty_cart, remove_from_cart} = useCartStore()
 
     const [show, setShow] = useState(false)
+
+    const finalprice =  () => {
+      setCounter(prevCounter => prevCounter + 1); 
+      add_to_cart({ identifier:identifier, imageUrl: product.imageUrl, name: product.name, description: '', price: product.price, quantity: counter, currency: '', subtotal: (product.price * counter) });
+    }
+
+
+    const [blogs, setBlogs] = useState(null)
+
+    const [ispending, setIspending] = useState(true)
+
+    // useEffect(() => {
+    //   ////////fetching the request ////
+    //   setTimeout(() => {
+    //     fetch('http://localhost:8000/')
+    //   //this returns a promise
+    //   .then(res => {
+    //     return res.json()
+    //   })
+    //   // we return another promise because the request takes some time to load
+    //   //this is poin to fire once the one on top is complete
+    //   // that 'then' take the actual data we need
+    //   .then ((data) => {
+       
+    //     setBlogs(data)
+    //     setIspending(false)
+    //   });
+        
+    //   }, 1000);
+
+    //   // console.log('use effect ran')
+    //   // console.log(products)
+    //   /////creting dependencies to render specific products
+    //   /////the [array] only runs the function after the first initial render( this means once)
+    //   ///for what is in the array we want to run the useffect first but always whe the 'name' changes. so the name becomws the depedencies
+    // },[]);
+
+   
+
+
   return (
     <>
-<Box mb={3} bg="#E3E7F1">  
+<Box mb={3} bg="#E3E7F1"> 
+{
+ispending && <Text fontSize={'lg'}>Loading.......</Text>
+}
+{blogs && <Text>blogs={blogs}</Text>}
+
 <Box>
 <Button bg={"#E3E7F1"} _hover={{ color:"teal",fontWeight:'bold', transition:'0.3s'}} ml={'90px'} fontSize='26px'><Link as={NextLink} href="/shop/identifier/payment"><LiaShoppingBagSolid /></Link></Button>
 <Divider border={'0.5px solid grey'} orientation='horizontal' />
@@ -93,11 +138,11 @@ export default function payment({params}:any)  {
         </GridItem>
 
 
-{/* ////////////////////////////////////// section 2 /////////////////////////////////////  */}
-        <GridItem w="100%"  p={5} bg={'white'}>
-          <Text>{add_to_cart}</Text>
+{/* ////////////////////////////////////// Right Section /////////////////////////////////////  */}
+        <GridItem w="100%" p={5} bg={'white'}>
+          {/* <Button onClick={() => {add_to_cart()}}>Add to cart</Button> */}
           <Button onClick={() => {empty_cart()}}>Empty cart</Button>
-        {cart.map((product:any) => (
+           {cart.map((product:any) => (
             <Flex alignItems={'center'} >
             <Flex alignItems={'center'} flexGrow={1}>
                 <Box position="relative" w="100px" h="100px" p={5} border={'0.5px solid grey'} borderRadius={'5px'}> 
@@ -109,17 +154,17 @@ export default function payment({params}:any)  {
                         display="flex" alignItems="center"
                         justifyContent="center" fontSize="sm"
                         >
-                        {counter}
+                       {}
                     </Box>
                 </Box>
                 <Text fontSize="xl" p={3}>{product?.name}</Text>
           </Flex>
-          <Text fontWeight={'bold'} flexShrink={0}>${product?.subtotal.toFixed(2)}</Text>
+          <Text fontWeight={'bold'} flexShrink={0}>{product?.price}</Text>
           </Flex>
           ))}
           <Flex mt={4} >
             <Text fontWeight={'bold'} flexGrow={1}>Subtotal</Text>
-            <Text fontSize={'12px'}  flexShrink={0}>${subtotal.toFixed(2)}</Text>
+            <Text fontSize={'12px'} flexShrink={0}>${cart.reduce(function (sum: any, current: any) { return (parseFloat(sum) + parseFloat(current.price)).toFixed(2) }, 0)}</Text>
           </Flex>
 
           <Flex mt={4}>

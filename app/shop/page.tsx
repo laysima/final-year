@@ -2,29 +2,53 @@
 import React from 'react'
 import NextLink from 'next/link'
 import { useState } from 'react';
-import { IconButton ,Center, Select, Heading, Button, Text, Image, Flex, Box, VStack, SimpleGrid, Stack, ButtonGroup, Link} from '@chakra-ui/react'
-import { FaHeart, FaAngleRight} from 'react-icons/fa';
+import { IconButton ,Center, Select, Heading, Button, Text, Image, Flex, Box, Tooltip, SimpleGrid, Stack, ButtonGroup, Link, Icon} from '@chakra-ui/react'
+import { FaRegHeart, FaHeart, FaAngleRight} from 'react-icons/fa';
 import { usePathname, useRouter } from 'next/navigation';
+import PaginationControls from '@/app/components/PaginationControls'
+import { color } from 'framer-motion';
+import { useCartStore } from "@/zustand/store"
 
 
 
-const initialProducts = require('../datasource.json')
-const itemsPerPage = 8;
+const initialProducts = require('../datasource.json');
   
-const page = () => {
+export default function page ({
+  searchParams,
+}: {
+  searchParams: { [key: string]: string | string[] | undefined }
+}) {
+
+  const page = searchParams['page'] ?? '1'
+  const per_page = searchParams['per_page'] ?? '8'
+
+  const start = (Number(page) - 1) * Number(per_page) // 0, 5, 10 ...
+  const end = start + Number(per_page) // 5, 10, 15 ...
+
   const pathname = usePathname()
     const [products, setProducts] = useState(initialProducts);
-    const [currentPage, setCurrentPage] = useState(1);
+    const currentItems = products.slice(start, end);
 
-    const indexOfLastItem = currentPage * itemsPerPage;
-    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-    const currentItems = products.slice(indexOfFirstItem, indexOfLastItem);
-    const totalPages = Math.ceil(products.length / itemsPerPage);
-  
-    const changePage = (page:any) => {
-      setCurrentPage(page);
+    const [showText, setShowText] = useState(false);
+
+    const { add_to_cart, cart } = useCartStore()
+    const [counter, setCounter] = useState(1);
+
+    const buyItNow = () => {
+      // setSubtotal((prevSubtotal:number) => Math.max(productPrice, prevSubtotal / 2));
+      setCounter(prevCounter => Math.max(1, prevCounter - 1)); // Decrease the sequential number, not going below 1
     };
+// 
+    // const [isHovered, setIsHovered] = useState(false);
 
+    // const textStyle = {
+    //   transition: 'all 0.3s ease-in-out',
+    //   transform: isHovered ? 'scale(1.1)' : 'scale(1)',
+    //   fontWeight: isHovered ? 'bold' : 'normal',
+    //   shadow : " 1px 1px 2px grey",
+    // };
+  
+  
     const handleSortChange = (event:any) => {
         const sortValue = event.target.value;
         let sortedProducts = [...products];
@@ -49,6 +73,8 @@ const page = () => {
     
         setProducts(sortedProducts);
         };
+
+        
 
   return (
     <>
@@ -76,45 +102,52 @@ const page = () => {
         {currentItems.map((product:any) => (
           <Box bg={'#F9F9F8'} _hover={{ shadow: "md", transform: "translateY(-5px)", transition: "all .3s ease" , color:'teal'}} >
           <Link key={product.id} href={`/shop/${product.id}`} >
-        <Box 
+        <Box alignItems={'center'} justifyContent={'center'} 
             bg={'#F9F9F8'} 
             border={'none'}
             position="relative"
             key={product.id}
             overflow="hidden"
-            >  
-                <Box p={5} _hover={{
-                    '> img': {
-                        transform: 'scale(1.1)',
-                    },
+            ><Box p={5} _hover={{
                     '> div': {
                         display: 'block',
                     },
                     }} transition="all .3s ease">
-                    <Image src={product.imageUrl} boxSize="200px"  objectFit="cover" />
-                        <Box  position="absolute"
-                            top="0"
-                            right="0"
-                            display="none"
-                            padding="2">
-                            <IconButton aria-label='heart'
-                                    icon={<FaHeart />}
-                                    isRound
-                                    size="sm"
-                                    colorScheme="red"
-                                    variant="ghost"
-                            /> 
-                            </Box>
+                        <Image  src={product.imageUrl} boxSize="200px"  objectFit="cover" />
+                        <Flex position="absolute" top="0" right="0" display="none" padding="2" onMouseEnter={()=> setShowText(true)}
+                        onMouseLeave={()=> setShowText(false)} >
+                                {showText && (
+                                  <Text display="inline" borderRadius={'5px'} fontSize="sm" bg={'white'} color={'black'} p={2} shadow={'1px 1px 2px grey'}>
+                                   Add to Wishlist
+                                  </Text>
+                                      )}
+                                <Link href='/'>
+                                <IconButton
+                                _hover={{transform: 'scale(1.05)', transition: 'transform 0.2s ease-in-out'}}
+                                size={'sm'}
+                                borderRadius={'50px'}
+                                ml={2}
+                                fontSize={'sm'}
+                                bg={'teal'}
+                                icon={<FaHeart/>}
+                                variant="filled"
+                                color={'white'}
+                                aria-label="More information"
+                                marginRight="2"
+                                />
+                                </Link>
+                        </Flex>
                     </Box>
+              
                 <Box p="5">
-                    <Text fontWeight="bold">{product.name}</Text>
+                    <Text colorScheme='teal' fontWeight="bold">{product.name}</Text>
                     <Text>${product.price}</Text>
                 </Box>   
         </Box>
         </Link>
         <Box p={'7px'}>
         <Link key={product?.id} href={`/shop/payment/${product?.id}`}>
-        <Button colorScheme="teal" fontSize={'l'} size="sm" >ADD TO CART</Button>
+        <Button mb={5} borderRadius={'50px'} colorScheme='teal' fontSize={'l'} onClick={buyItNow} size="sm" >ADD TO CART</Button>
         </Link>
         </Box>
         </Box>
@@ -122,24 +155,12 @@ const page = () => {
         ))}
       </SimpleGrid>
 
-      <Stack spacing={4} direction="row" align="center" justifyContent="center" marginTop="4">
-        <ButtonGroup variant="outline" spacing="2">
-          {[...Array(totalPages)].map((page) => (
-            <Button mt={10}
-              key={page + 1}
-              onClick={() => changePage(page + 1)}
-              isActive={currentPage === page + 1}
-            >
-              {page + 1}
-            </Button>
-          ))}
-        </ButtonGroup>
-      </Stack>
+<PaginationControls 
+       hasNextPage={end < initialProducts.length}
+       hasPrevPage={start > 0}
+       />
     </Box>
 
 
     </>
-  )
-}
-
-export default page
+  )}
