@@ -5,10 +5,12 @@ import { FaLocationDot, FaPhone } from "react-icons/fa6";
 import { MdMail } from "react-icons/md";
 
 
-const page = () => {
+
+const about = () => {
+     
   return (
     <>
-    <Box p={'2px'} bg={'#F9F9F8'} >
+    <Box bg={'#F9F9F8'} >
         <Flex gap={5} justifyContent={'center'} mt={10} p={12} >
        <Box border={'1px solid teal'} p={'50px'} borderRadius={'5px'} _hover={{border:'2px solid #29A0B1', cursor:'pointer', transform: 'scale(1.05)', transition: 'transform 0.2s ease-in-out'}}>
             <Heading textColor={'teal'} fontSize={'3xl'} fontFamily={'"Outfit", sans-serif'}>Address</Heading>
@@ -37,7 +39,7 @@ const page = () => {
        </Flex>
     </Box>
 
-    <Flex mt={20}>
+    <Flex mt={20} p={30} px={'100px'} >
     <Flex p={'30px'} direction={'column'} maxW={'50%'} >
       <Heading color={'#175873'} fontFamily={'"Outfit", sans-serif'} fontSize={'3xl'}>
        Get In Touch With Our Team
@@ -112,4 +114,4 @@ const page = () => {
   )
 }
 
-export default page
+export default about

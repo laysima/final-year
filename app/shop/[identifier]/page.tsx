@@ -1,6 +1,6 @@
 'use client'
 import { useCartStore } from "@/zustand/store"
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import NextLink from 'next/link'
 import { useRouter } from 'next/navigation';
 import { usePathname } from 'next/navigation'
@@ -12,6 +12,7 @@ import { IoStar } from "react-icons/io5";
 import { IoMdHeartEmpty, IoIosAdd, IoMdClose} from "react-icons/io";
 import { TbTruckDelivery } from "react-icons/tb";
 import { FiMinus } from "react-icons/fi";
+import dynamic from "next/dynamic";
 
 
 const ProductPage = ({params}:any) => {
@@ -25,7 +26,7 @@ const ProductPage = ({params}:any) => {
 
   const [counter, setCounter] = useState(1); // This tracks the sequential number
   // const [subtotal, setSubtotal] = useState(product?.price || 0);
-  const productPrice = product?.price;  // Assuming initial subtotal is the price of 1 item
+  // const productPrice = product?.price;  // Assuming initial subtotal is the price of 1 item
 
 
   const doubleSubtotal = () => {
@@ -40,6 +41,11 @@ const ProductPage = ({params}:any) => {
     add_to_cart({ identifier:identifier, imageUrl: product.imageUrl, name: product.name, description: '', price: product.price, quantity: counter, currency: '', subtotal: (product.price * counter) });
   };
 
+  const buyItNow = () => {
+    // setSubtotal((prevSubtotal:number) => Math.max(productPrice, prevSubtotal / 2));
+    setCounter(prevCounter => Math.max(1, prevCounter - 1)); // Decrease the sequential number, not going below 1
+    add_to_cart({ identifier:identifier, imageUrl: product.imageUrl, name: product.name, description: '', price: product.price, quantity: counter, currency: '', subtotal: (product.price * counter) });
+  };
   //wishlist section
   const [wishlist, setWishlist] = useState<any>([]);
   const { isOpen, onToggle, onClose } = useDisclosure();
@@ -49,12 +55,14 @@ const ProductPage = ({params}:any) => {
     if (!isOpen) onToggle();
   };
 
+  
+
 
   return (
     <>
     {/*<Text>we are good: {identifier}</Text*/}
 
-      <Center flexDirection={'column'} p={40} bgImage={"../../shop.jpeg"} textAlign={'center'} bgSize={'cover'} bgRepeat={'no-repeat'} >
+      <Center flexDirection={'column'} p={40} bgImage={"../../../dnaaa.jpg"} textAlign={'center'} bgSize={'cover'} bgRepeat={'no-repeat'} >
         <Heading fontFamily={'"Outfit", sans-serif'} color={'white'}>{product?.name}</Heading>
         <Flex alignItems={'center'} textAlign={'center'} mt={3}>
         {/* <Link as={NextLink} textDecoration={'none'} style={{color:'white', fontSize:'1.5em'}} href="/shop"> All </Link> */}
@@ -95,7 +103,7 @@ const ProductPage = ({params}:any) => {
             <Icon as={IoMdHeartEmpty} />
             <Text>Add to Wishlist</Text>
             </Flex >
-            <Text ml={5} fontWeight={'bold'}>Quantity:{counter} </Text>
+            {/* <Text ml={5} fontWeight={'bold'}>Quantity:{counter} </Text> */}
           </Flex>
            
         
@@ -129,10 +137,12 @@ const ProductPage = ({params}:any) => {
          </Box> */}
      </Flex>
         <Link textDecorationLine={'teal'} _hover={{color:"teal", transition:'0.2s'}} as={NextLink} key={product?.id} href={`/shop/payment/${product?.id}`} passHref>
-          <Button textDecorationLine={'none'} width={'350px'} colorScheme="teal" borderRadius={0}>
+          <Button textDecorationLine={'none'} width={'350px'} colorScheme="teal" borderRadius={0} onClick={buyItNow}> 
             BUY IT NOW
           </Button>
        </Link>
+
+       
         
         <Divider orientation='horizontal' border={'0.5px solid ash'}/>
 
@@ -213,7 +223,7 @@ const ProductPage = ({params}:any) => {
         </Flex>
         <Text mt={"15px"} >Everything is calculated at checkout</Text>
         <Link as={NextLink} key={product?.id} href={`/shop/payment/${product?.id}`} passHref>
-        <Button mt={"15px"}  width={'350px'} colorScheme="teal" borderRadius={0} onClick={() => addToWishlist("Product 1")}>
+        <Button mt={"15px"}  width={'350px'} colorScheme="teal" borderRadius={0}>
           CHECKOUT
         </Button>
         </Link>
@@ -267,3 +277,4 @@ const ProductPage = ({params}:any) => {
 };
 
 export default ProductPage;
+
