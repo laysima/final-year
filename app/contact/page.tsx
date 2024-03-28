@@ -11,7 +11,7 @@ const about = () => {
   return (
     <>
     <Box bg={'#F9F9F8'} >
-        <Flex gap={5} justifyContent={'center'} mt={10} p={12} >
+        <Flex gap={5} justifyContent={'center'} p={12} >
        <Box border={'1px solid teal'} p={'50px'} borderRadius={'5px'} _hover={{border:'2px solid #29A0B1', cursor:'pointer', transform: 'scale(1.05)', transition: 'transform 0.2s ease-in-out'}}>
             <Heading textColor={'teal'} fontSize={'3xl'} fontFamily={'"Outfit", sans-serif'}>Address</Heading>
             <Text fontSize={'20px'}>P.O.BOX CT6924</Text>

@@ -59,12 +59,13 @@ export default function Home({params}:any) {
 
       {/* Content */}
       <Flex p={30} alignItems="center" px={'100px'} position="relative" zIndex="1">
-        <Flex shrink={0} width="60%">
+        <Flex shrink={0} width="80%">
           <Box>
-            <Heading color="White" fontFamily='"Outfit", sans-serif' fontSize="2xl" as="b">
-              WELCOME TO PHARMANINC: <br />Your Compassionate Ally in Navigating the Path to Optimal Health and Wellness
+            <Heading color="White" fontFamily='"Outfit", sans-serif' fontSize="6xl" as="b">
+              WELCOME TO PHARMANINC: <br />
             </Heading>
             <Text mt={10} color={'white'} mb={10} fontSize="xl">
+            Your Compassionate Ally in Navigating the Path to Optimal Health and Wellness
               At PharmaInc, we understand that managing health is a personal journey that requires trust, support, and reliable resources.
             </Text>
           </Box>
@@ -73,12 +74,15 @@ export default function Home({params}:any) {
 
       {/* Linking Buttons */}
       <Flex gap={5} p={30} px={'100px'} mb={10} position="relative" zIndex="1">
+        
         <Link as={NextLink} href='/shop'>
-          <Button colorScheme="teal" borderRadius={0}>SHOP NOW</Button>
+          <Button bg="#E3E7F1" borderRadius={0}>SHOP NOW</Button>
         </Link>
-        <Button colorScheme="teal" borderRadius={0} >
+
+        <Button bg="#E3E7F1" borderRadius={0} >
           <Link  as={NextLink} href="/">CHAT WITH A BOT</Link>
         </Button>
+        
       </Flex>
     </Box>
 
@@ -97,7 +101,7 @@ export default function Home({params}:any) {
           <Text mr={3}  textAlign={'right'}  fontSize={'xl'} >Cough Syrup</Text>
           <Flex justifyContent="flex-end">
             <Link as={NextLink} href="/shop" w={'40%'}>
-              <Button textDecorationLine={'none'} mr={3} colorScheme="teal" borderRadius={'20px'} mt={5}>SHOP NOW</Button>
+              <Button textDecorationLine={'none'} mr={3} color="#378ba4" borderRadius={'20px'} mt={5}>SHOP NOW</Button>
             </Link>
           </Flex>
         </GridItem>
@@ -126,12 +130,12 @@ export default function Home({params}:any) {
         </GridItem>
 
         {/* grid 4 */}
-        <GridItem p={2} rowSpan={1} bgImage="VC.webp" color={'white'}  bgColor={"green"} bgSize={'cover'} bgPos={'center'} >
+        <GridItem p={2} rowSpan={1} bgImage="sth.jpg" color={'white'}  bgColor={"green"} bgSize={'cover'} bgPos={'center'} >
           <Heading fontFamily={'"Outfit", sans-serif'} fontSize='2xl' mt={5} mr={3} textAlign={'right'}>30% DISCOUNT ON</Heading>
             <Text mr={2} textAlign={'right'} fontSize={'xl'} >Paracetamol</Text>
             <Flex justifyContent="flex-end">
               <Link as={NextLink} href="/shop" w={'40%'}>
-                <Button mr={2} colorScheme="blackAlpha" borderRadius={'20px'}mt={5}>SHOP NOW</Button>
+                <Button mr={2} bg={'#05abc4'} borderRadius={'20px'}mt={5}>SHOP NOW</Button>
               </Link>
           </Flex>
 
@@ -303,11 +307,11 @@ export default function Home({params}:any) {
 
         {/* float 1 */}
       <Flex position="relative" height={'10vh'}
-      _before={{content: '""',position: "absolute",right: 0, height: "100%",width: "0%",bgColor: ' #ECECEB',
+      _before={{content: '""',position: "absolute",right: 0, height: "100%",width: "0%",bgColor: '#ECECEB',
       transition:'width 0.5s ease-in-out',zIndex: 0}} _hover={{ border:'0.5px solid',_before: { width: "100%"},
         }}>
       <Flex p={2} alignItems={'center'}>
-      <Flex position={'relative'} borderRadius={'50%'} mr={3} p={3} alignItems={'center'} fontSize={'50px'} bg={'#527D53'} color={'white'}>
+      <Flex position={'relative'} borderRadius={'50%'} mr={3} p={3} alignItems={'center'} fontSize={'50px'} bg={'#05abc4'} color={'white'}>
         <TbDentalBroken />
         </Flex>
         <Heading fontFamily={'"Outfit", sans-serif'} fontSize={'2xl'} zIndex={1} >Dental Wellness</Heading>
@@ -322,7 +326,7 @@ export default function Home({params}:any) {
       transition:'width 0.5s ease-in-out',zIndex: 0, }} _hover={{ border:'0.5px solid',_before: { width: "100%", },
         }}>
       <Flex p={2} alignItems={'center'}>
-      <Flex position={'relative'} borderRadius={'50%'} mr={3} p={3} alignItems={'center'} fontSize={'50px'} bg={'#527D53'} color={'white'}>
+      <Flex position={'relative'} borderRadius={'50%'} mr={3} p={3} alignItems={'center'} fontSize={'50px'} bg={'#05abc4'} color={'white'}>
         <FaHandsHoldingChild />
         </Flex>
         <Heading fontFamily={'"Outfit", sans-serif'} fontSize={'2xl'}  zIndex="1">Beauty Care</Heading>
@@ -336,7 +340,7 @@ export default function Home({params}:any) {
         transition:'width 0.5s ease-in-out',zIndex: 0, }} _hover={{ border:'0.5px solid',_before: { width: "100%", },
           }}>
       <Flex p={2} alignItems={'center'}>
-      <Flex position={'relative'} borderRadius={'50%'} mr={3} p={3} alignItems={'center'} fontSize={'50px'} bg={'#527D53'} color={'white'}>
+      <Flex position={'relative'} borderRadius={'50%'} mr={3} p={3} alignItems={'center'} fontSize={'50px'} bg={'#05abc4'} color={'white'}>
       <MdOutlineHealthAndSafety />
         </Flex>
         <Heading fontFamily={'"Outfit", sans-serif'} fontSize={'2xl'} zIndex="1" >Health Products</Heading>
@@ -350,7 +354,7 @@ export default function Home({params}:any) {
         transition: 'width 0.5s ease-in-out', zIndex: 0, }}_hover={{border:'0.5px solid',_before: {width: "100%", },
         }} > 
       <Flex p={2} zIndex="1" alignItems={'center'}>
-      <Flex position={'relative'} borderRadius={'50%'} mr={3} p={3} alignItems={'center'} fontSize={'50px'} bg={'#527D53'} color={'white'}>
+      <Flex position={'relative'} borderRadius={'50%'} mr={3} p={3} alignItems={'center'} fontSize={'50px'} bg={'#05abc4'} color={'white'}>
       <FaDumbbell />
         </Flex>
         <Heading fontFamily={'"Outfit", sans-serif'} fontSize={'2xl'}>Wellness Products</Heading>
@@ -396,7 +400,7 @@ export default function Home({params}:any) {
           <Text>
             we need payers to mane the encyclopedia and do not need ot engaege in the particualr sections of tyhe news brinswicj institution, pleas do not resist
           </Text>
-          <IconButton aria-label='direct right' icon={<FaArrowRight/>}  borderRadius={'50%'} fontSize={'1.5em'} bottom={'-40px'} bgColor={'teal'} /> 
+          <IconButton aria-label='direct right' icon={<FaArrowRight/>}  borderRadius={'50%'} fontSize={'1.5em'} bottom={'-40px'} bg={'#05abc4'} color={'white'} /> 
         </Flex>
       </Box>
 
@@ -405,7 +409,7 @@ export default function Home({params}:any) {
           <Text>
         the particualr sections of tyhe news brinswicj institution, please do not resist
           </Text>
-          <IconButton aria-label='direct right' icon={<FaArrowRight/>} borderRadius={'50%'} fontSize={'1.5em'} bottom={'-40px'} bgColor={'teal'} /> 
+          <IconButton aria-label='direct right' icon={<FaArrowRight/>} borderRadius={'50%'} fontSize={'1.5em'} bottom={'-40px'}bg={'#05abc4'} color={'white'} /> 
         </Flex>
       </Box>
 
@@ -413,7 +417,7 @@ export default function Home({params}:any) {
         <Flex>
           <Text>gaege in the particualr sections of tyhe news brinswicj institution, pleas do not resist
           </Text>
-          <IconButton aria-label='direct right' icon={<FaArrowRight/>}  borderRadius={'50%'} fontSize={'1.5em'} bottom={'-40px'} bgColor={'teal'} /> 
+          <IconButton aria-label='direct right' icon={<FaArrowRight/>}  borderRadius={'50%'} fontSize={'1.5em'} bottom={'-40px'} bg={'#05abc4'} color={'white'} /> 
         </Flex>
       </Box>
 
@@ -422,7 +426,7 @@ export default function Home({params}:any) {
           <Text>
         the particualr sections of tyhe news brinswicj institution, pleas do not resist
           </Text>
-          <IconButton aria-label='direct right' icon={<FaArrowRight/>}  borderRadius={'50%'} fontSize={'1.5em'} bottom={'-40px'} bgColor={'teal'} /> 
+          <IconButton aria-label='direct right' icon={<FaArrowRight/>}  borderRadius={'50%'} fontSize={'1.5em'} bottom={'-40px'} bg={'#05abc4'} color={'white'} /> 
         </Flex>
       </Box>
     </Flex>

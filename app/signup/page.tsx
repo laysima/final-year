@@ -14,7 +14,7 @@ const signup = () => {
   return (
     <>
     <Box mb={20}>
-      <Center flexDirection={'column'} p={40} bgImage={"cate1.jpg"} textAlign={'center'} bgSize={'cover'} bgRepeat={'no-repeat'} >
+      <Center flexDirection={'column'} p={40} bgImage={"bgsamps.jpg"} textAlign={'center'} bgSize={'cover'} bgRepeat={'no-repeat'} >
         <Heading fontFamily={'"Outfit", sans-serif'} color={'white'}>Create Account</Heading>
         <Flex alignItems={'center'} textAlign={'center'} mt={3}>
         <Link style={{color:'white', fontSize:'1.5em'}} href="/"> Home </Link>

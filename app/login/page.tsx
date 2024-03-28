@@ -23,7 +23,7 @@ const login = () => {
   return (
     <>
     <Box mb={20}>
-      <Center flexDirection={'column'} p={40} bgImage={"cate1.jpg"} textAlign={'center'} bgSize={'cover'} bgRepeat={'no-repeat'} >
+      <Center flexDirection={'column'} p={40} bgImage={"bgsamps.jpg"} textAlign={'center'} bgSize={'cover'} bgRepeat={'no-repeat'} >
         <Heading fontFamily={'"Outfit", sans-serif'} color={'white'}>Account</Heading>
         <Flex alignItems={'center'} textAlign={'center'} mt={3}>
         <Link style={{color:'white', fontSize:'1.5em'}} href="/"> Home </Link>
@@ -32,7 +32,7 @@ const login = () => {
         </Flex>
       </Center>
 
-      <Center>
+      <Center >
       <Box mt={20} justifyContent={'center'} alignItems={'center'} >
         <Box p={'60px'} borderRadius={'5px'} bg={'gray.100'}>
         <Heading mb={10} textAlign={'center'}  fontFamily={'"Outfit", sans-serif'}>Sign In</Heading>

@@ -34,10 +34,13 @@ export default function page ({
     const { add_to_cart, cart } = useCartStore()
     const [counter, setCounter] = useState(1);
 
+ 
     const buyItNow = () => {
       // setSubtotal((prevSubtotal:number) => Math.max(productPrice, prevSubtotal / 2));
       setCounter(prevCounter => Math.max(1, prevCounter - 1)); // Decrease the sequential number, not going below 1
     };
+
+    
 // 
     // const [isHovered, setIsHovered] = useState(false);
 
@@ -79,7 +82,7 @@ export default function page ({
   return (
     <>
     <Box mb={10}>
-    <Center flexDirection={'column'} p={40} bgImage={"cate1.jpg"} textAlign={'center'} bgSize={'cover'} bgRepeat={'no-repeat'} >
+    <Center flexDirection={'column'} p={20} bgImage={"bgsamps.jpg"} bgPos={'center'} textAlign={'center'} bgSize={'cover'} bgRepeat={'no-repeat'} >
         <Heading fontFamily={'"PT Sans", sans-serif'} color={'white'}>Shop</Heading>
         <Flex mt={3} alignItems={'center'}>
         <Link fontSize={'1.4em'} color={"white"}  _hover={{color:"teal", transition:'0.2s'}} as={NextLink} className={`link ${pathname === '/' ? 'active' : ''}`}  href="/" >Home </Link>
@@ -99,9 +102,9 @@ export default function page ({
         </Select>
       </Box>
       <SimpleGrid columns={[2, null, 3, 4]} spacing="5"  >
-        {currentItems.map((product:any) => (
-          <Box bg={'#F9F9F8'} _hover={{ shadow: "md", transform: "translateY(-5px)", transition: "all .3s ease" , color:'teal'}} >
-          <Link key={product.id} href={`/shop/${product.id}`} >
+        {currentItems.map((product:any, index:any) => (
+          <Box key={index} as={Link} href={`/shop/${product.id}`} bg={'#F9F9F8'} _hover={{ shadow: "md", transform: "translateY(-5px)", transition: "all .3s ease" , color:'teal'}} >
+      
         <Box alignItems={'center'} justifyContent={'center'} 
             bg={'#F9F9F8'} 
             border={'none'}
@@ -144,10 +147,10 @@ export default function page ({
                     <Text>${product.price}</Text>
                 </Box>   
         </Box>
-        </Link>
+      
         <Box p={'7px'}>
         <Link key={product?.id} href={`/shop/payment/${product?.id}`}>
-        <Button mb={5} borderRadius={'50px'} colorScheme='teal' fontSize={'l'} onClick={buyItNow} size="sm" >ADD TO CART</Button>
+        <Button mb={5} borderRadius={'50px'} bg={'#378ba4'} color={'white'} fontSize={'l'} onClick={()=> {add_to_cart(product.id)}} size="sm" >ADD TO CART</Button>
         </Link>
         </Box>
         </Box>

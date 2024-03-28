@@ -39,7 +39,7 @@ export const Footer = () => {
 
   return (
   <footer style={{width:'100%'}}>
-    <Box p={30} px={'100px'}  bg={'teal'} color={'white'}>
+    <Box p={30} px={'100px'}  bg={'#378ba4'} color={'white'}>
     <Flex gap={30} justifyContent={'space-between'}>
       <Flex direction={'column'} fontSize={'20px'}>
       <Heading fontWeight={900} fontFamily={'"PT Sans", sans-serif'}fontSize='50px'>PharmaInc</Heading>
@@ -123,12 +123,12 @@ export const Footer = () => {
     </Flex>
 
     <Divider mt={'45px'} border={'0.5px solid'} color={'white'} orientation='horizontal' />
-    <Flex height={'3vh'} mt={10}> 
-      <Flex p={5} direction={'column'} justifyContent={'center'} >
+    <Flex height={'3vh'} mt={10} alignItems={'center'} > 
+      <Flex p={5} direction={'column'} justifyContent={'center'}>
         <Text fontFamily={'"PT Sans", sans-serif'} as={'b'}>&copy; 2024 PharmaInc</Text>
       </Flex>
-      <Divider border={'1px solid'}  orientation='vertical' borderColor={'wwhite'} height={'3vh'} />
-      <Text as={'b'} mt={1.3} ml={3}>Design by Laysima</Text>
+      <Divider border={'1px solid'} alignItems={'center'} orientation='vertical' borderColor={'wwhite'} height={'3vh'} />
+      <Text as={'b'} ml={3}>Design by Laysima</Text>
       </Flex>
 
       {showScrollButton && (
