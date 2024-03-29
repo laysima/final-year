@@ -122,7 +122,7 @@ export const Navbar = () => {
                       </UnorderedList>
                     </Box> */}
                   </Box>
-            <Flex gap={7}>
+            <Flex gap={20}>
             <Link fontSize='26px'  _hover={{color:"teal", transition:'0.2s'}} as={NextLink} className={`link ${pathname === '/shop/identifier/payment' ? 'active' : ''}`} href="/shop/identifier/payment"><LiaShoppingBagSolid /></Link>
             <Link fontSize='26px'  _hover={{color:"teal", transition:'0.2s'}} as={NextLink} className={`link ${pathname === '/shop' ? 'active' : ''}`} href="/shop"><BsCart2 /></Link>
             <Link fontSize='26px'  _hover={{color:"teal", transition:'0.2s'}} as={NextLink} className={`link ${pathname === '/login' ? 'active' : ''}`} href="/login"><GoPerson /></Link>

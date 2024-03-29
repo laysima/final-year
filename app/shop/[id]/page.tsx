@@ -63,11 +63,11 @@ const ProductPage = ({params}:any) => {
     <>
     {/*<Text>we are good: {id}</Text*/}
 
-      <Center flexDirection={'column'} p={20} bgImage={"../../../dna2.o.jpg"} textAlign={'center'} bgPos={'center'} bgSize={'cover'} bgRepeat={'no-repeat'} >
+      <Center flexDirection={'column'} p={'100px'} bgImage={"../../../dna2.o.jpg"} textAlign={'center'} bgPos={'center'} bgSize={'cover'} bgRepeat={'no-repeat'} >
         <Heading fontFamily={'"Outfit", sans-serif'} color={'white'}>{product?.name}</Heading>
-        <Flex alignItems={'center'} textAlign={'center'} mt={3}>
+        <Flex alignItems={'center'} textAlign={'center'} >
         {/* <Link as={NextLink} textDecoration={'none'} style={{color:'white', fontSize:'1.5em'}} href="/shop"> All </Link> */}
-        <Link fontSize={'1.5em'} color={"white"}  _hover={{color:"teal", transition:'0.2s'}} as={NextLink} className={`link ${pathname === '/shop' ? 'active' : ''}`}  href="/shop" >All </Link>
+        <Link fontSize={'1.5em'} color={"white"}  _hover={{color:"teal", transition:'0.2s'}} as={NextLink}  href="/shop" >All </Link>
         <FaAngleRight style={{color:'white', fontSize:'1em'}}   />
         <Text color={'white'} fontSize={'1.2em'}>{product?.name}</Text>
         </Flex>
@@ -117,11 +117,10 @@ const ProductPage = ({params}:any) => {
     
             </InputGroup>
             <Flex grow={1}>
-            <Link textDecorationLine={'teal'} _hover={{color:"teal", transition:'0.2s'}} as={NextLink} key={product?.id} href={`/shop/payment/${product?.id}`} passHref>
-          <Button textDecorationLine={'none'} width={'230px'} colorScheme="teal" borderRadius={0} onClick={buyItNow}> 
-            ADD TO CART
-          </Button>
-       </Link>
+            <Button width={'230px'}  p={5} fontSize={'20px'} colorScheme="teal" borderRadius={0} onClick={() => addToWishlist("Product 1")}>
+              ADD TO CART
+            </Button>
+
             </Flex>
 
             <Flex alignItems={'center'} ml={5} >
@@ -138,23 +137,9 @@ const ProductPage = ({params}:any) => {
             />
           </Flex>
           </Flex>
-            {/* <IconButton borderRadius={0} colorScheme='teal'
-            icon={<FiMinus />}
-            aria-label="Decrease quantity"
-            onClick={halveSubtotal}
-          />
-          <Text paddingX="2">{counter}</Text> 
-          <IconButton borderRadius={0} colorScheme='teal'
-            icon={<IoIosAdd />}
-            aria-label="Increase quantity"
-            onClick={doubleSubtotal}
-          />
-           <Box flex="1" p="4" zIndex="docked"> 
-            
-         </Box> */}
      </Flex>
         <Link textDecorationLine={'teal'} _hover={{color:"teal", transition:'0.2s'}} as={NextLink} key={product?.id} href={`/shop/payment/${product?.id}`} passHref>
-          <Button textDecorationLine={'none'} width={'350px'} colorScheme="teal" borderRadius={0} onClick={buyItNow}> 
+          <Button textDecorationLine={'none'} p={5} fontSize={'20px'} width={'350px'} colorScheme="teal" borderRadius={0} onClick={buyItNow}> 
             BUY IT NOW
           </Button>
        </Link>
@@ -173,7 +158,7 @@ const ProductPage = ({params}:any) => {
 
 
 {/* ////////////////////////////////////// Wishlist Section //////////////////////////// */}
-    {/* <Flex position="relative">
+    <Flex position="relative">
 
       {isOpen && (
         <Box
@@ -240,17 +225,20 @@ const ProductPage = ({params}:any) => {
         </Flex>
         <Text mt={"15px"} >Everything is calculated at checkout</Text>
         <Link as={NextLink} key={product?.id} href={`/shop/payment/${product?.id}`} passHref>
-        <Button mt={"15px"}  width={'350px'} colorScheme="teal" borderRadius={0}>
+        <Button mt={"15px"} p={5} fontSize={'20px'} width={'350px'} colorScheme="teal" borderRadius={0}>
           CHECKOUT
         </Button>
         </Link>
-        <Button mt={"15px"} width={'350px'} colorScheme="teal" borderRadius={0} onClick={() => addToWishlist("Product 1")}>
+
+        <Link as={NextLink} key={product?.id} href={`/shop/${id}/cart/`} passHref>
+        <Button mt={"15px"} p={5} fontSize={'20px'} width={'350px'} colorScheme="teal" borderRadius={0}>
             VIEW CART
         </Button>
+        </Link>
       </Box>
     </Box>
       )}
-    </Flex> */}
+    </Flex>
 
     <Flex alignItems={'center'} justifyContent={"space-between"}>
       <Image boxSize={'30px'} src='../../cash.png'></Image>

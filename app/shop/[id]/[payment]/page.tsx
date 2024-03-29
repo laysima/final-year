@@ -5,7 +5,6 @@ import { Box, Text, Grid, GridItem, InputGroup,
 import { FaCreditCard} from "react-icons/fa";
 import { LiaShoppingBagSolid } from "react-icons/lia";
 import { GoDash } from "react-icons/go";
-
 import { GoLock } from "react-icons/go";
 import NextLink from 'next/link'
 import { useState, useEffect } from 'react';
@@ -36,7 +35,7 @@ export default function payment({params}:any)  {
     <>
 <Box mb={3} bg="#E3E7F1">
 <Box>
-<Button bg={"#E3E7F1"} _hover={{ color:"teal",fontWeight:'bold', transition:'0.3s'}} ml={'90px'} fontSize='26px'><Link as={NextLink} href="/shop/identifier/payment"><LiaShoppingBagSolid /></Link></Button>
+<Button bg={"#E3E7F1"} _hover={{ color:"teal",fontWeight:'bold', transition:'0.3s'}} ml={'90px'} fontSize='26px'><Link as={NextLink} href="/shop/id/payment"><LiaShoppingBagSolid /></Link></Button>
 <Divider border={'0.5px solid grey'} orientation='horizontal' />
       <Grid
          // Make the grid take up  the full viewport height
