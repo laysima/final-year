@@ -11,7 +11,8 @@ import {
   Button,
   Divider,
   IconButton,
-  FormControl,
+  Grid,
+  GridItem
 } from "@chakra-ui/react";
 import { FaAngleRight } from "react-icons/fa";
 import { LiaShoppingBagSolid } from "react-icons/lia";
@@ -68,7 +69,7 @@ const cart = ({ params }: any) => {
       </Center>
 
       <Box p={30} px={"100px"}>
-        <Flex>
+        {/* <Flex>
           <Flex grow={1}>
             <Text fontWeight={"bold"}>PRODUCT</Text>
           </Flex>
@@ -80,12 +81,32 @@ const cart = ({ params }: any) => {
           <Flex shrink={0}>
             <Text fontWeight={"bold"}>TOTAL</Text>
           </Flex>
-        </Flex>
+        </Flex> */}
+
+        <Grid templateColumns='repeat(5, 1fr)' gap={2}>
+          <GridItem  colSpan={2} w='100%' fontWeight={"bold"} justifyContent={"center"} alignItems={"center"} >
+          <Flex fontWeight={"bold"}>
+          PRODUCT
+          </Flex>
+          </GridItem>
+
+          <GridItem  colStart={4} w='100%' fontWeight={"bold"}>
+            <Flex fontWeight={"bold"} justify={"right"} align={"right"}>
+            QUANTITY
+            </Flex>
+            </GridItem>
+            
+          <GridItem  colSpan={1} w='100%' fontWeight={"bold"} justifyContent={"center"} alignItems={"center"} >
+          <Flex fontWeight={"bold"} justify={"right"} align={"right"}>
+          TOTAL
+            </Flex>
+          </GridItem>
+        </Grid>
         <Divider border={"1px solid grey.100"} mb={10} />
 
         {cart.map((product: any, index: any) => (
           <Box key={index} mt={10}>
-            <Flex align={"center"} gap={62}>
+            {/* <Flex align={"center"} gap={62}>
               <Flex grow={1} alignItems={"center"}>
                 <Image
                   justifyContent={"center"}
@@ -115,7 +136,47 @@ const cart = ({ params }: any) => {
               <Flex shrink={0} w={"50px"}>
                 <Text>{product.price * product.quantity}</Text>
               </Flex>
-            </Flex>
+            </Flex> */}
+
+            
+            <Grid templateColumns='repeat(5, 1fr)' gap={2}>
+          <GridItem  colSpan={2} w='100%' fontWeight={"bold"} justifyContent={"center"} alignItems={"center"} >
+          <Flex fontWeight={"bold"}>
+          <Flex alignItems={"center"}>
+                <Image
+                  justifyContent={"center"}
+                  src={product.imageUrl}
+                  boxSize={"60px"}
+                />
+                <Text fontWeight={"bold"}>{product.name}</Text>
+              </Flex>
+          </Flex>
+          </GridItem>
+
+          <GridItem  colStart={4} w='100%' fontWeight={"bold"}>
+            <Flex fontWeight={"bold"} justify={"right"} align={"right"}>
+              <Flex align={"center"}>
+                <Text>{product.quantity}</Text>
+                <IconButton
+                  borderRadius={0}
+                  ml={3}
+                  icon={<GoDash />}
+                  aria-label="Decrease quantity"
+                  onClick={() => {
+                    remove_from_cart(product.id);
+                  }}
+                />
+                </Flex>
+              </Flex>
+            </GridItem>
+            
+          <GridItem  colSpan={1} w='100%' fontWeight={"bold"} justifyContent={"center"} alignItems={"center"} >
+          <Flex fontWeight={"bold"} justify={"right"} align={"right"}>
+                <Text>{product.price * product.quantity}</Text>
+              </Flex>
+          </GridItem>
+        </Grid>
+
           </Box>
         ))}
         <Divider border={"1px solid grey.100"} borderColor={""} mt={10} />
@@ -133,6 +194,12 @@ const cart = ({ params }: any) => {
         </Flex>
 
         <Flex justify={"right"} mt={10}>
+            <Link as={NextLink} href={`/shop/payment/${product?.id}`}>
+            <Button p={7} color={"white"} bg={'#0881DE'} fontSize={'l'}>Proceed To Payment</Button>
+            </Link>
+        </Flex>
+
+        <Flex justify={"right"} mt={5}>
             <Link as={NextLink} href="/shop">
             <Button p={7} color={"white"} bg={'#0881DE'} fontSize={'xl'}>Continue Shopping</Button>
             </Link>

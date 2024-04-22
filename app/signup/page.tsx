@@ -1,5 +1,6 @@
 "use client";
-// import Link from 'next/link'
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Text,
   Input,
@@ -27,11 +28,26 @@ import { BsEye, BsEyeSlash } from "react-icons/bs";
 import { useState } from "react";
 import NextLink from "next/link";
 import React from "react";
+import { SignupSchema, SignupType } from "@/schemas";
+import { Controller } from 'react-hook-form';
 
 const signup = () => {
   const [show, setShow] = React.useState(false);
   const handleClick = () => setShow(!show);
 
+
+
+  const {
+    control, 
+    handleSubmit,
+    formState: { errors },
+  } = useForm<SignupType>({
+    resolver:zodResolver(SignupSchema)
+  })
+
+  const onSubmit = (payload:SignupType) => {
+    console.log('payload', payload);
+  }
   return (
     <>
       <Box
@@ -82,34 +98,70 @@ const signup = () => {
             <Flex mt={10} direction={"column"} w={"full"} align={"center"}>
               <Flex direction={"column"} align={"start"} w={"full"}>
                 <FormLabel>Name</FormLabel>
-                <Input
+                <Controller
+                control={control}
+                name='name'
+                render={({ field }) => (
+                  <Input
                   border={"1px solid #EAEFF2"}
-                  placeholder="First Name"
-                  type="email"
+                  bg={'#F0F8FF'}
+                  borderRadius={0}
+                  type="name"
+                  value={field.value}
+                  onChange={(e) => field.onChange(e.target.value)}
                 />
+                )}
+                /> 
+                 <FormHelperText color={errors.name? 'red' : ''}>
+                  { errors.name ? errors.name.message: 'Please Enter Your Required name'}
+                  </FormHelperText>
               </Flex>
             </Flex>
 
             <Flex mt={5} direction={"column"} w={"full"} align={"center"}>
               <Flex direction={"column"} align={"start"} w={"full"}>
                 <FormLabel>Email</FormLabel>
-                <Input
+                <Controller
+                control={control}
+                name='email'
+                render={({ field }) => (
+                  <Input
+                  bg={'#F0F8FF'}
+                  borderRadius={0}
                   border={"1px solid #EAEFF2"}
                   type="email"
-                  placeholder="Please Enter Your email"
+                  value={field.value}
+                  onChange={(e) => field.onChange(e.target.value)}
                 />
-                <FormHelperText>Please Enter Your Email</FormHelperText>
+                )}
+                />
+      
+                 <FormHelperText color={errors.email? 'red' : ''}>
+                  { errors.email ? errors.email.message: 'Please Enter Your Email'}
+                  </FormHelperText>
               </Flex>
             </Flex>
 
             <Flex mt={5} direction={"column"} w={"full"} align={"center"}>
               <Flex direction={"column"} align={"start"} w={"full"}>
                 <FormLabel>Username</FormLabel>
-                <Input
+                <Controller
+                control={control}
+                name='username'
+                render={({ field }) => (
+                  <Input
+                  bg={'#F0F8FF'}
+                  borderRadius={0}
                   border={"1px solid #EAEFF2"}
-                  type="email"
-                  placeholder="Enter your email"
+                  type="username'"
+                  value={field.value}
+                  onChange={(e) => field.onChange(e.target.value)}
                 />
+                )}
+                />
+                 <FormHelperText color={errors.username? 'red' : ''}>
+                  { errors.username ? errors.username.message: 'Please Enter Your username'}
+                  </FormHelperText>
               </Flex>
             </Flex>
 
@@ -117,10 +169,20 @@ const signup = () => {
               <Flex direction={"column"} align={"start"} w={"full"}>
                 <FormLabel>Password</FormLabel>
                 <InputGroup size="md">
-                  <Input
-                    pr="4.5rem"
-                    type={show ? "text" : "password"}
-                    placeholder="Enter password"
+                  <Controller
+                  control={control}
+                  name={"password"}
+                  render={({field}) => (
+                    <Input
+                    bg={'#F0F8FF'}
+                    borderRadius={0}
+                      pr="4.5rem"
+                      type={show ? "text" : "password"}
+                      value={field.value}
+                      onChange={(e) => field.onChange(e.target.value)}
+                    />
+                  )}
+                  
                   />
                   <InputRightElement width="4.5rem">
                     <button
@@ -135,11 +197,15 @@ const signup = () => {
                     </button>
                   </InputRightElement>
                 </InputGroup>
+                <FormHelperText color={errors.password? 'red' : ''}>
+                  { errors.password ? errors.password.message: 'Please Enter Your Password'}
+                  </FormHelperText>
               </Flex>
             </Flex>
 
             <Flex justify={"center"} mt={10}>
               <button
+              onClick={handleSubmit(onSubmit)}
                 style={{
                   background: "#0881DE",
                   padding: "10px",

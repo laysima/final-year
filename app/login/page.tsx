@@ -3,9 +3,6 @@ import {
   Text,
   Input,
   Box,
-  Grid,
-  GridItem,
-  IconButton,
   FormControl,
   FormLabel,
   FormErrorMessage,
@@ -13,13 +10,12 @@ import {
   Button,
   Link,
   Flex,
-  Center,
-  Heading,
-  Divider,
   InputRightElement,
   InputGroup,
   Image,
 } from "@chakra-ui/react";
+import { Controller, useForm } from "react-hook-form";
+import {zodResolver} from '@hookform/resolvers/zod'
 import { FaAngleRight, FaArrowRight } from "react-icons/fa";
 import { BsEye, BsEyeSlash } from "react-icons/bs";
 // import Link from 'next/link'
@@ -27,10 +23,25 @@ import { useState } from "react";
 import NextLink from "next/link";
 
 import React from "react";
+import { LoginSchema, LoginType } from "@/schemas";
 
 const login = () => {
   const [show, setShow] = React.useState(false);
   const handleClick = () => setShow(!show);
+
+  
+  //reat hook forms
+  const {
+    control, 
+    handleSubmit,
+    formState: { errors },
+  } = useForm<LoginType>({
+    resolver:zodResolver(LoginSchema)
+  })
+
+  const onSubmit = (payload:LoginType) => {
+    console.log('payload', payload);
+  }
 
   return (
     <>
@@ -70,12 +81,22 @@ const login = () => {
             <Flex mt={10} direction={"column"} w={"full"} align={"center"}>
               <Flex direction={"column"} align={"start"} w={"full"}>
                 <FormLabel>Username</FormLabel>
-                <Input
-                  border={"1px solid #EAEFF2"}
-                  type="email"
-                  placeholder="Enter your email"
+                <Controller 
+                  control={control}
+                  name={"username"}
+                  render={({ field }) => (
+                    <Input
+                    border={"1px solid #EAEFF2"}
+                    type="email"
+                    placeholder="Enter your email"
+                    value={field.value}
+                    onChange={(e) => field.onChange(e.target.value)}
+                  />
+                  )}
                 />
-                <FormHelperText>Please Enter Your Username</FormHelperText>
+              
+                <FormHelperText color={errors.username? 'red' : ''}>
+                  { errors.username ? errors.username.message: 'Please Enter Your Username'}</FormHelperText>
               </Flex>
             </Flex>
 
@@ -83,10 +104,19 @@ const login = () => {
               <Flex direction={"column"} align={"start"} w={"full"}>
                 <FormLabel>Password</FormLabel>
                 <InputGroup size="md">
-                  <Input
-                    pr="4.5rem"
-                    type={show ? "text" : "password"}
-                    placeholder="Enter password"
+                  <Controller
+                  control={control}
+                  name={"password"}
+                  render={({field}) => (
+                    <Input
+                      pr="4.5rem"
+                      type={show ? "text" : "password"}
+                      placeholder="Enter password"
+                      value={field.value}
+                      onChange={(e) => field.onChange(e.target.value)}
+                    />
+                  )}
+                  
                   />
                   <InputRightElement width="4.5rem">
                     <button
@@ -101,11 +131,15 @@ const login = () => {
                     </button>
                   </InputRightElement>
                 </InputGroup>
+                <FormHelperText color={errors.password? 'red' : ''}>
+                  { errors.password ? errors.password.message: 'Please Enter Your Password'}
+                  </FormHelperText>
               </Flex>
             </Flex>
 
             <Flex justify={"center"} mt={10}>
               <button
+              onClick={handleSubmit(onSubmit)}
                 style={{
                   background: "#0881DE",
                   padding: "10px",

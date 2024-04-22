@@ -6,11 +6,7 @@ import {
   Flex,
   Grid,
   Image,
-  InputRightElement,
   Text,
-  useMultiStyleConfig,
-  ListItem,
-  UnorderedList,
   Icon,
 } from "@chakra-ui/react";
 import { useState, useEffect, ChangeEvent } from "react";
@@ -67,11 +63,10 @@ export const Navbar = () => {
         p={"10px"}
         px={"100px"}
       >
-        <Flex gap={10} grow={1}>
+        <Flex gap={10} grow={1} color={'#0881DE'}>
           <IconButton
             aria-label="direct right"
             icon={<FaTwitter />}
-            color={"teal"}
             padding={5}
             borderRadius={"50%"}
             bgColor={"white"}
@@ -79,7 +74,6 @@ export const Navbar = () => {
           <IconButton
             aria-label="direct right"
             icon={<FaFacebookF />}
-            color={"teal"}
             padding={5}
             borderRadius={"50%"}
             bgColor={"white"}
@@ -87,7 +81,6 @@ export const Navbar = () => {
           <IconButton
             aria-label="direct right"
             icon={<FaInstagram />}
-            color={"teal"}
             padding={5}
             borderRadius={"50%"}
             bgColor={"white"}
@@ -95,7 +88,6 @@ export const Navbar = () => {
           <IconButton
             aria-label="direct right"
             icon={<FaYoutube />}
-            color={"teal"}
             padding={5}
             borderRadius={"50%"}
             bgColor={"white"}
@@ -122,7 +114,14 @@ export const Navbar = () => {
       >
         <Flex alignItems={"center"} px={"100px"}>
           <Flex shrink={0} alignItems={"center"}>
-            <Box
+          <Box width={"170px"} height={"auto"}>
+                <Image
+                  width={"full"}
+                  objectFit={"cover"}
+                  src="pharmainc.svg"
+                ></Image>
+              </Box>
+            {/* <Box
               alignItems={"center"}
               position={"relative"}
               display={"inline-block"}
@@ -191,7 +190,7 @@ export const Navbar = () => {
                   </Box>
                 </Box>
               )}
-            </Box>
+            </Box> */}
           </Flex>
 
           <Flex
@@ -249,16 +248,6 @@ export const Navbar = () => {
             >
               Shop
             </Link>
-
-            <Flex shrink={0} alignItems={"center"}>
-              <Box width={"120px"} height={"auto"}>
-                <Image
-                  width={"full"}
-                  objectFit={"cover"}
-                  src="pharmainc.svg"
-                ></Image>
-              </Box>
-            </Flex>
           </Flex>
 
           <Flex
@@ -300,9 +289,9 @@ export const Navbar = () => {
                 _hover={{ color: "#B8E0F7", transition: "0.2s" }}
                 as={NextLink}
                 className={`link ${
-                  pathname === "/shop/identifier/payment" ? "active" : ""
+                  pathname === "/shop/identifier/cart" ? "active" : ""
                 }`}
-                href="/shop/identifier/payment"
+                href="/shop/identifier/cart"
               >
                 <LiaShoppingBagSolid />
               </Link>
@@ -310,7 +299,7 @@ export const Navbar = () => {
               <Flex key={index} justifyContent={"center"} position={"absolute"} bg={'#0881DE'} top={'-7px'} right={'-7px'} width="22px"
                           height="22px" borderRadius='100%'>
                   <Text color={"white"} p={3} fontSize={'12px'}>
-              {product.quantity}
+                  {`${cart.reduce((sum: number, current: any) => sum + current.quantity, 0)}`}
                   </Text>
               </Flex> ))}
               </Box>

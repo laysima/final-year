@@ -28,10 +28,13 @@ import { IoMdMail } from "react-icons/io";
 import { FaArrowUp } from "react-icons/fa6";
 import NextLink from "next/link";
 import { usePathname } from "next/navigation";
+import { CiChat1 } from "react-icons/ci";
+
 
 export const Footer = () => {
   const pathname = usePathname();
   const [showScrollButton, setShowScrollButton] = useState(false);
+  const [showChatBubble, setShowChatBubble] = useState(false);
 
   useEffect(() => {
     const checkScroll = () => {
@@ -249,6 +252,58 @@ export const Footer = () => {
             Design by Laysima
           </Text>
         </Flex>
+
+
+        {showChatBubble && (
+          <Box
+          color={'black'}
+          fontSize="30px"
+          position="fixed"
+          bottom="100px"
+          right="20px"
+          zIndex="50"
+          h={'70vh'}
+          w={'400px'}
+          borderRadius={'20px'}
+          boxShadow={"1px 1px 8px 5px #EAEFF2, 0 0 10px #EAEFF2"}
+          bg={"white"}
+   
+          >
+           <Flex direction={"column"} p={'20px'} bg={'linear-gradient(115deg, #004ff9, #000000)'} borderRadius={'20px'} >
+              <Text fontSize={'20px'}>
+                Chat With Us
+              </Text>
+
+              <Text fontSize={'45px'} color={"white"} mt={3}>
+                HELLO!! SHAKUR
+              </Text>
+              <Text fontSize={'20px'} color={'#0881DE'} mb={'50px'} >
+                How Can ChatGpt Help You
+              </Text>
+           </Flex>
+
+           <Flex direction={"column"} p={'20px'} mt={'250px'}>
+            <Input borderRadius={'50px'} placeholder="type message here" p={4} fontSize={'20px'} variant={"flushed"} border={'0.5px solid black'}/>
+           </Flex>
+
+
+          </Box>
+        )}
+
+        <IconButton onClick={() => setShowChatBubble(prev => !prev)}
+            aria-label="Scroll To Top "
+            icon={<CiChat1 />}
+            isRound={true}
+            fontSize="30px"
+            position="fixed"
+            bottom="20px"
+            right="20px"
+            zIndex="50"
+            bg="#0881DE"
+            padding={10}
+            borderRadius={"50%"}
+            color="white"
+          />
 
         {showScrollButton && (
           <IconButton

@@ -12,17 +12,17 @@ import {
   Image,
   Flex,
   Box,
-  Tooltip,
+  Input,
   SimpleGrid,
-  Stack,
-  ButtonGroup,
+  InputGroup,
+  InputRightElement,
   Link,
   Icon,
 } from "@chakra-ui/react";
 import { FaRegHeart, FaHeart, FaAngleRight } from "react-icons/fa";
 import { usePathname, useRouter } from "next/navigation";
 import PaginationControls from "@/app/components/PaginationControls";
-import { color } from "framer-motion";
+import { BiSearch, BiFilter } from "react-icons/bi";
 import { useCartStore } from "@/zustand/store";
 
 const initialProducts = require("../datasource.json");
@@ -46,6 +46,14 @@ export default function page({
 
   const { add_to_cart, cart } = useCartStore();
   const [counter, setCounter] = useState(1);
+
+  const [filteredItems, setFilteredItems] = useState(currentItems);
+
+  const handleSearch = ({event}:any) => {
+    const value = event.target.value.toLowerCase();
+    const filtered = currentItems.filter(({product}:any) => product.name.toLowerCase().includes(value));
+    setFilteredItems(filtered);
+};
 
   const AddToCart = (product: any) => {
     add_to_cart({
@@ -133,7 +141,7 @@ export default function page({
       </Box>
 
       <Box ml={"10%"} w={"80%"} p={5} justifyContent={"space-evenly"}>
-        <Box marginBottom="4">
+        <Flex marginBottom="4" align={"center"} gap={3}>
           <Select
             placeholder="Sort by"
             onChange={handleSortChange}
@@ -145,7 +153,23 @@ export default function page({
             <option value="price-asc">Price (Low-High)</option>
             <option value="price-desc">Price (High-Low)</option>
           </Select>
-        </Box>
+
+                <InputGroup width={'250px'}> 
+                        <Input id='input-box'
+                        type='text'
+                        placeholder="search"
+                        onChange={handleSearch}
+                        border='0.5px solid'
+                        borderColor='grey' 
+                        borderRadius={"50px"}
+                        p={5}/>
+                        <InputRightElement> 
+                        <button>
+                        <BiSearch />
+                        </button>
+                        </InputRightElement> 
+                    </InputGroup>
+        </Flex>
         <SimpleGrid columns={[2, null, 3, 4]} spacing="5">
           {currentItems.map((product: any, index: any) => (
             <Box
@@ -215,7 +239,7 @@ export default function page({
                         borderRadius={"50px"}
                         ml={2}
                         fontSize={"sm"}
-                        bg={"teal"}
+                        bg={"red"}
                         icon={<FaHeart />}
                         variant="filled"
                         color={"white"}
@@ -240,7 +264,7 @@ export default function page({
                   _hover={{ color: "teal", transition: "0.2s" }}
                   as={NextLink}
                   key={product?.id}
-                  href={`/shop/payment/${product?.id}`}
+                  href={`/shop/{id}/cart/`}
                   passHref
                 >
                   <Button

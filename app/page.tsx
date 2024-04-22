@@ -1,6 +1,10 @@
 "use client";
+import { useInView } from 'react-intersection-observer';
 import { useState } from "react";
 import NextLink from "next/link";
+import ScrollAnimationBox from '@/app/components/ScrollAnimationBox'
+import { CiChat1 } from "react-icons/ci";
+
 import {
   Box,
   Button,
@@ -13,7 +17,7 @@ import {
   Heading,
   Link,
   Icon,
-  Center,
+  Container,
   IconButton,
 } from "@chakra-ui/react";
 import { PiHandshakeLight } from "react-icons/pi";
@@ -24,6 +28,7 @@ import { FaCheckCircle, FaDumbbell, FaArrowRight } from "react-icons/fa";
 import { FaHandsHoldingChild } from "react-icons/fa6";
 import { TbDentalBroken } from "react-icons/tb";
 import { MdOutlineHealthAndSafety } from "react-icons/md";
+
 import "./globals.css";
 
 /////////////////////// hoooks //////////////////////
@@ -31,8 +36,19 @@ import { Suspense } from "react";
 import { BiX } from "react-icons/bi";
 import { relative } from "path";
 
+
+
+
 export default function Home({ params }: any) {
   const [openedItemId, setOpenedItemId] = useState(null);
+
+
+
+  const ScrollAnimationComponent = () => {
+    const { ref, inView } = useInView({
+      triggerOnce: true,
+      threshold: 0.5, // Customize it based on when you want the animation to start
+    })};
 
   const toggleItem = (itemId: any) => {
     if (openedItemId === itemId) {
@@ -74,8 +90,7 @@ export default function Home({ params }: any) {
   return (
     <>
       <Box>
-        <Box bg={"#F9F9F8"}>
-          <Flex></Flex>
+        <Box bg={"#F9F9F8"} >
           <Flex
             bgImage={"url('./hexagon.jpg')"}
             width={"full"}
@@ -93,16 +108,14 @@ export default function Home({ params }: any) {
               >
                 <Flex>
                   <Box>
-                    <Heading
-                      w={"50%"}
+                    <Heading as="div" className="typewriter-text" maxW="800px"
                       color=""
                       fontFamily='"Outfit", sans-serif'
                       fontSize="5xl"
-                      as="b"
                     >
                       WELCOME TO PHARMANINC: <br />
                     </Heading>
-                    <Text maxW={"50%"} mt={10} color={""} mb={10} fontSize="xl">
+                    <Text maxW={600} mt={10} color={""} mb={10} fontSize="xl">
                       Your Compassionate Ally in Navigating the Path to Optimal
                       Health and Wellness At PharmaInc, we understand that
                       managing health is a personal journey that requires trust,
@@ -147,6 +160,8 @@ export default function Home({ params }: any) {
 
           {/* /////////////////////////////////////// Offers  Grids /////////////////////////////////*/}
           <Box mt={10} mb={"100px"}>
+
+            
             <SimpleGrid
               p={30}
               px={"100px"}
@@ -157,6 +172,8 @@ export default function Home({ params }: any) {
               gap={3}
             >
               {/* grid 1 */}
+
+              
               <GridItem
                 p={2}
                 rowSpan={2}
@@ -192,6 +209,8 @@ export default function Home({ params }: any) {
                   </Link>
                 </Flex>
               </GridItem>
+            
+
 
               {/* grid 2 */}
               <GridItem
@@ -356,46 +375,8 @@ export default function Home({ params }: any) {
                 </Flex>
               </GridItem>
             </SimpleGrid>
+  
           </Box>
-
-          {/* /////////////////////////////////////options buttons ///////////////////////////////////////////// */}
-
-          {/* <Box p={{ base: '50px', md: '30px' }} mt={{ base: 37, md: 30 }} >
-      <Flex direction={{ base: 'column', md: 'row' }} gap={{ base: 5, md: 10 }} justifyContent={'space-evenly'} textColor={'#0C1446'} _hover={{cursor:'pointer'}}>
-      <Flex direction={{ base: 'row', lg: 'row', md: 'row' }} align="center">
-        <Image src='capsule.image.jpeg' width={'70px'} height={'70px'} borderRadius={'50px'} mr={5}  _hover={{transform: 'scale(1.05)', transition: 'transform 0.2s ease-in-out'}} ></Image>
-      <Flex direction={'column'}>
-        <Heading fontFamily={'"Outfit", sans-serif'} fontSize={{ base: 'xl', md: '2xl' }} >Medicines</Heading>
-        <Text>Paracetamol</Text>
-      </Flex>
-      </Flex>
-
-      <Flex direction={{ base: 'row', lg: 'row', md: 'row' }} align="center">
-        <Image src='cerave.webp' width={'70px'} height={'70px'} borderRadius={'50px'} mr={5} _hover={{transform: 'scale(1.05)', transition: 'transform 0.2s ease-in-out'}} ></Image>
-      <Flex direction={'column'}>
-        <Heading fontFamily={'"Outfit", sans-serif'} fontSize={{ base: 'xl', md: '2xl' }} >Beauty Care</Heading>
-        <Text>Beauty care</Text>
-      </Flex>
-      </Flex>
-
-      <Flex direction={{ base: 'row', lg: 'row', md: 'row' }} align="center">
-        <Image objectFit={'cover'}  src='natural.jpg' width={'70px'} height={'70px'} borderRadius={'50px'} mr={5} bgSize={'cover'} _hover={{transform: 'scale(1.05)', transition: 'transform 0.2s ease-in-out'}} ></Image>
-      <Flex direction={'column'}>
-        <Heading fontFamily={'"Outfit", sans-serif'} fontSize={{ base: 'xl', md: '2xl' }} >Health Products</Heading>
-        <Text>Health Products</Text>
-      </Flex>
-      </Flex>
-
-      <Flex direction={{ base: 'row', lg: 'row', md: 'row' }} align="center">
-        <Image src='wellman.jpg' width={'70px'} height={'70px'} borderRadius={'50px'} mr={5} _hover={{transform: 'scale(1.05)', transition: 'transform 0.2s ease-in-out'}} ></Image>
-      <Flex direction={'column'}>
-        <Heading fontFamily={'"Outfit", sans-serif'} fontSize={{ base: 'xl', md: '2xl' }}>Wellness Products</Heading>
-        <Text>Wellman/ Wellwoman</Text>
-      </Flex>
-      </Flex>
-
-      </Flex>
-    </Box> */}
         </Box>
 
         {/*////////////////////////////////// Categories ////////////////////////////////// */}
@@ -894,7 +875,7 @@ export default function Home({ params }: any) {
         </Flex>
 
         {/* section for newsletter and newsproduction section, based on current information or news that thr websites has gone through  */}
-
+        <ScrollAnimationBox>
         <Text
           textAlign={"center"}
           fontFamily={'"Outfit", sans-serif'}
@@ -904,6 +885,9 @@ export default function Home({ params }: any) {
         >
           Testimonials{" "}
         </Text>
+       </ScrollAnimationBox>
+
+       <ScrollAnimationBox>
         <Text
           textAlign={"center"}
           fontFamily={'"Outfit", sans-serif'}
@@ -912,6 +896,7 @@ export default function Home({ params }: any) {
         >
           Member Feedback And Reviews
         </Text>
+        </ScrollAnimationBox>
 
         <Flex
           p={30}
@@ -921,6 +906,8 @@ export default function Home({ params }: any) {
           justifyContent={"center"}
           id="section 2"
         >
+          
+          <ScrollAnimationBox>
           <Box
             borderRadius={10}
             p={"30px"}
@@ -964,7 +951,9 @@ export default function Home({ params }: any) {
               </Text>
             </Flex>
           </Box>
+          </ScrollAnimationBox>
 
+          <ScrollAnimationBox>
           <Box
             borderRadius={10}
             p={"30px"}
@@ -1008,7 +997,10 @@ export default function Home({ params }: any) {
               </Text>
             </Flex>
           </Box>
+          </ScrollAnimationBox>
 
+          
+          <ScrollAnimationBox>
           <Box
             borderRadius={10}
             p={"30px"}
@@ -1052,8 +1044,27 @@ export default function Home({ params }: any) {
               </Text>
             </Flex>
           </Box>
+          </ScrollAnimationBox>
         </Flex>
+        
+
+
+        <Box p={5}>
+      <ScrollAnimationBox>
+        <Text fontSize="2xl" p={5} bg="blue.500" color="white" textAlign="center">
+          This content slides in from the bottom!
+        </Text>
+      </ScrollAnimationBox>
+      <ScrollAnimationBox>
+        <Text fontSize="2xl" p={5} bg="green.500" color="white" textAlign="center">
+          More sliding content!
+        </Text>
+      </ScrollAnimationBox>
+    </Box>
+
+
       </Box>
+
     </>
   );
 }
