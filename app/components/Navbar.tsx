@@ -10,7 +10,7 @@ import {
   Icon,
 } from "@chakra-ui/react";
 import { useState, useEffect, ChangeEvent } from "react";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import {
   FaTwitter,
   FaFacebookF,
@@ -26,17 +26,48 @@ import { MdOutlineAccountCircle } from "react-icons/md";
 import { GoPerson } from "react-icons/go";
 import { AiOutlineMenu } from "react-icons/ai";
 import { LiaShoppingBagSolid } from "react-icons/lia";
-import { BiSearch, BiFilter } from "react-icons/bi";
+import { BiSearch, BiFilter, BiLogOut } from "react-icons/bi";
 import { Button, Input, InputGroup, Stack } from "@chakra-ui/react";
 import Home from "../page";
+import { deleteCookie, getCookie } from "cookies-next";
+import { redirect } from "next/navigation";
 
 import { useCartStore } from "@/zustand/store";
 import cart from '../shop/[id]/cart/page';
 
 export const Navbar = () => {
- 
+  const router = useRouter();
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
+
+  // TODO: get type from response
+  const [user, setUser] = useState<any>(null);
+
+  const getUserCookie = async () => {
+    const cookie = getCookie('user')
+    console.log("Cookie value:", cookie);  // Debug log
+  
+    if (cookie) {
+      const user = JSON.parse(cookie)
+      setUser(user)
+      console.log("User set:", user);  // Debug log
+    }
+  }
+  
+  useEffect(() => {
+    const fetchUserCookie = async () => {
+      await getUserCookie();
+    };
+    
+    fetchUserCookie();
+  }, [])
+
+  const handleLogout = async () => {
+    deleteCookie("token");
+    deleteCookie("user");
+    router.replace("/login");
+    window.location.reload(); 
+  };
 
   const products = require("../datasource.json");
 
@@ -257,8 +288,8 @@ export const Navbar = () => {
             gap={10}
             mr={50}
           >
-            <Box textAlign={"center"}>
-              {/* <InputGroup>
+            {/* <Box textAlign={"center"}>
+              <InputGroup>
                         <InputRightElement> 
                         <Button>
                         <BiSearch style={{marginTop:"8px", padding:"2px", fontSize:'25px', marginRight:"10px"}} />
@@ -271,17 +302,17 @@ export const Navbar = () => {
                         borderRadius={"20px"}
                         width={'300px'}
                         p={7}/>
-                    </InputGroup> */}
+                    </InputGroup>
 
-              {/* <Box position={'absolute'} textColor={'black'} borderTop={'1px solid white'} p={'5px'} bg={'white'} width={'300px'} mt={3} borderRadius={'5px'} shadow= "2px 2px 4px #000000" className='result-box'>
+              <Box position={'absolute'} textColor={'black'} borderTop={'1px solid white'} p={'5px'} bg={'white'} width={'300px'} mt={3} borderRadius={'5px'} shadow= "2px 2px 4px #000000" className='result-box'>
                       <UnorderedList listStyleType='none' cursor='pointer' textAlign='left'>
                         <ListItem _hover={{background:'teal', transition:'0.5s'}} p={10}>Javascript</ListItem>
                         <ListItem _hover={{background:'teal', transition:'0.5s'}} p={10}>web dev</ListItem>
                         <ListItem _hover={{background:'teal', transition:'0.5s'}} p={10}>web dev</ListItem>
                         <ListItem _hover={{background:'teal', transition:'0.5s'}} p={10}>web dev</ListItem>
                       </UnorderedList>
-                    </Box> */}
-            </Box>
+                    </Box>
+            </Box> */}
             <Flex gap={20} align={"center"}>
               <Box position={"relative"}>
               <Link
@@ -312,18 +343,43 @@ export const Navbar = () => {
               >
                 <BsCart2 />
               </Link>
-              <Link
+              <Button
                 fontSize="26px"
                 _hover={{ color: "#B8E0F7", transition: "0.2s" }}
-                as={NextLink}
-                className={`link ${pathname === "/login" ? "active" : ""}`}
-                href="/login"
+                onClick={() => {
+                  if (user) {
+                    router.replace("/")
+                    return
+                  }
+
+                  router.replace("/login")
+                }}
+
+                // as={NextLink}
+                // className={`link ${pathname === "/login" ? "active" : ""}`}
+                // href="/login"
               >
-                <Flex align={"center"}  bg={'#0881DE'} p={'5px '} borderRadius={5}>
+                <Flex align={"center"} bg={'#0881DE'} p={'5px '} borderRadius={5}>
                 <Icon as={GoPerson} color={"white"} fontSize={'17px'} />
-                <Text color={"white"} fontWeight={500} ml={2} fontSize={'17px'}>Login</Text>
+                <Text color={"white"} fontWeight={500} ml={2} fontSize={'17px'}>
+                  {user ? user?.username : "Login"}
+                </Text>
                 </Flex>
-              </Link>
+              </Button>
+              {user && (
+                <Button
+                fontSize="26px"
+                colorScheme='red' 
+                onClick={handleLogout}
+              >
+                <Flex align={"center"} bg={'crimson'} p={'5px '} borderRadius={5}>
+                  <Icon as={BiLogOut} color={"#fff"} fontSize={'17px'} />
+                  <Text color={"#fff"} fontWeight={500} ml={2} fontSize={'17px'}>
+                    Log out
+                  </Text>
+                </Flex>
+              </Button>
+              )}
             </Flex>
           </Flex>
         </Flex>

@@ -13,21 +13,28 @@ import {
   InputRightElement,
   InputGroup,
   Image,
+  useToast,
 } from "@chakra-ui/react";
 import { Controller, useForm } from "react-hook-form";
 import {zodResolver} from '@hookform/resolvers/zod'
 import { FaAngleRight, FaArrowRight } from "react-icons/fa";
 import { BsEye, BsEyeSlash } from "react-icons/bs";
 // import Link from 'next/link'
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import NextLink from "next/link";
 
 import React from "react";
 import { LoginSchema, LoginType } from "@/schemas";
+import { LoginUser } from "@/api";
+import { useRouter } from "next/navigation";
 
 const login = () => {
-  const [show, setShow] = React.useState(false);
+  const [show, setShow] = useState(false);
   const handleClick = () => setShow(!show);
+  const toast = useToast()
+  const router = useRouter();
+
+  const [loading, setLoading] = useState(false);
 
   
   //reat hook forms
@@ -39,8 +46,27 @@ const login = () => {
     resolver:zodResolver(LoginSchema)
   })
 
-  const onSubmit = (payload:LoginType) => {
-    console.log('payload', payload);
+  const onSubmit = async (payload:LoginType) => {
+    setLoading(true)
+
+    try {
+     await LoginUser(payload).then(() => {
+      router.push('/')
+     })
+     toast({
+      title: 'Success',
+      status: 'success',
+      isClosable: true,
+    })
+    setLoading(false)
+    } 
+    catch (e:any) {
+      toast({
+        title: e.message,
+        status: 'error',
+        isClosable: true,
+      })
+    }
   }
 
   return (
@@ -148,8 +174,7 @@ const login = () => {
                   width: "60%",
                 }}
               >
-                {" "}
-                Sign In
+                {loading? 'Signing In.....':  "Sign In"}
               </button>
             </Flex>
 

@@ -1,6 +1,6 @@
 "use client";
 import { useInView } from 'react-intersection-observer';
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import NextLink from "next/link";
 import ScrollAnimationBox from '@/app/components/ScrollAnimationBox'
 import { CiChat1 } from "react-icons/ci";
@@ -35,15 +35,14 @@ import "./globals.css";
 import { Suspense } from "react";
 import { BiX } from "react-icons/bi";
 import { relative } from "path";
+import { getCookie } from 'cookies-next';
 
 
 
 
 export default function Home({ params }: any) {
   const [openedItemId, setOpenedItemId] = useState(null);
-
-
-
+  
   const ScrollAnimationComponent = () => {
     const { ref, inView } = useInView({
       triggerOnce: true,
