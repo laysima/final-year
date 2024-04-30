@@ -21,6 +21,7 @@ import {
   InputRightElement,
   InputGroup,
   Image,
+  useToast
 } from "@chakra-ui/react";
 import { FaAngleRight, FaArrowRight } from "react-icons/fa";
 import { BsEye, BsEyeSlash } from "react-icons/bs";
@@ -30,12 +31,17 @@ import NextLink from "next/link";
 import React from "react";
 import { SignupSchema, SignupType } from "@/schemas";
 import { Controller } from 'react-hook-form';
+import { SignInUser } from "@/api";
+import { useRouter } from "next/navigation";
 
 const signup = () => {
   const [show, setShow] = React.useState(false);
+  const [loading, setLoading] = React.useState(false);
   const handleClick = () => setShow(!show);
+  const router = useRouter()
+  const toast = useToast()
 
-
+  
 
   const {
     control, 
@@ -45,9 +51,28 @@ const signup = () => {
     resolver:zodResolver(SignupSchema)
   })
 
-  const onSubmit = (payload:SignupType) => {
-    console.log('payload', payload);
+  const onSubmit = async (payload:SignupType) => {
+    setLoading(true)
+    try {
+      await SignInUser(payload).then(() => {
+       router.push('/login')
+      })
+      toast({
+       title: 'Success',
+       status: 'success',
+       isClosable: true,
+     })
+     setLoading(false)
+     } 
+     catch (e:any) {
+       toast({
+         title: e.message,
+         status: 'error',
+         isClosable: true,
+       })
+     }
   }
+
   return (
     <>
       <Box
@@ -103,8 +128,7 @@ const signup = () => {
                 name='name'
                 render={({ field }) => (
                   <Input
-                  border={"1px solid #EAEFF2"}
-                  bg={'#F0F8FF'}
+                  variant={'flushed'} bg={'#F0F8FF'}
                   borderRadius={0}
                   type="name"
                   value={field.value}
@@ -126,9 +150,8 @@ const signup = () => {
                 name='email'
                 render={({ field }) => (
                   <Input
-                  bg={'#F0F8FF'}
+                  variant={'flushed'} bg={'#F0F8FF'}
                   borderRadius={0}
-                  border={"1px solid #EAEFF2"}
                   type="email"
                   value={field.value}
                   onChange={(e) => field.onChange(e.target.value)}
@@ -150,9 +173,8 @@ const signup = () => {
                 name='username'
                 render={({ field }) => (
                   <Input
-                  bg={'#F0F8FF'}
+                  variant={'flushed'} bg={'#F0F8FF'}
                   borderRadius={0}
-                  border={"1px solid #EAEFF2"}
                   type="username'"
                   value={field.value}
                   onChange={(e) => field.onChange(e.target.value)}
@@ -174,7 +196,7 @@ const signup = () => {
                   name={"password"}
                   render={({field}) => (
                     <Input
-                    bg={'#F0F8FF'}
+                    variant={'flushed'} bg={'#F0F8FF'}
                     borderRadius={0}
                       pr="4.5rem"
                       type={show ? "text" : "password"}
@@ -215,7 +237,7 @@ const signup = () => {
                   fontWeight: "bold",
                 }}
               >
-                CREATE
+                {loading? 'Signing Up.....':  "Sign Up"}
               </button>
             </Flex>
           </FormControl>

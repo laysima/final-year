@@ -1,15 +1,15 @@
 "use client";
-import { ChakraProvider, chakra } from "@chakra-ui/react";
+import { Box, ChakraProvider, chakra } from "@chakra-ui/react";
 import { CacheProvider } from "@chakra-ui/next-js";
 import { Flex } from "@chakra-ui/react";
 import "./globals.css";
 import { Inter } from "next/font/google";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from 'react';
 
 //components
 import { Navbar } from "./components/Navbar";
 import { Footer } from "./components/Footer";
-
+import { getCookie } from "cookies-next";
 const inter = Inter({ subsets: ["latin"] });
 
 // export const metadata = {
@@ -18,6 +18,27 @@ const inter = Inter({ subsets: ["latin"] });
 // }
 
 export default function RootLayout({ children }: any) {
+  const [user, setUser] = useState(null)
+
+  const getUserCookie = async () => {
+    const cookie = getCookie('user')
+    console.log("Cookie value:", cookie);  // Debug log
+  
+    if (cookie) {
+      const user = JSON.parse(cookie)
+      setUser(user)
+      console.log("User set:", user);  // Debug log
+    }
+  }
+
+  useEffect(() => {
+    const fetchUserCookie = async () => {
+      await getUserCookie();
+    };
+    
+    fetchUserCookie();
+  }, [])
+
   return (
     <html lang="en">
       <head>
@@ -29,14 +50,14 @@ export default function RootLayout({ children }: any) {
         ></link>
       </head>
 
-      <body className={inter.className}>
-        <Navbar />
+      <body>
         <CacheProvider>
           <ChakraProvider>
-            <main>{children}</main>
+          <Navbar />
+            <Box minH={'100dvh'}>{children}</Box>
+            <Footer />
           </ChakraProvider>
         </CacheProvider>
-        <Footer />
       </body>
     </html>
   );

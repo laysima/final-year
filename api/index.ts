@@ -1,6 +1,6 @@
 import axios from "axios";
 import { setCookie, getCookie } from "cookies-next";
-import { LoginType } from '@/schemas';
+import { LoginType, SignupType } from '@/schemas';
 
 
 const client =  axios.create ({
@@ -11,6 +11,18 @@ export const LoginUser = async ({ username, password }:LoginType) => {
     const URL = '/v1/user/login';
     try {
         const response = await client.post(URL, { username, password}) 
+        const  { data } = response.data;
+        return data
+    } catch (e:any) {
+        throw new Error(e.response.data.error.message)
+    }
+
+}
+
+export const SignInUser = async ({ name, email, username, password }:SignupType) => {
+    const URL = '/v1/user/register';
+    try {
+        const response = await client.post(URL, { name, email, username, password}) 
         const  { data } = response.data;
         setCookie('token', data.token)
         setCookie('user', JSON.stringify(data))

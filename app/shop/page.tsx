@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import NextLink from "next/link";
 import { useState } from "react";
 import {
@@ -18,6 +18,8 @@ import {
   InputRightElement,
   Link,
   Icon,
+  HStack,
+  filter,
 } from "@chakra-ui/react";
 import { FaRegHeart, FaHeart, FaAngleRight } from "react-icons/fa";
 import { usePathname, useRouter } from "next/navigation";
@@ -49,11 +51,18 @@ export default function page({
 
   const [filteredItems, setFilteredItems] = useState(currentItems);
 
-  const handleSearch = ({event}:any) => {
-    const value = event.target.value.toLowerCase();
-    const filtered = currentItems.filter(({product}:any) => product.name.toLowerCase().includes(value));
+  const [query, setQuery] = useState('')
+
+  const handleSearch =  () => {
+    // console.log(JSON.stringify(event));
+    const filtered = currentItems.filter((item:any) => item.name.toLowerCase().includes(query))
+    console.log(filtered)
     setFilteredItems(filtered);
-};
+  };
+
+  useEffect(() => {
+    handleSearch()
+  },[query])
 
   const AddToCart = (product: any) => {
     add_to_cart({
@@ -101,7 +110,7 @@ export default function page({
         break;
     }
 
-    setProducts(sortedProducts);
+    setFilteredItems(sortedProducts);
   };
 
   return (
@@ -154,28 +163,31 @@ export default function page({
             <option value="price-desc">Price (High-Low)</option>
           </Select>
 
-                <InputGroup width={'250px'}> 
-                        <Input id='input-box'
-                        type='text'
-                        placeholder="search"
-                        onChange={handleSearch}
-                        border='0.5px solid'
-                        borderColor='grey' 
-                        borderRadius={"50px"}
-                        p={5}/>
-                        <InputRightElement> 
-                        <button>
-                        <BiSearch />
-                        </button>
-                        </InputRightElement> 
-                    </InputGroup>
+          <InputGroup width={"250px"}>
+            <Input
+              id="input-box"
+              type="text"
+              placeholder="search"
+              onChange={(e) => {
+                setQuery(e.target.value)
+              }}
+              border="0.5px solid"
+              borderColor="grey"
+              borderRadius={"50px"}
+              p={5}
+            />
+            <InputRightElement>
+              <button>
+                <BiSearch />
+              </button>
+            </InputRightElement>
+          </InputGroup>
         </Flex>
-        <SimpleGrid columns={[2, null, 3, 4]} spacing="5">
-          {currentItems.map((product: any, index: any) => (
+        {/* {JSON.stringify(filteredItems)} */}
+        <SimpleGrid columns={{base:1, md:2, xl:4}} gap={10}>
+          {filteredItems.map((product: any, index: any) => (
             <Box
               key={index}
-              as={Link}
-              href={`/shop/${product.id}`}
               bg={"#F9F9F8"}
               _hover={{
                 shadow: "md",
@@ -258,27 +270,25 @@ export default function page({
                 </Box>
               </Box>
 
-              <Box p={"7px"}>
-                <Link
-                  textDecorationLine={"teal"}
-                  _hover={{ color: "teal", transition: "0.2s" }}
-                  as={NextLink}
-                  key={product?.id}
-                  href={`/shop/{id}/cart/`}
-                  passHref
+              <HStack p={"7px"}>
+                <Button
+                  size={"sm"}
+                  as={Link}
+                  href={`/shop/${product.id}`}
                 >
-                  <Button
-                    textDecorationLine={"none"}
-                    p={5}
-                    fontSize={"15px"}
-                    color={"white"}
-                    bg={"#378ba4"}
-                    onClick={() =>AddToCart(product)}
-                  >
-                    Add To Cart
-                  </Button>
-                </Link>
-              </Box>
+                  Info
+                </Button>
+                <Button
+                  size={"sm"}
+                  colorScheme="blue"
+                  onClick={() => AddToCart(product)}
+                  isDisabled={cart.some((e: any) => e.id === product.id)}
+                >
+                  {cart.some((e: any) => e.id === product.id)
+                    ? "Added"
+                    : "Add To Cart"}
+                </Button>
+              </HStack>
             </Box>
           ))}
         </SimpleGrid>

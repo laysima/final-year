@@ -17,6 +17,8 @@ import {
   Divider,
   IconButton,
   FormControl,
+  SimpleGrid,
+  Container,
 } from "@chakra-ui/react";
 import { FaCreditCard } from "react-icons/fa";
 import { LiaShoppingBagSolid } from "react-icons/lia";
@@ -44,29 +46,26 @@ export default function payment({ params }: any) {
 
   return (
     <>
-      <Box mb={3} bg="#E3E7F1">
-        <Box>
+      <Box bg="#E3E7F1">
+      <Container maxW={1200}>
           <Button
-            bg={"#E3E7F1"}
             _hover={{ color: "teal", fontWeight: "bold", transition: "0.3s" }}
-            ml={"90px"}
             fontSize="26px"
           >
-            <Link as={NextLink} href="/shop/id/payment">
+            <Link as={NextLink} href="/shop/">
               <LiaShoppingBagSolid />
             </Link>
           </Button>
+        </Container>
           <Divider border={"0.5px solid grey"} orientation="horizontal" />
-          <Grid
-            // Make the grid take up  the full viewport height
-            templateColumns="repeat(2, 1fr)" // Divide into two equal columns
+
+          <Container maxW={1200}>
+          <SimpleGrid columns={{base:1, md:2, xl:2}} 
           >
             <GridItem
-              w="80%"
               bg="#E3E7F1"
               justifyContent={"center"}
               p={5}
-              ml={"90px"}
             >
               <Box alignItems="start" gap={5}>
                 <Flex>
@@ -204,8 +203,7 @@ export default function payment({ params }: any) {
               <Text mt={3}>All rights reserved dt-pharmify</Text>
             </GridItem>
 
-            {/* ////////////////////////////////////// Right Section /////////////////////////////////////  */}
-            <GridItem w="100%" p={5} bg={"white"}>
+            <GridItem  p={5} bg={"white"}>
               {/* <Button onClick={() => {add_to_cart()}}>Add to cart</Button> */}
               <Button
                 onClick={() => {
@@ -218,6 +216,7 @@ export default function payment({ params }: any) {
               {cart.map((product: any, index: any) => (
                 <Box key={index} alignItems={"center"} mb={5}>
                   <Flex>
+                  <SimpleGrid columns={{base:1}} gap={5}>
                     <Flex alignItems={"center"} flexGrow={1}>
                       <Box
                         position="relative"
@@ -232,7 +231,7 @@ export default function payment({ params }: any) {
                           src={product.imageUrl}
                           boxSize={"60px"}
                         />
-                        {/* Number Badge */}
+                 
 
                         <Box
                           position="absolute"
@@ -256,6 +255,7 @@ export default function payment({ params }: any) {
                         {product?.name}
                       </Text>
                     </Flex>
+                    <Flex alignItems={"center"}>
                     <Text fontWeight={"bold"} flexShrink={0}>
                       {product?.price}
                     </Text>
@@ -268,6 +268,8 @@ export default function payment({ params }: any) {
                         remove_from_cart(product.id);
                       }}
                     />
+                    </Flex>
+                    </SimpleGrid>
                   </Flex>
 
                   <Flex mt={4}>
@@ -280,11 +282,6 @@ export default function payment({ params }: any) {
                   </Flex>
                 </Box>
               ))}
-
-              {/* <Flex mt={4} >
-            <Text fontWeight={'bold'} flexGrow={1}>Subtotal</Text>
-            <Text fontSize={'12px'} flexShrink={0}>${cart.reduce(function (sum: any, current: any) { return (parseFloat(sum) + parseFloat(current.price * current.quantity)).toFixed(2) }, 0)}</Text>
-          </Flex> */}
 
               <Flex mt={4}>
                 <Text fontWeight={"bold"} flexGrow={1}>
@@ -301,8 +298,9 @@ export default function payment({ params }: any) {
                   .toFixed(2)}`}</Text>
               </Flex>
             </GridItem>
-          </Grid>
-        </Box>
+
+          </SimpleGrid>
+          </Container>
       </Box>
     </>
   );

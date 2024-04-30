@@ -27,15 +27,21 @@ import React from "react";
 import { LoginSchema, LoginType } from "@/schemas";
 import { LoginUser } from "@/api";
 import { useRouter } from "next/navigation";
+import { getCookie, setCookie } from "cookies-next";
 
 const login = () => {
   const [show, setShow] = useState(false);
   const handleClick = () => setShow(!show);
   const toast = useToast()
   const router = useRouter();
+  const session  = getCookie('session');
 
   const [loading, setLoading] = useState(false);
-
+  useEffect(()=> {
+    if (session) {
+      router.replace('/')
+    }
+  },[]) 
   
   //reat hook forms
   const {
@@ -50,9 +56,11 @@ const login = () => {
     setLoading(true)
 
     try {
-     await LoginUser(payload).then(() => {
-      router.push('/')
-     })
+    const data = await LoginUser(payload)
+    if (data) {
+      setCookie('session', JSON.stringify(data))
+      router.replace('/')
+    }
      toast({
       title: 'Success',
       status: 'success',
