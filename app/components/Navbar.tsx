@@ -153,7 +153,7 @@ export const Navbar = () => {
                   icon={<MdOutlineMenu />}
                   variant="outline"
                 />
-                <MenuList>
+                <MenuList borderRadius={0}>
                   <MenuItem >
                   <Link _hover={{background:"teal", transition:'0.5s'}} as={NextLink} href="/" p={2}>Home</Link>
                   </MenuItem>
@@ -161,10 +161,14 @@ export const Navbar = () => {
                   <Link _hover={{background:"teal", transition:'0.5s'}} as={NextLink} href="/about" p={2} >About</Link>
                   </MenuItem>
                   <MenuItem >
-                  <Link _hover={{background:"teal", transition:'0.5s'}} as={NextLink} href="/signup" p={2} >login</Link>
+                  <Link _hover={{background:"teal", transition:'0.5s'}} as={NextLink} href="/signup" p={2} >Login</Link>
                   </MenuItem>
                   <MenuItem >
-                  <Link _hover={{background:"teal", transition:'0.5s'}} as={NextLink} href="/signup" p={2} >signup</Link>                  </MenuItem>
+                  <Link _hover={{background:"teal", transition:'0.5s'}} as={NextLink} href="/signup" p={2} >Signup</Link> 
+                  </MenuItem>
+                  <MenuItem >
+                  <Link _hover={{background:"teal", transition:'0.5s'}} as={NextLink} href="/shop" p={2} >Shop</Link> 
+                  </MenuItem>
                 </MenuList>
               </Menu>
             </Flex>
