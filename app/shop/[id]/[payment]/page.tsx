@@ -27,7 +27,7 @@ import { GoLock } from "react-icons/go";
 import NextLink from "next/link";
 import { useState, useEffect } from "react";
 import { useCartStore } from "@/zustand/store";
-import { BiX } from "react-icons/bi";
+import { BiTrash, BiX } from "react-icons/bi";
 
 export default function payment({ params }: any) {
   const id = params.payment;
@@ -46,27 +46,22 @@ export default function payment({ params }: any) {
 
   return (
     <>
-      <Box bg="#E3E7F1">
-      <Container maxW={1200}>
+      <Box bg="rgb(224,240,247)">
+        <Container maxW={1200}>
           <Button
+            as={Link}
+            href="/shop/"
             _hover={{ color: "teal", fontWeight: "bold", transition: "0.3s" }}
             fontSize="26px"
+            bg={"transparent"}
           >
-            <Link as={NextLink} href="/shop/">
-              <LiaShoppingBagSolid />
-            </Link>
+            <LiaShoppingBagSolid />
           </Button>
         </Container>
-          <Divider border={"0.5px solid grey"} orientation="horizontal" />
 
-          <Container maxW={1200}>
-          <SimpleGrid columns={{base:1, md:2, xl:2}} 
-          >
-            <GridItem
-              bg="#E3E7F1"
-              justifyContent={"center"}
-              p={5}
-            >
+        <Container maxW={1200}>
+          <SimpleGrid columns={{ base: 1, md: 2, xl: 2 }}>
+            <GridItem bg="rgb(224,240,247)" justifyContent={"center"} p={5}>
               <Box alignItems="start" gap={5}>
                 <Flex>
                   <Heading
@@ -122,13 +117,13 @@ export default function payment({ params }: any) {
               <Box
                 mt={2}
                 bg={"#f6f6f6"}
-                border={"0.5px solid grey"}
+                border={"0.5px solid black"}
                 borderRadius={"5px"}
               >
                 <Flex
                   p={5}
                   bg={"white"}
-                  border={"0.5px solid grey"}
+                  border={"0.5px solid black"}
                   borderRadius={"2px"}
                 >
                   <Text fontWeight={"bold"} flexGrow={1}>
@@ -203,27 +198,29 @@ export default function payment({ params }: any) {
               <Text mt={3}>All rights reserved dt-pharmify</Text>
             </GridItem>
 
-            <GridItem  p={5} bg={"white"}>
+            <GridItem w={"full"}  bg={"white"} borderRadius={20}>
               {/* <Button onClick={() => {add_to_cart()}}>Add to cart</Button> */}
+              <Flex p={5}>
               <Button
                 onClick={() => {
                   empty_cart();
                 }}
                 mb={5}
+                colorScheme="red"
               >
                 Empty cart
               </Button>
+              </Flex>
               {cart.map((product: any, index: any) => (
                 <Box key={index} alignItems={"center"} mb={5}>
-                  <Flex>
-                  <SimpleGrid columns={{base:1}} gap={5}>
+                  <Flex p={5}>
                     <Flex alignItems={"center"} flexGrow={1}>
                       <Box
                         position="relative"
                         w="100px"
                         h="100px"
                         p={5}
-                        border={"0.5px solid grey"}
+                        border={"0.5px solid black"}
                         borderRadius={"5px"}
                       >
                         <Image
@@ -231,7 +228,6 @@ export default function payment({ params }: any) {
                           src={product.imageUrl}
                           boxSize={"60px"}
                         />
-                 
 
                         <Box
                           position="absolute"
@@ -251,28 +247,27 @@ export default function payment({ params }: any) {
                         </Box>
                       </Box>
 
-                      <Text fontSize="xl" p={3}>
+                      <Text fontSize="l" p={3}>
                         {product?.name}
                       </Text>
                     </Flex>
                     <Flex alignItems={"center"}>
-                    <Text fontWeight={"bold"} flexShrink={0}>
-                      {product?.price}
-                    </Text>
-                    <IconButton
-                      borderRadius={0}
-                      ml={3}
-                      icon={<GoDash />}
-                      aria-label="Decrease quantity"
-                      onClick={() => {
-                        remove_from_cart(product.id);
-                      }}
-                    />
+                      <Text fontWeight={"bold"} flexShrink={0}>
+                        {product?.price}
+                      </Text>
+                      <IconButton
+                        borderRadius={0}
+                        ml={3}
+                        icon={<BiTrash />}
+                        aria-label="Decrease quantity"
+                        onClick={() => {
+                          remove_from_cart(product.id);
+                        }}
+                      />
                     </Flex>
-                    </SimpleGrid>
                   </Flex>
 
-                  <Flex mt={4}>
+                  <Flex p={5} >
                     <Text fontWeight={"bold"} flexGrow={1}>
                       Subtotal
                     </Text>
@@ -280,10 +275,16 @@ export default function payment({ params }: any) {
                       {product.price * product.quantity}
                     </Text>
                   </Flex>
+                  <Divider mt={3}
+                border={"0.5px solid #EEEEE"}
+                orientation="horizontal"
+              />
                 </Box>
+                
               ))}
+              
 
-              <Flex mt={4}>
+              <Flex p={5}>
                 <Text fontWeight={"bold"} flexGrow={1}>
                   Total
                 </Text>
@@ -298,9 +299,8 @@ export default function payment({ params }: any) {
                   .toFixed(2)}`}</Text>
               </Flex>
             </GridItem>
-
           </SimpleGrid>
-          </Container>
+        </Container>
       </Box>
     </>
   );

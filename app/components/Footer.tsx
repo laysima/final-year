@@ -13,6 +13,9 @@ import {
   IconButton,
   Icon,
   Link,
+  Image,
+  Grid,
+  GridItem
 } from "@chakra-ui/react";
 import {
   FaPhoneAlt,
@@ -24,18 +27,20 @@ import {
   FaYoutube,
   FaTelegramPlane,
 } from "react-icons/fa";
-import { IoMdMail } from "react-icons/io";
+import { IoIosArrowRoundUp, IoMdMail } from "react-icons/io";
 import { FaArrowUp } from "react-icons/fa6";
 import NextLink from "next/link";
 import { usePathname } from "next/navigation";
 import { CiChat1 } from "react-icons/ci";
-import { BiSearch } from "react-icons/bi";
+import { BiSearch, BiSolidUpArrow, BiUpArrow } from "react-icons/bi";
 import { SimpleGrid } from '@chakra-ui/react';
+import { MdCheckCircleOutline } from "react-icons/md";
 
 export const Footer = () => {
   const pathname = usePathname();
   const [showScrollButton, setShowScrollButton] = useState(false);
   const [showChatBubble, setShowChatBubble] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
 
   useEffect(() => {
     const checkScroll = () => {
@@ -60,9 +65,9 @@ export const Footer = () => {
 
   return (
     <footer style={{ width: "100%" }}>
-      <Box p={30} px={"100px"} bg={"#003060"} color={"white"}>
-      <SimpleGrid columns={{base:1, md:2, xl:4}} gap={20}>
-          <Flex direction={"column"} fontSize={"20px"} >
+      <Box p={30} bg={"#003060"} color={"white"}>
+        <SimpleGrid columns={{ base: 1, md: 2, xl: 4 }} gap={20}>
+          <Flex direction={"column"} fontSize={"20px"}>
             <Heading
               fontWeight={900}
               fontFamily={'"PT Sans", sans-serif'}
@@ -71,40 +76,35 @@ export const Footer = () => {
               PharmaInc
             </Heading>
 
-            <Flex
-            direction={"column"}
-            fontSize={"md"}
-            gap={'20px'}
-          >
-            <Flex align={"center"} gap={3}>
-              <Icon as={FaPhoneAlt}/>
-              <Flex >+233 50 924 6726</Flex>
-            </Flex>
-
-            <Flex align={"center"} gap={3}>
-              <Icon as={IoMdMail}/>
-              <Flex>info@example.com</Flex>
-            </Flex>
-
-            <Flex align={"center"} gap={3}>
-              <Icon as={FaGlobe }/>
-              <Flex>wwww.pharmainc.com</Flex>
-            </Flex>
-            
-
-            <Flex gap={5}>
-              <FaTwitter />
-              <Flex>
-                <FaFacebookF />
-              </Flex>
-              <Flex>
-                <FaInstagram />
+            <Flex direction={"column"} fontSize={"md"} gap={"20px"}>
+              <Flex align={"center"} gap={3}>
+                <Icon as={FaPhoneAlt} />
+                <Text>+233 50 924 6726</Text>
               </Flex>
 
-              <Flex>
-                <FaYoutube />
+              <Flex align={"center"} gap={3}>
+                <Icon as={IoMdMail} />
+                <Text>info@example.com</Text>
               </Flex>
-            </Flex>
+
+              <Flex align={"center"} gap={3}>
+                <Icon as={FaGlobe} />
+                <Text>wwww.pharmainc.com</Text>
+              </Flex>
+
+              <Flex gap={5}>
+                <FaTwitter />
+                <Flex>
+                  <FaFacebookF />
+                </Flex>
+                <Flex>
+                  <FaInstagram />
+                </Flex>
+
+                <Flex>
+                  <FaYoutube />
+                </Flex>
+              </Flex>
             </Flex>
           </Flex>
 
@@ -113,7 +113,9 @@ export const Footer = () => {
             fontSize={"20px"}
             justifyContent={"space-around"}
           >
-            <Heading fontWeight={900} fontSize={'30px'}>Company</Heading>
+            <Heading fontWeight={900} fontSize={"30px"}>
+              Company
+            </Heading>
             <Link
               _hover={{ color: "#A45F66", transition: "0.2s" }}
               as={NextLink}
@@ -143,7 +145,9 @@ export const Footer = () => {
             fontSize={"md"}
             justifyContent={"space-around"}
           >
-            <Heading fontWeight={900} fontSize={'30px'}>Help & Support</Heading>
+            <Heading fontWeight={900} fontSize={"30px"}>
+              Help & Support
+            </Heading>
             <Text>Support</Text>
             <Link
               _hover={{ color: "#A45F66", transition: "0.2s" }}
@@ -169,28 +173,32 @@ export const Footer = () => {
           </Flex>
 
           <Flex direction={"column"} fontSize={"md"} gap={"20px"}>
-            <Heading fontWeight={900} fontSize={'30px'}>Newsletter</Heading>
+            <Heading fontWeight={900} fontSize={"30px"}>
+              Newsletter
+            </Heading>
             <Text>
               Subscribe our Newsletter to get the latest news and insights
             </Text>
             <Text>By subscribing, you accept the Privacy Policy</Text>
 
-            <InputGroup width={'250px'}> 
-                        <Input id='input-box'
-                        type='text'
-                        placeholder="search"
-                        border='0.5px solid'
-                        borderColor='grey' 
-                        borderRadius={"50px"}
-                        p={5}/>
-                        <InputRightElement> 
-                        <button>
-                        <BiSearch />
-                        </button>
-                        </InputRightElement> 
-                    </InputGroup>
+            <InputGroup width={"250px"}>
+              <Input
+                id="input-box"
+                type="text"
+                placeholder="search"
+                border="0.5px solid"
+                borderColor="grey"
+                borderRadius={"50px"}
+                p={5}
+              />
+              <InputRightElement>
+                <button>
+                  <BiSearch />
+                </button>
+              </InputRightElement>
+            </InputGroup>
 
-            <Flex >
+            <Flex>
               <FaCalendarAlt
                 color="white"
                 style={{
@@ -234,39 +242,84 @@ export const Footer = () => {
         {showChatBubble && (
           <Box
             color={"black"}
-            fontSize="30px"
             position="fixed"
             bottom="100px"
             right="20px"
             zIndex="50"
             h={"70vh"}
             w={"400px"}
-            boxShadow={"1px 1px 8px 5px #EAEFF2, 0 0 10px #EAEFF2"}
+            border={'0.5px solid grey'}
             bg={"white"}
           >
-            <Flex
-              direction={"column"}
-              p={"20px"}
-              bg={"linear-gradient(115deg, #004ff9, #000000)"}
-            >
-              <Text fontSize={"20px"}>Chat With Us</Text>
-
-              <Text fontSize={"45px"} color={"white"} mt={3}>
-                HELLO!! SHAKUR
+            <Flex direction={"column"} p={5}>
+              <Text fontSize={'lg'} fontStyle={'italic'}>
+                Chat With OpenAi
               </Text>
-              <Text fontSize={"20px"} color={"#0881DE"} mb={"50px"}>
-                How Can ChatGpt Help You
+
+              <Flex align={'baseline'} gap={5}>
+                <Text fontSize={"30px"} color={"#003060"} >
+                  HELLO!!
+                </Text>
+                <Text fontSize={"lg"} mt={3}>
+                  SHAKUR{''}
+                </Text>
+              </Flex>
+              <Divider border={'0.5px solid grey'} />
+            </Flex>
+
+            <Flex justify={"center"} direction={"column"} align={"center"}>
+              <Image src="openai.png" bgSize={"cover"} bgRepeat={'none'} bgPos={"center"} w={'30px'} />
+              <Text fontSize={"lg"} mt={3}>
+                How Can I Help You?
               </Text>
             </Flex>
 
-            <Flex direction={"column"} p={"20px"} mt={"250px"}>
+           
+            <Flex direction={"column"} p={5} mt={'120px'} >
+              <Grid templateColumns='repeat(1, 1fr)' gap={2} pb={5}>
+
+                <GridItem w='100%' border={'0.5px solid grey'} borderRadius={5} as={'button'}
+                onMouseEnter={()=> {setIsHovered(true)}} onMouseLeave={() => {setIsHovered(false)}}>
+                  <Flex align={"center"} justify={"center"}> 
+                  <Flex direction={"column"} p={3} >
+                  <Text fontSize={'sm'} fontWeight={500} >
+                      I have been coughing and vomitting
+                    </Text>
+                    <Text fontSize={'sm'} color={'grey'}>
+                      Can you give me tips
+                    </Text> 
+                  </Flex>
+                    {isHovered && (
+                      <IconButton aria-label="up"
+                      icon={<IoIosArrowRoundUp />}
+                       />
+                    )}
+                  </Flex>
+                </GridItem>
+
+                <GridItem w='100%' border={'0.5px solid grey'} borderRadius={5} as={'button'}>
+                  <Flex direction={"column"} p={3}> 
+                    <Text fontSize={'sm'} fontWeight={500} >
+                      I have been coughing and vomitting
+                    </Text>
+                    <Text fontSize={'sm'} color={'grey'}>
+                      Can you give me tips
+                    </Text> 
+                  </Flex>
+                </GridItem>
+              </Grid>
+              <InputGroup>
               <Input
                 placeholder="type message here"
                 p={4}
-                fontSize={"20px"}
-                variant={"flushed"}
+                borderRadius={5}
+                fontSize={"lg"}
                 border={"0.5px solid black"}
               />
+               <InputRightElement as={'button'} borderRadius={0}>
+                  <FaTelegramPlane color='green.500' />
+                </InputRightElement>
+              </InputGroup>
             </Flex>
           </Box>
         )}
@@ -281,7 +334,7 @@ export const Footer = () => {
           right="20px"
           zIndex="50"
           colorScheme="blue"
-          size={'lg'}
+          size={"lg"}
           borderRadius={"50%"}
           color="white"
         />
@@ -299,7 +352,7 @@ export const Footer = () => {
             bg="black"
             borderRadius={"50%"}
             color="white"
-            size={'lg'}
+            size={"lg"}
           />
         )}
       </Box>

@@ -134,8 +134,8 @@ export const Navbar = () => {
         }}
       >
         <Container maxW={1200}>
-          <Flex alignItems={"center"}>
-            <Flex alignItems={"center"} display={{ base: "none", lg: "flex" }}>
+          <Flex alignItems={"center"} >
+            <Flex alignItems={"center"} display={{ base: "flex", md:'flex', lg: "flex" }} grow={1}>
               <Image
                 width={"auto"}
                 h={"30px"}
@@ -145,7 +145,7 @@ export const Navbar = () => {
               ></Image>
             </Flex>
 
-            <Flex display={{ lg:'none'}}>
+            <Flex display={{ lg:'none'}} shrink={0}>
               <Menu>
                 <MenuButton
                   as={IconButton}

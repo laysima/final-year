@@ -87,11 +87,11 @@ const login = () => {
         objectFit={"cover"}
         bgRepeat={"no-repeat"}
       >
-        <Flex justify={"center"} w={"full"}>
-          <Box w={"300px"} mt={"60px"}>
+        {/* <Flex justify={"center"} w={"full"}>
+          <Box w={"200px"} mt={"60px"}>
             <Image objectFit={"cover"} src="pharmainc.svg"></Image>
           </Box>
-        </Flex>
+        </Flex> */}
 
         <Flex justify={"center"} w={"full"} mt={5} mb={10}>
           <FormControl
@@ -120,9 +120,8 @@ const login = () => {
                   name={"username"}
                   render={({ field }) => (
                     <Input
-                    border={"1px solid #EAEFF2"}
+                    variant={'flushed'} bg={'#F0F8FF'}
                     type="email"
-                    placeholder="Enter your email"
                     value={field.value}
                     onChange={(e) => field.onChange(e.target.value)}
                   />
@@ -143,9 +142,9 @@ const login = () => {
                   name={"password"}
                   render={({field}) => (
                     <Input
+                     variant={'flushed'} bg={'#F0F8FF'}
                       pr="4.5rem"
                       type={show ? "text" : "password"}
-                      placeholder="Enter password"
                       value={field.value}
                       onChange={(e) => field.onChange(e.target.value)}
                     />

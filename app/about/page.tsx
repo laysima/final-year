@@ -34,7 +34,7 @@ const about = () => {
       {/* ///////////////////////////////some other section  part 1/////////////////////////*/}
       <Container maxW={1200}>
         <Flex p={30} gap={10}>
-          <Box position={"relative"}>
+          <Box position={"relative"} display={{base:'none', md:'none', lg:'none'}}>
             <Box width={"600px"}>
               <Image borderRadius={10} src="healthprof.jpg" w={"full"}></Image>
             </Box>
@@ -73,7 +73,7 @@ const about = () => {
             </Box>
           </Box>
 
-          <Flex direction={"column"} maxW={"50%"} display={{base:'none', md:'none', lg:'flex'}}>
+          <Flex direction={"column"} >
             <Box>
               <Text
                 mt={5}

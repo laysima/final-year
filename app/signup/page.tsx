@@ -82,14 +82,15 @@ const signup = () => {
         objectFit={"cover"}
         bgRepeat={"no-repeat"}
       >
-        <Flex justify={"center"} w={"full"}>
+        {/* <Flex justify={"center"} w={"full"}>
           <Box w={"300px"} mt={"40px"}>
             <Image objectFit={"cover"} src="pharmainc.svg"></Image>
           </Box>
-        </Flex>
+        </Flex> */}
 
-        <Flex justify={"center"} w={"full"} mt={3} mb={10}>
+        <Flex justify={"center"} w={"full"} mt={3}>
           <FormControl
+          pb={10}
             w={"30rem"}
             boxShadow={"1px 1px 8px 5px #EAEFF2, 0 0 10px #EAEFF2"}
             p={"62px 28px"}
