@@ -31,7 +31,7 @@ import NextLink from "next/link";
 import React from "react";
 import { SignupSchema, SignupType } from "@/schemas";
 import { Controller } from 'react-hook-form';
-import { SignInUser } from "@/api";
+import { SignInUser } from "@/app/api";
 import { useRouter } from "next/navigation";
 
 const signup = () => {

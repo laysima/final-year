@@ -32,3 +32,14 @@ export const SignInUser = async ({ name, email, username, password }:SignupType)
     }
 
 }
+
+// export const GetProducts = async () => {
+//     const URL = "/v1/products";
+//     try {
+//       const response = await client.get(URL);
+//       const { data } = response.data;
+//       return data;
+//     } catch (e: any) {
+//       throw new Error(e.response.data.error.message);
+//     }
+//   };

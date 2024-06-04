@@ -3,6 +3,7 @@ import { useInView } from "react-intersection-observer";
 import { useEffect, useState } from "react";
 import NextLink from "next/link";
 import ScrollAnimationBox from "@/app/components/ScrollAnimationBox";
+import PageWrap from "./components/PageWrap";
 import { CiChat1 } from "react-icons/ci";
 
 import {
@@ -40,6 +41,7 @@ import { relative } from "path";
 import { getCookie } from "cookies-next";
 import { useRouter } from "next/navigation";
 import login from "./login/page";
+import { motion, useScroll } from "framer-motion";
 
 export default function Home({ params }: any) {
   const [openedItemId, setOpenedItemId] = useState(null);
@@ -51,6 +53,30 @@ export default function Home({ params }: any) {
   //   if (!session)
   //     {router.replace('/login')}
   // }, [])
+
+  const variants = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.3,
+      },
+    },
+  };
+  
+  const images = {
+    hidden: {
+      opacity: 0,
+      y: 40,
+    },
+    show: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 2,
+      },
+    },
+  };
 
   const ScrollAnimationComponent = () => {
     const { ref, inView } = useInView({
@@ -98,6 +124,7 @@ export default function Home({ params }: any) {
 
   return (
     <>
+    <PageWrap>
       <Box>
         <Container maxW={1200} pb={40}>
           <Flex gap={6}>
@@ -839,9 +866,11 @@ export default function Home({ params }: any) {
               _hover={{ cursor: "pointer" }}
               alignItems="center"
             >
-            <SimpleGrid columns={{base:1, md:2, xl:4}} gap={20}>
-              <Box p={6} bg={"#F9F9F8"} border="1px" borderColor="#F9F9F8">
-                <Flex
+            <SimpleGrid columns={{base:1, md:2, xl:4}} gap={20} as={motion.div} variants={variants}
+              initial="hidden"
+              animate="show">
+              <Box p={6} bg={"#F9F9F8"} border="1px" borderColor="#F9F9F8" as={motion.div} variants={images}>
+                <Flex 
                   direction={"column"}
                   alignItems="center"
                   justifyContent="center"
@@ -867,8 +896,8 @@ export default function Home({ params }: any) {
                 </Flex>
               </Box>
 
-              <Box p={6} bg={"#F9F9F8"} border="1px" borderColor="#F9F9F8">
-                <Flex
+              <Box p={6} bg={"#F9F9F8"} border="1px" borderColor="#F9F9F8" as={motion.div} variants={images}>
+                <Flex 
                   direction={"column"}
                   alignItems="center"
                   justifyContent="center"
@@ -894,7 +923,7 @@ export default function Home({ params }: any) {
                 </Flex>
               </Box>
 
-              <Box p={6} bg={"#F9F9F8"} border="1px" borderColor="#F9F9F8">
+              <Box p={6} bg={"#F9F9F8"} border="1px" borderColor="#F9F9F8"  as={motion.div} variants={images}>
                 <Flex
                   direction={"column"}
                   alignItems="center"
@@ -921,7 +950,7 @@ export default function Home({ params }: any) {
                 </Flex>
               </Box>
 
-              <Box p={6} bg={"#F9F9F8"} border="1px" borderColor="#F9F9F8">
+              <Box p={6} bg={"#F9F9F8"} border="1px" borderColor="#F9F9F8" as={motion.div} variants={images}>
                 <Flex
                   direction={"column"}
                   alignItems="center"
@@ -1176,6 +1205,7 @@ export default function Home({ params }: any) {
       </ScrollAnimationBox>
     </Box> */}
       </Box>
+      </PageWrap>
     </>
   );
 }

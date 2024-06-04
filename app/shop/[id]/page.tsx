@@ -17,14 +17,11 @@ import {
   Button,
   useDisclosure,
   Divider,
-  Input,
   Tabs,
   TabList,
   Tab,
   TabPanels,
   TabPanel,
-  InputGroup,
-  InputLeftElement,
   DrawerBody,
   DrawerOverlay,
   DrawerContent,
@@ -34,32 +31,52 @@ import {
   Drawer,
   SimpleGrid,
 } from "@chakra-ui/react";
-import { LiaTimesSolid } from "react-icons/lia";
+
+
+////////////////////////////////////// APIs /////////////////////////////////////////////////
+// import { GetProducts } from "@/app/api";
+import { ProductType } from "@/schemas";
+////////////////////////////////////// APIs /////////////////////////////////////////////////
+
 import { FaAngleRight } from "react-icons/fa";
 import { IoStar } from "react-icons/io5";
 import { IoMdHeartEmpty, IoIosAdd, IoMdClose } from "react-icons/io";
 import { TbTruckDelivery } from "react-icons/tb";
 import { FiMinus } from "react-icons/fi";
-import dynamic from "next/dynamic";
+import { useQuery } from "@tanstack/react-query";
 
-const ProductPage = ({ params }: any) => {
+const ProductDetail = ({ params }: any) => {
   const pathname = usePathname();
   const id = params.id;
-  const products = require("../../datasource.json");
-  const product = products.find((product: any) => product.id === id);
+
+  const { data: product  } = useQuery({queryKey: [`product_${id}`, id], queryFn: async () => {
+    const res = await fetch(`/api/products/${id}`)
+    return res?.ok ? res.json() : []
+    }, ...{enabled:!!id}})
+
+  console.log('id:',  id)
+
+    
+  // const products = require("../../datasource.json");
+
+  // const product = products.find((product: any) => product.id === id);
   //////// settin the states of the description , reviews and Additiinal information section /////////////////
+
+  const [loading, setLoading] = useState<boolean>(false);
+  const [categories, setCategories] = useState<{
+    [key: string]: ProductType[];
+  }>({});
 
   const { add_to_cart } = useCartStore();
 
-  const [counter, setCounter] = useState(1); // This tracks the sequential number
-  // const [subtotal, setSubtotal] = useState(product?.price || 0);
-  // const productPrice = product?.price;  // Assuming initial subtotal is the price of 1 item
+  const [counter, setCounter] = useState(1); 
 
+ 
   const doubleSubtotal = () => {
     setCounter((prevCounter) => prevCounter + 1); // Increase the sequential number
     add_to_cart({
-      id: id,
-      imageUrl: product.imageUrl,
+      id: product.id,
+      imageUrl: product.image,
       name: product.name,
       description: product.description,
       price: product.price,
@@ -72,8 +89,8 @@ const ProductPage = ({ params }: any) => {
   const halveSubtotal = () => {
     setCounter((prevCounter) => Math.max(1, prevCounter - 1));
     add_to_cart({
-      id: id,
-      imageUrl: product.imageUrl,
+      id: product.id,
+      imageUrl: product.image,
       name: product.name,
       description: "",
       price: product.price,
@@ -86,8 +103,8 @@ const ProductPage = ({ params }: any) => {
   const buyItNow = () => {
     console.log(counter);
     add_to_cart({
-      id: id,
-      imageUrl: product.imageUrl,
+      id: product.id,
+      imageUrl: product.image,
       name: product.name,
       description: "",
       price: product.price,
@@ -97,21 +114,24 @@ const ProductPage = ({ params }: any) => {
     });
   };
   //wishlist section
-  const [wishlist, setWishlist] = useState<any>([]);
   // const { isOpen, onToggle, onClose } = useDisclosure();
 
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = useRef<HTMLButtonElement>(null);
 
-  const addToWishlist = (product: any) => {
-    setWishlist([...wishlist, product]);
-    if (!isOpen) onOpen();
-  };
-
   return (
     <>
       {/*<Text>we are good: {id}</Text*/}
+      {/* {Object.keys(categories).map((category) => (  
+        <Box key={category}>                     
+        {categories[category].map((product: ProductType) => ( 
+          <Box></Box>
+             ))}
 
+        </Box>
+
+         ))} */}
+         <Box className="diff">
       <Center
         flexDirection={"column"}
         p={"100px"}
@@ -148,7 +168,7 @@ const ProductPage = ({ params }: any) => {
 
       <Flex p={30} justifyContent={"center"} gap={20} fontSize={"18px"}>
         <SimpleGrid columns={{ base: 1, md: 2, xl: 2 }} gap={20}>
-          <Image src={product?.imageUrl} h={"70vh"}></Image>
+          <Image src={product?.image} h={"70vh"}></Image>
 
           <Flex direction={"column"} gap={4} mt={"50px"}>
             <Text fontSize={"3xl"} fontWeight={500}>
@@ -162,8 +182,7 @@ const ProductPage = ({ params }: any) => {
               <Icon as={IoStar} color={"gold"} fontSize={"20px"} />
             </Flex>
             <Text maxW={"500px"}>
-              Nunc vehicula quam semper odio varius tincidunt estibulum ante
-              ipsum primis in faucibus orci luctus et ultrices posue.
+              {product?.description}
             </Text>
             <Text fontWeight={"bold"}>Availability:</Text>
 
@@ -408,8 +427,10 @@ const ProductPage = ({ params }: any) => {
           </TabPanels>
         </Tabs>
       </Box>
+      </Box>
+      
     </>
   );
 };
 
-export default ProductPage;
+export default ProductDetail;

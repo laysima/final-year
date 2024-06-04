@@ -28,41 +28,29 @@ const PaginationControls: FC<PaginationControlsProps> = ({
       marginTop="4"
       p={10}
     >
-      <button
-        style={{
-          backgroundColor: "#378ba4",
-          padding: "5px",
-          color: "white",
-          borderRadius: "5px",
-          marginBottom: "5px",
-        }}
+      <Button
+      colorScheme="blue"
         disabled={!hasPrevPage}
         onClick={() => {
           router.push(`/shop?page=${Number(page) - 1}&per_page=${per_page}`);
         }}
       >
         Prev page
-      </button>
+      </Button>
 
       <Box>
         {page} / {Math.ceil(10 / Number(per_page))}
       </Box>
 
-      <button
-        style={{
-          backgroundColor: "#378ba4",
-          padding: "5px",
-          color: "white",
-          borderRadius: "5px",
-          marginBottom: "5px",
-        }}
+      <Button
+        colorScheme="blue"
         disabled={!hasNextPage}
         onClick={() => {
           router.push(`/shop?page=${Number(page) + 1}&per_page=${per_page}`);
         }}
       >
         Next page
-      </button>
+      </Button>
     </Stack>
   );
 };

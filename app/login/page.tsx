@@ -25,7 +25,7 @@ import NextLink from "next/link";
 
 import React from "react";
 import { LoginSchema, LoginType } from "@/schemas";
-import { LoginUser } from "@/api";
+import { LoginUser } from "@/app/api";
 import { useRouter } from "next/navigation";
 import { getCookie, setCookie } from "cookies-next";
 
@@ -55,6 +55,9 @@ const login = () => {
   const onSubmit = async (payload:LoginType) => {
     setLoading(true)
 
+
+    console.log('payload', payload)
+    
     try {
     const data = await LoginUser(payload)
     if (data) {

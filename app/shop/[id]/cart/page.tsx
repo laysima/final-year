@@ -195,13 +195,13 @@ const cart = ({ params }: any) => {
 
         <Flex justify={"right"} mt={10}>
             <Link as={NextLink} href={`/shop/payment/${product?.id}`}>
-            <Button p={7} color={"white"} bg={'#0881DE'} fontSize={'l'}>Proceed To Payment</Button>
+            <Button p={7} colorScheme="blue" fontSize={'l'}>Proceed To Payment</Button>
             </Link>
         </Flex>
 
         <Flex justify={"right"} mt={5}>
             <Link as={NextLink} href="/shop">
-            <Button p={7} color={"white"} bg={'#0881DE'} fontSize={'xl'}>Continue Shopping</Button>
+            <Button p={7}  colorScheme="blue" fontSize={'xl'}>Continue Shopping</Button>
             </Link>
         </Flex>
       </Box>

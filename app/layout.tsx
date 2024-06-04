@@ -5,6 +5,11 @@ import { Flex } from "@chakra-ui/react";
 import "./globals.css";
 import { Inter } from "next/font/google";
 import { useState, useEffect, useRef } from 'react';
+import { motion, useScroll, AnimatePresence } from "framer-motion";
+import {
+  QueryClient,
+  QueryClientProvider,
+} from '@tanstack/react-query'
 
 //components
 import { Navbar } from "./components/Navbar";
@@ -20,6 +25,8 @@ const inter = Inter({ subsets: ["latin"] });
 export default function RootLayout({ children }: any) {
   const [user, setUser] = useState(null)
 
+  const queryClient = new QueryClient()
+
   const getUserCookie = async () => {
     const cookie = getCookie('user')
     console.log("Cookie value:", cookie);  // Debug log
@@ -30,6 +37,8 @@ export default function RootLayout({ children }: any) {
       console.log("User set:", user);  // Debug log
     }
   }
+
+  const { scrollYProgress } = useScroll();
 
   useEffect(() => {
     const fetchUserCookie = async () => {
@@ -51,11 +60,22 @@ export default function RootLayout({ children }: any) {
       </head>
 
       <body>
+     
         <CacheProvider>
           <ChakraProvider>
+          <QueryClientProvider client={queryClient}>
           <Navbar />
+          <AnimatePresence>
+          <motion.div
+              initial={{opacity:0, y:30}}
+              animate={{opacity:1, y:0}}
+              exit={{opacity:0, y:15}}
+              transition={{delay:0.25}}>
             <Box minH={'100dvh'}>{children}</Box>
+            </motion.div>
+          </AnimatePresence>
             <Footer />
+            </QueryClientProvider>
           </ChakraProvider>
         </CacheProvider>
       </body>

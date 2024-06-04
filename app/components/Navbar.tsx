@@ -120,7 +120,7 @@ export const Navbar = () => {
               />
             </Flex>
 
-            <Text>No: 58 A, East Madison Street, Baltimore, MD, USA 4508</Text>
+            <Text>P.O.BOX CT6924 CANTONMENTS, ACCRA</Text>
           </HStack>
         </Container>
       </Flex>

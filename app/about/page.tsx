@@ -27,12 +27,17 @@ import { FaHandsHoldingChild } from "react-icons/fa6";
 import { MdOutlineHealthAndSafety } from "react-icons/md";
 import Head from "next/head";
 import page from "../shop/page";
+import { motion, useScroll } from "framer-motion";
+
 
 const about = () => {
+  const { scrollYProgress } = useScroll();
+
   return (
     <>
       {/* ///////////////////////////////some other section  part 1/////////////////////////*/}
-      <Container maxW={1200}>
+      <Container maxW={1200} as={motion.div} initial={{ opacity: 0 }}
+  whileInView={{ opacity: 1 }}>
         <Flex p={30} gap={10}>
           <Box position={"relative"} display={{base:'none', md:'none', lg:'none'}}>
             <Box width={"600px"}>
