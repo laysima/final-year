@@ -1,24 +1,15 @@
 "use client";
-import {
-  Text,
-  Input,
-  Box,
-  FormControl,
-  FormLabel,
-  FormErrorMessage,
-  FormHelperText,
-  Button,
-  Link,
-  Flex,
-  InputRightElement,
-  InputGroup,
-  Image,
-  useToast,
-} from "@chakra-ui/react";
+import {Text, Input, Box, FormControl, FormLabel, FormHelperText, Button, Link, Flex, InputRightElement,InputGroup,
+Image, useToast,} from "@chakra-ui/react";
+
 import { Controller, useForm } from "react-hook-form";
+
 import {zodResolver} from '@hookform/resolvers/zod'
+
 import { FaAngleRight, FaArrowRight } from "react-icons/fa";
+
 import { BsEye, BsEyeSlash } from "react-icons/bs";
+
 // import Link from 'next/link'
 import { useEffect, useState } from "react";
 import NextLink from "next/link";
@@ -44,13 +35,13 @@ const login = () => {
   },[]) 
   
   //reat hook forms
-  const {
-    control, 
-    handleSubmit,
-    formState: { errors },
-  } = useForm<LoginType>({
-    resolver:zodResolver(LoginSchema)
-  })
+
+    const { control, handleSubmit, formState: { errors },} = useForm<LoginType>
+    (
+      {
+        resolver:zodResolver(LoginSchema)
+      }
+    )
 
   const onSubmit = async (payload:LoginType) => {
     setLoading(true)
@@ -124,15 +115,17 @@ const login = () => {
                   render={({ field }) => (
                     <Input
                     variant={'flushed'} bg={'#F0F8FF'}
-                    type="email"
+                    type="text"
+                    p={2}
+                    placeholder="example"
                     value={field.value}
                     onChange={(e) => field.onChange(e.target.value)}
                   />
                   )}
-                />
-              
+                />              
                 <FormHelperText color={errors.username? 'red' : ''}>
-                  { errors.username ? errors.username.message: 'Please Enter Your Username'}</FormHelperText>
+                  { errors.username ? errors.username.message: 'Please Enter Your Username'}
+                </FormHelperText>
               </Flex>
             </Flex>
 
@@ -147,6 +140,8 @@ const login = () => {
                     <Input
                      variant={'flushed'} bg={'#F0F8FF'}
                       pr="4.5rem"
+                      placeholder="*****"
+                      p={2}
                       type={show ? "text" : "password"}
                       value={field.value}
                       onChange={(e) => field.onChange(e.target.value)}

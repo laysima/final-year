@@ -44,10 +44,16 @@ import { IoMdHeartEmpty, IoIosAdd, IoMdClose } from "react-icons/io";
 import { TbTruckDelivery } from "react-icons/tb";
 import { FiMinus } from "react-icons/fi";
 import { useQuery } from "@tanstack/react-query";
+import { getCookie } from "cookies-next";
 
 const ProductDetail = ({ params }: any) => {
   const pathname = usePathname();
   const id = params.id;
+  const cookie = getCookie('token')
+
+  const json = cookie ? JSON.parse(cookie) : undefined
+
+  console.log('COOKIE JSON', json)
 
   const { data: product  } = useQuery({queryKey: [`product_${id}`, id], queryFn: async () => {
     const res = await fetch(`/api/products/${id}`)
@@ -174,7 +180,7 @@ const ProductDetail = ({ params }: any) => {
             <Text fontSize={"3xl"} fontWeight={500}>
               {product?.name}
             </Text>
-            <Text fontWeight={"bold"}>${product?.price}</Text>
+            <Text fontWeight={"bold"}>₵{product?.price}</Text>
             <Flex gap={2}>
               <Icon as={IoStar} color={"gold"} fontSize={"20px"} />
               <Icon as={IoStar} color={"gold"} fontSize={"20px"} />
@@ -188,7 +194,7 @@ const ProductDetail = ({ params }: any) => {
 
             <Flex gap={3}>
               <Text fontWeight={"bold"}>Sub Total:</Text>
-              <Text>${(product?.price * counter).toFixed(2)}</Text>
+              <Text>₵{(product?.price * counter).toFixed(2)}</Text>
             </Flex>
 
             <Flex gap={3}>
@@ -214,7 +220,15 @@ const ProductDetail = ({ params }: any) => {
               <Button
                 ref={btnRef}
                 colorScheme="blue"
-                onClick={onOpen}
+                onClick={() => {
+                  if (!cookie) {
+                    return (
+                      alert('CHALE GO AND SIGN IN')
+                    )
+                  }
+
+                  onOpen()
+                }}
                 width={"230px"}
                 fontSize={"17px"}
                 borderRadius={0}
@@ -249,7 +263,7 @@ const ProductDetail = ({ params }: any) => {
                   <DrawerBody>
                     <Flex p={30} gap={10}>
                       <Image
-                        src={product?.imageUrl}
+                        src={product?.image}
                         w={"30%"}
                         h={"15vh"}
                       ></Image>
@@ -262,7 +276,7 @@ const ProductDetail = ({ params }: any) => {
                           {product?.name}
                         </Heading>
                         <Text fontWeight={"bold"}>
-                          ${(product?.price * counter).toFixed(2)}
+                        ₵{(product?.price * counter).toFixed(2)}
                         </Text>
                         <Flex alignItems={"center"}>
                           <IconButton
@@ -294,7 +308,7 @@ const ProductDetail = ({ params }: any) => {
                         <Flex gap={3} mt={5}>
                           <Text fontWeight={"bold"}>Sub Total:</Text>
                           <Text fontWeight={"bold"}>
-                            ${(product?.price * counter).toFixed(2)}
+                          ₵{(product?.price * counter).toFixed(2)}
                           </Text>
                         </Flex>
                         <Text>Everything is calculated at checkout</Text>
@@ -371,7 +385,7 @@ const ProductDetail = ({ params }: any) => {
               textDecorationLine={"teal"}
               as={NextLink}
               key={product?.id}
-              href={`/shop/payment/${product?.id}`}
+              href={cookie ? `/shop/payment/${product?.id}` : ''}
               passHref
             >
               <Button
@@ -381,7 +395,15 @@ const ProductDetail = ({ params }: any) => {
                 color={"white"}
                 width={"230px"}
                 borderRadius={0}
-                onClick={buyItNow}
+                onClick={() => {
+                  if (!cookie) {
+                    return (
+                      alert('CHALE GO AND SIGN IN')
+                    )
+                  }
+
+                  buyItNow()
+                }}
               >
                 BUY IT NOW
               </Button>

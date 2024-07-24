@@ -22,13 +22,17 @@ import NextLink from "next/link";
 import { useState, useEffect } from "react";
 import { useCartStore } from "@/zustand/store";
 import { BiX } from "react-icons/bi";
+import { useQuery } from "@tanstack/react-query";
 
 const cart = ({ params }: any) => {
-  const id = params.cart;
-  const products = require("../../../datasource.json");
-  const product = products.find((product: any) => product.id === id);
+  const id = params.id;
+  const { data: product  } = useQuery({queryKey: [`product_${id}`, id], queryFn: async () => {
+    const res = await fetch(`/api/products/${id}`)
+    return res?.ok ? res.json() : []
+    }, ...{enabled:!!id}})
 
-  const { cart, empty_cart, remove_from_cart } = useCartStore();
+
+  const { cart, remove_from_cart } = useCartStore();
 
   console.log(cart);
 
@@ -106,39 +110,6 @@ const cart = ({ params }: any) => {
 
         {cart.map((product: any, index: any) => (
           <Box key={index} mt={10}>
-            {/* <Flex align={"center"} gap={62}>
-              <Flex grow={1} alignItems={"center"}>
-                <Image
-                  justifyContent={"center"}
-                  src={product.imageUrl}
-                  boxSize={"60px"}
-                />
-                <Text fontWeight={"bold"}>{product.name}</Text>
-              </Flex>
-
-              <Flex
-                justifyContent={"flex-end"}
-                mr={"140px"}
-                alignItems={"center"}
-              >
-                <Text>{product.quantity}</Text>
-                <IconButton
-                  borderRadius={0}
-                  ml={3}
-                  icon={<GoDash />}
-                  aria-label="Decrease quantity"
-                  onClick={() => {
-                    remove_from_cart(product.id);
-                  }}
-                />
-              </Flex>
-
-              <Flex shrink={0} w={"50px"}>
-                <Text>{product.price * product.quantity}</Text>
-              </Flex>
-            </Flex> */}
-
-            
             <Grid templateColumns='repeat(5, 1fr)' gap={2}>
           <GridItem  colSpan={2} w='100%' fontWeight={"bold"} justifyContent={"center"} alignItems={"center"} >
           <Flex fontWeight={"bold"}>
@@ -148,7 +119,7 @@ const cart = ({ params }: any) => {
                   src={product.imageUrl}
                   boxSize={"60px"}
                 />
-                <Text fontWeight={"bold"}>{product.name}</Text>
+                <Text fontWeight={"bold"} ml={3}>{product.name}</Text>
               </Flex>
           </Flex>
           </GridItem>
@@ -183,7 +154,7 @@ const cart = ({ params }: any) => {
 
         <Flex justify={"right"} mt={10} alignItems={"center"} gap={3}>
         <Text fontWeight={500} fontSize={'xl'}>TOTAL:</Text>
-        <Text fontWeight={500}>{`$${cart
+        <Text fontWeight={500}>{`₵${cart
                   .reduce(
                     (sum: any, current: any) =>
                       sum +

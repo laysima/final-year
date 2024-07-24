@@ -14,7 +14,7 @@ export const SignupSchema = z.object({
 })
 
 export const ProductSchema = z.object({
-    category: z.string({required_error: 'Required'}),
+category: z.string({required_error: 'Required'}),
   name: z.string({required_error:'Required'}),
   weight: z.string(),
   dosage: z.string(),

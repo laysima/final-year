@@ -54,6 +54,10 @@ export default function Home({ params }: any) {
   //     {router.replace('/login')}
   // }, [])
 
+
+  const session = getCookie("session");
+  const nSession = session && JSON.parse(session);
+
   const variants = {
     hidden: { opacity: 0 },
     show: {
@@ -138,11 +142,11 @@ export default function Home({ params }: any) {
                       fontFamily='"Outfit", sans-serif'
                       fontSize="4xl"
                     >
-                      WELCOME TO PHARMANINC: <br />
+                      GREETINGS, {nSession ? nSession?.username : "Login"}👋  <br />
                     </Heading>
                     <Text maxW={400} mt={10} color={""} mb={10} fontSize="lg">
                       Your Compassionate Ally in Navigating the Path to Optimal
-                      Health and Wellness.
+                      Health and Wellness is here.
                     </Text>
                   </Box>
                 </Flex>

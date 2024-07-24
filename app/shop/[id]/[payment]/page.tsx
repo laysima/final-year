@@ -30,9 +30,9 @@ import { useCartStore } from "@/zustand/store";
 import { BiTrash, BiX } from "react-icons/bi";
 
 export default function payment({ params }: any) {
-  const id = params.payment;
-  const products = require("../../../datasource.json");
-  const product = products.find((product: any) => product.id === id);
+  // const id = params.payment;
+  // const products = require("../../../datasource.json");
+  // const product = products.find((product: any) => product.id === id);
 
   const { cart, empty_cart, remove_from_cart } = useCartStore();
 
@@ -255,7 +255,7 @@ export default function payment({ params }: any) {
                     </Flex>
                     <Flex alignItems={"center"}>
                       <Text fontWeight={"bold"} flexShrink={0}>
-                        {product?.price}
+                      ₵{product?.price}
                       </Text>
                       <IconButton
                         borderRadius={0}
@@ -291,7 +291,7 @@ export default function payment({ params }: any) {
                   Total
                 </Text>
                 {/* <Text fontWeight={'bold'} flexShrink={0}>${cart.reduce(function (sum: any, current: any) { return (parseFloat(sum) + parseFloat(current.price)).toFixed(2) }, 0)}</Text> */}
-                <Text fontWeight={"bold"} flexShrink={0}>{`$${cart
+                <Text fontWeight={"bold"} flexShrink={0}>{`₵${cart
                   .reduce(
                     (sum: any, current: any) =>
                       sum +

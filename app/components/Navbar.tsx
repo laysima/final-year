@@ -65,6 +65,12 @@ export const Navbar = () => {
     router.replace("/login");
   };
 
+  const getFirstLetter = (value: string): string => {
+    if (value === "Login") {
+      return value; // Return "Login" as is
+    }
+    return value.charAt(0).toUpperCase(); // Return first letter of username
+  };
   const products = require("../datasource.json");
 
   // Determine if the link is active based on the current path
@@ -147,12 +153,7 @@ export const Navbar = () => {
 
             <Flex display={{ lg:'none'}} shrink={0}>
               <Menu>
-                <MenuButton
-                  as={IconButton}
-                  aria-label="Options"
-                  icon={<MdOutlineMenu />}
-                  variant="outline"
-                />
+                <MenuButton as={IconButton} aria-label="Options" icon={<MdOutlineMenu />} variant="outline"/>
                 <MenuList borderRadius={0}>
                   <MenuItem >
                   <Link _hover={{background:"teal", transition:'0.5s'}} as={NextLink} href="/" p={2}>Home</Link>
@@ -253,18 +254,8 @@ export const Navbar = () => {
                     <LiaShoppingBagSolid />
                   </Link>
                   {cart.map((product: any, index: any) => (
-                    <Flex
-                      key={index}
-                      justifyContent={"center"}
-                      align={"center"}
-                      position={"absolute"}
-                      bg={"#0881DE"}
-                      top={"-7px"}
-                      right={"-7px"}
-                      width="22px"
-                      height="22px"
-                      borderRadius="100%"
-                    >
+                    <Flex key={index} justifyContent={"center"} align={"center"} position={"absolute"} bg={"#0881DE"} top={"-7px"} right={"-7px"}
+                      width="22px" height="22px" borderRadius="100%">
                       <Text color={"white"} p={3} fontSize={"12px"}>
                         {`${cart.reduce(
                           (sum: number, current: any) => sum + current.quantity,
@@ -274,63 +265,16 @@ export const Navbar = () => {
                     </Flex>
                   ))}
                 </Box>
-                <Link
-                  fontSize="26px"
-                  _hover={{ color: "#B8E0F7", transition: "0.2s" }}
-                  as={NextLink}
-                  className={`link ${pathname === "/shop" ? "active" : ""}`}
-                  href="/shop"
-                >
+                <Link fontSize="26px"  _hover={{ color: "#B8E0F7", transition: "0.2s" }} as={NextLink} className={`link ${pathname === "/shop" ? "active" : ""}`}href="/shop">
                   <BsCart2 />
                 </Link>
-                <Button
-                  fontSize="26px"
-                  _hover={{ color: "#B8E0F7", transition: "0.2s" }}
-                  as={NextLink}
-                  className={`link ${pathname === "/login" ? "active" : ""}`}
-                  href="/login"
-                >
-                  <Flex
-                    align={"center"}
-                    bg={"#0881DE"}
-                    p={"5px "}
-                    borderRadius={5}
-                  >
-                    <Icon as={GoPerson} color={"white"} fontSize={"17px"} />
-                    <Text
-                      color={"white"}
-                      fontWeight={500}
-                      ml={2}
-                      fontSize={"17px"}
-                    >
-                      {nSession ? nSession?.username : "Login"}
-                    </Text>
-                  </Flex>
+
+                <Button _hover={{bg:"#05abc4", color:"white"}} fontSize="17px" borderRadius={30} bg={"#05abc4"} color={"white"} as={NextLink} href="/login">             
+                  {getFirstLetter(nSession ? nSession?.username : "Login")}              
                 </Button>
+
                 {nSession && (
-                  <Button
-                    fontSize="26px"
-                    colorScheme="red"
-                    onClick={handleLogout}
-                    type="submit"
-                  >
-                    <Flex
-                      align={"center"}
-                      bg={"crimson"}
-                      p={"5px "}
-                      borderRadius={5}
-                    >
-                      <Icon as={BiLogOut} color={"#fff"} fontSize={"17px"} />
-                      <Text
-                        color={"#fff"}
-                        fontWeight={500}
-                        ml={2}
-                        fontSize={"17px"}
-                      >
-                        Log out
-                      </Text>
-                    </Flex>
-                  </Button>
+                  <IconButton aria-label={"logout"} colorScheme="red" onClick={handleLogout} type="submit"  icon={<BiLogOut />}></IconButton>
                 )}
               </Flex>
             </Flex>

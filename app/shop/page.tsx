@@ -20,6 +20,7 @@ import {
   Link,
   HStack,
   useToast,
+  Spinner,
 } from "@chakra-ui/react";
 import { FaHeart, FaAngleRight } from "react-icons/fa";
 import { usePathname, useRouter } from "next/navigation";
@@ -29,6 +30,7 @@ import { useCartStore } from "@/zustand/store";
 import PageWrap from "../components/PageWrap";
 // import { GetProducts } from "@/app/api";
 import { useQuery } from "@tanstack/react-query";
+import { getCookie } from "cookies-next";
 
 const variants = {hidden: { opacity: 0 },
   show: {opacity: 1,transition: {staggerChildren: 0.3,},},
@@ -47,7 +49,7 @@ function formatString(name: string): string {
 
 export default function page({searchParams,}: {  searchParams: { [key: string]: string | string[] | undefined };
 }) {
-  const { data: products } = useQuery({queryKey: ['products'], queryFn: async () => {
+  const { data: products, isLoading } = useQuery({queryKey: ['products'], queryFn: async () => {
     const res = await fetch('/api/products')
     return res?.ok ? res.json() : []
     }})
@@ -64,9 +66,17 @@ export default function page({searchParams,}: {  searchParams: { [key: string]: 
     const [getSearch, setSearch] = useState("");
     const [getFilter, setFilter] = useState("");
     const [getSort, setSort] = useState("");
-  
+    const cookie = getCookie('token')
+
+    console.log('COOKIE', cookie)
   
     const AddToCart = (product: any) => {
+      if (!cookie) {
+        return (
+          alert('CHALE GO AND SIGN IN')
+        )
+      }
+
       add_to_cart({
         id: product.id,
         imageUrl: product.image,
@@ -252,10 +262,10 @@ export default function page({searchParams,}: {  searchParams: { [key: string]: 
               w={"20%"}
               borderRadius={"none"}
             >
-              <option value="name-asc">Name (A-Z)</option>
-              <option value="name-desc">Name (Z-A)</option>
-              <option value="price-asc">Price (Low-High)</option>
-              <option value="price-desc">Price (High-Low)</option>
+              <option value="name-asc">Name (Z-A)</option>
+              <option value="name-desc">Name (A-Z)</option>
+              <option value="price-asc">Price (High-Low)</option>
+              <option value="price-desc">Price (Low-High)</option>
             </Select>
 
             <InputGroup width={"250px"}>
@@ -279,6 +289,12 @@ export default function page({searchParams,}: {  searchParams: { [key: string]: 
             </InputGroup>
           </Flex>
           {/* {JSON.stringify(filteredItems)} */}
+          
+          {isLoading && (
+        <Flex alignItems="center" justifyContent="center">
+        <Spinner size="xl" />
+      </Flex>
+      )}
 
           <SimpleGrid columns={{ base: 1, md: 2, xl: 4 }} gap={10}>
                 {getData?.map((product:any, index:any)=>(
@@ -359,7 +375,7 @@ export default function page({searchParams,}: {  searchParams: { [key: string]: 
                           <Text colorScheme="teal" fontWeight="bold">
                             {product.name}
                           </Text>
-                          <Text>${product.price}</Text>
+                          <Text>₵{product.price}</Text>
                         </Box>
                       </motion.div>
                     </Box>

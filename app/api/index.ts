@@ -12,6 +12,9 @@ export const LoginUser = async ({ username, password }:LoginType) => {
     try {
         const response = await client.post(URL, { username, password}) 
         const  { data } = response.data;
+        setCookie('token', data.token)
+        setCookie('user', JSON.stringify(data))
+
         return data
     } catch (e:any) {
         throw new Error(e.response.data.error.message)
