@@ -1,6 +1,7 @@
 html,
 *{
   font-family: "Outfit", sans-serif;
+  scroll-behavior: smooth;
 }
 body {
   padding: 0;
@@ -9,5 +10,35 @@ body {
 
 }
 .active {
-  color: teal;
+  color: #0881DE;
+}
+/* Add this to your App.css or a similar file */
+@keyframes typing {
+  from { width: 0; }
+  to { width: 100%; }
+}
+
+@keyframes blink-caret {
+  from, to { border-color: transparent; }
+  50% { border-color: black; }
+}
+
+.typewriter-text {
+  overflow: hidden;
+  white-space: nowrap;
+  margin: 0 auto;
+  letter-spacing: .15em;
+  animation:
+      typing 1.5s steps(40, end),
+      blink-caret .75s step-end infinite;
+}
+
+.progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 10px;
+  background: var(--red);
+  transform-origin: 0%;
 }

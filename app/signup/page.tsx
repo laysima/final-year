@@ -1,81 +1,251 @@
-'use client'
+"use client";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import {
+  Text,
+  Input,
+  Box,
+  Grid,
+  GridItem,
+  IconButton,
+  FormControl,
+  FormLabel,
+  FormErrorMessage,
+  FormHelperText,
+  Button,
+  Link,
+  Flex,
+  Center,
+  Heading,
+  Divider,
+  InputRightElement,
+  InputGroup,
+  Image,
+  useToast
+} from "@chakra-ui/react";
+import { FaAngleRight, FaArrowRight } from "react-icons/fa";
+import { BsEye, BsEyeSlash } from "react-icons/bs";
 // import Link from 'next/link'
-import NextLink from 'next/link'
-import { Box, Center, Flex, Input, Text, Heading, Link } from '@chakra-ui/react'
-import React from 'react'
-import { Grid, GridItem, InputGroup,Button, InputRightElement, Divider} from '@chakra-ui/react'
-import { FaAngleRight } from "react-icons/fa";
+import { useState } from "react";
+import NextLink from "next/link";
+import React from "react";
+import { SignupSchema, SignupType } from "@/schemas";
+import { Controller } from 'react-hook-form';
+import { SignInUser } from "@/app/api";
+import { useRouter } from "next/navigation";
 
 const signup = () => {
-    const [show, setShow] = React.useState(false)
-    const handleClick = () => setShow(!show)
+  const [show, setShow] = React.useState(false);
+  const [loading, setLoading] = React.useState(false);
+  const handleClick = () => setShow(!show);
+  const router = useRouter()
+  const toast = useToast()
 
-    
+  
+
+  const {
+    control, 
+    handleSubmit,
+    formState: { errors },
+  } = useForm<SignupType>({
+    resolver:zodResolver(SignupSchema)
+  })
+
+  const onSubmit = async (payload:SignupType) => {
+    setLoading(true)
+    try {
+      await SignInUser(payload).then(() => {
+       router.push('/login')
+      })
+      toast({
+       title: 'Success',
+       status: 'success',
+       isClosable: true,
+     })
+     setLoading(false)
+     } 
+     catch (e:any) {
+       toast({
+         title: e.message,
+         status: 'error',
+         isClosable: true,
+       })
+     }
+  }
+
   return (
     <>
-    <Box mb={20}>
-      <Center flexDirection={'column'} p={40} bgImage={"cate1.jpg"} textAlign={'center'} bgSize={'cover'} bgRepeat={'no-repeat'} >
-        <Heading fontFamily={'"Outfit", sans-serif'} color={'white'}>Create Account</Heading>
-        <Flex alignItems={'center'} textAlign={'center'} mt={3}>
-        <Link style={{color:'white', fontSize:'1.5em'}} href="/"> Home </Link>
-        <FaAngleRight style={{color:'white', fontSize:'1em'}}   />
-        <Text color={'white'} fontSize={'1.2em'}>Create Account</Text>
+      <Box
+        bgImage={"url('./hexagon.jpg')"}
+        width={"full"}
+        bgSize={"cover"}
+        objectFit={"cover"}
+        bgRepeat={"no-repeat"}
+      >
+        {/* <Flex justify={"center"} w={"full"}>
+          <Box w={"300px"} mt={"40px"}>
+            <Image objectFit={"cover"} src="pharmainc.svg"></Image>
+          </Box>
+        </Flex> */}
+
+        <Flex justify={"center"} w={"full"} mt={3}>
+          <FormControl
+          pb={10}
+            w={"30rem"}
+            boxShadow={"1px 1px 8px 5px #EAEFF2, 0 0 10px #EAEFF2"}
+            p={"62px 28px"}
+            borderRadius={7}
+          >
+            <Flex textAlign={"center"} direction={"column"} gap={1}>
+              <Text
+                fontWeight={500}
+                color={"#0881DE"}
+                fontFamily={'"Outfit", sans-serif'}
+                fontSize={"3xl"}
+              >
+                Sign Up
+              </Text>
+              <Flex justify={"center"} mt={5}>
+                <Text> Already have An Account? </Text>
+                <Link
+                  as={NextLink}
+                  href="/login"
+                  _hover={{
+                    color: "#0881DE",
+                    transition: "0.5s",
+                    cursor: "pointer",
+                  }}
+                >
+                  <Text>Login</Text>
+                </Link>
+              </Flex>
+            </Flex>
+
+            <Flex mt={10} direction={"column"} w={"full"} align={"center"}>
+              <Flex direction={"column"} align={"start"} w={"full"}>
+                <FormLabel>Name</FormLabel>
+                <Controller
+                control={control}
+                name='name'
+                render={({ field }) => (
+                  <Input
+                  variant={'flushed'} bg={'#F0F8FF'}
+                  borderRadius={0}
+                  type="name"
+                  value={field.value}
+                  onChange={(e) => field.onChange(e.target.value)}
+                />
+                )}
+                /> 
+                 <FormHelperText color={errors.name? 'red' : ''}>
+                  { errors.name ? errors.name.message: 'Please Enter Your Required name'}
+                  </FormHelperText>
+              </Flex>
+            </Flex>
+
+            <Flex mt={5} direction={"column"} w={"full"} align={"center"}>
+              <Flex direction={"column"} align={"start"} w={"full"}>
+                <FormLabel>Email</FormLabel>
+                <Controller
+                control={control}
+                name='email'
+                render={({ field }) => (
+                  <Input
+                  variant={'flushed'} bg={'#F0F8FF'}
+                  borderRadius={0}
+                  type="email"
+                  value={field.value}
+                  onChange={(e) => field.onChange(e.target.value)}
+                />
+                )}
+                />
+      
+                 <FormHelperText color={errors.email? 'red' : ''}>
+                  { errors.email ? errors.email.message: 'Please Enter Your Email'}
+                  </FormHelperText>
+              </Flex>
+            </Flex>
+
+            <Flex mt={5} direction={"column"} w={"full"} align={"center"}>
+              <Flex direction={"column"} align={"start"} w={"full"}>
+                <FormLabel>Username</FormLabel>
+                <Controller
+                control={control}
+                name='username'
+                render={({ field }) => (
+                  <Input
+                  variant={'flushed'} bg={'#F0F8FF'}
+                  borderRadius={0}
+                  type="username'"
+                  value={field.value}
+                  onChange={(e) => field.onChange(e.target.value)}
+                />
+                )}
+                />
+                 <FormHelperText color={errors.username? 'red' : ''}>
+                  { errors.username ? errors.username.message: 'Please Enter Your username'}
+                  </FormHelperText>
+              </Flex>
+            </Flex>
+
+            <Flex mt={5} direction={"column"} w={"full"} align={"center"}>
+              <Flex direction={"column"} align={"start"} w={"full"}>
+                <FormLabel>Password</FormLabel>
+                <InputGroup size="md">
+                  <Controller
+                  control={control}
+                  name={"password"}
+                  render={({field}) => (
+                    <Input
+                    variant={'flushed'} bg={'#F0F8FF'}
+                    borderRadius={0}
+                      pr="4.5rem"
+                      type={show ? "text" : "password"}
+                      value={field.value}
+                      onChange={(e) => field.onChange(e.target.value)}
+                    />
+                  )}
+                  
+                  />
+                  <InputRightElement width="4.5rem">
+                    <button
+                      style={{
+                        height: "1.75rem",
+                        fontSize: "m",
+                        backgroundColor: "none",
+                      }}
+                      onClick={handleClick}
+                    >
+                      {show ? <BsEye /> : <BsEyeSlash />}
+                    </button>
+                  </InputRightElement>
+                </InputGroup>
+                <FormHelperText color={errors.password? 'red' : ''}>
+                  { errors.password ? errors.password.message: 'Please Enter Your Password'}
+                  </FormHelperText>
+              </Flex>
+            </Flex>
+
+            <Flex justify={"center"} mt={10}>
+              <button
+              onClick={handleSubmit(onSubmit)}
+                style={{
+                  background: "#0881DE",
+                  padding: "10px",
+                  borderRadius: "7px",
+                  color: "white",
+                  width: "60%",
+                  fontWeight: "bold",
+                }}
+              >
+                {loading? 'Signing Up.....':  "Sign Up"}
+              </button>
+            </Flex>
+          </FormControl>
         </Flex>
-      </Center>
-
-      <Center>
-      <Box mt={20} justifyContent={'center'} alignItems={'center'} >
-        <Box bg={'gray.100'} p={'60px'} borderRadius={'5px'}>
-        <Heading  textAlign={'center'} fontFamily={'"Outfit", sans-serif'}>Sign In</Heading>
-        <Flex mb={5} >
-          <Flex mt={5} grow={1}> 
-          <Link _hover={{ color:"teal.300", transition:'0.2s'}} fontWeight={'bold'}> Already have an account?</Link>
-          </Flex>
-          <Flex mt={5} shrink={0} >
-          <Link _hover={{ color:"teal.300", transition:'0.2s'}} fontWeight={'bold'} href="login" >Sign In</Link>
-          </Flex>
-        </Flex>
-
-        <Grid templateColumns='repeat(1, 1fr)' gap={6}  textAlign={'center'}  >
-          <GridItem >
-        <Input colorScheme='blue' placeholder='Firstname' border={'0.5px solid'} borderRadius={0} 
-         height={'5vh'} bg={'white'}/>
-          </GridItem>
-
-          <GridItem >
-        <Input colorScheme='blue' placeholder='Lastname' border={'0.5px solid'} borderRadius={0} 
-         height={'5vh'} bg={'white'}/>
-          </GridItem>
-
-          <GridItem >
-        <Input colorScheme='blue' placeholder='Email' border={'0.5px solid'} borderRadius={0} 
-         height={'5vh'} bg={'white'}/>
-          </GridItem>
-
-
-        <GridItem>
-          <InputGroup>
-            <Input type={show ? 'text' : 'password'} placeholder='Password' border={'0.5px solid'} borderRadius={0} height={'5vh'} bg={'white'} />
-            <InputRightElement mr={2}>
-            <Button h='1.75rem' size='sm' onClick={handleClick}>
-              {show ? 'Hide' : 'Show'}
-            </Button>
-            </InputRightElement>
-          </InputGroup>
-        </GridItem>
-
-        </Grid>
-        <Center>
-        <Button  p={3} w={'100px'} colorScheme='teal' fontSize={'l'} borderRadius={0} mt={5}>CREATE</Button>
-        </Center>
-
-        </Box>
       </Box>
-      </Center>
-       
-    </Box>
     </>
-  )
-}
+  );
+};
 
-export default signup
+export default signup;
