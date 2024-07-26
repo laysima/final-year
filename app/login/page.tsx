@@ -25,11 +25,11 @@ const login = () => {
   const handleClick = () => setShow(!show);
   const toast = useToast()
   const router = useRouter();
-  const session  = getCookie('session');
+  const user  = getCookie('user');
 
   const [loading, setLoading] = useState(false);
   useEffect(()=> {
-    if (session) {
+    if (user) {
       router.replace('/')
     }
   },[]) 
@@ -52,7 +52,7 @@ const login = () => {
     try {
     const data = await LoginUser(payload)
     if (data) {
-      setCookie('session', JSON.stringify(data))
+      setCookie('user', JSON.stringify(data))
       router.replace('/')
     }
      toast({

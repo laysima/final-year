@@ -66,12 +66,14 @@ export default function page({searchParams,}: {  searchParams: { [key: string]: 
     const [getSearch, setSearch] = useState("");
     const [getFilter, setFilter] = useState("");
     const [getSort, setSort] = useState("");
-    const cookie = getCookie('token')
+    
+    const token = getCookie('token')
+    const user = getCookie('user')
 
-    console.log('COOKIE', cookie)
+    
   
     const AddToCart = (product: any) => {
-      if (!cookie) {
+      if (!token && !user) {
         return (
           alert('CHALE GO AND SIGN IN')
         )

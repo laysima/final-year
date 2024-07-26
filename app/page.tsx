@@ -47,16 +47,16 @@ export default function Home({ params }: any) {
   const [openedItemId, setOpenedItemId] = useState(null);
   // const router = useRouter()
 
-  // const session = getCookie('session')
+  // const user = getCookie('user')
 
   // useEffect(() =>{
-  //   if (!session)
+  //   if (!user)
   //     {router.replace('/login')}
   // }, [])
 
 
-  const session = getCookie("session");
-  const nSession = session && JSON.parse(session);
+  const user = getCookie("user");
+  const nUser = user && JSON.parse(user);
 
   const variants = {
     hidden: { opacity: 0 },
@@ -142,7 +142,7 @@ export default function Home({ params }: any) {
                       fontFamily='"Outfit", sans-serif'
                       fontSize="4xl"
                     >
-                      GREETINGS, {nSession ? nSession?.username : "Login"}👋  <br />
+                      GREETINGS, {nUser ? nUser?.username : "Login"}👋  <br />
                     </Heading>
                     <Text maxW={400} mt={10} color={""} mb={10} fontSize="lg">
                       Your Compassionate Ally in Navigating the Path to Optimal

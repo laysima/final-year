@@ -49,11 +49,10 @@ import { getCookie } from "cookies-next";
 const ProductDetail = ({ params }: any) => {
   const pathname = usePathname();
   const id = params.id;
-  const cookie = getCookie('token')
 
-  const json = cookie ? JSON.parse(cookie) : undefined
+  const token = getCookie('token')
+  const user = getCookie('user')
 
-  console.log('COOKIE JSON', json)
 
   const { data: product  } = useQuery({queryKey: [`product_${id}`, id], queryFn: async () => {
     const res = await fetch(`/api/products/${id}`)
@@ -221,7 +220,7 @@ const ProductDetail = ({ params }: any) => {
                 ref={btnRef}
                 colorScheme="blue"
                 onClick={() => {
-                  if (!cookie) {
+                  if (!token && !user) {
                     return (
                       alert('CHALE GO AND SIGN IN')
                     )
@@ -385,7 +384,7 @@ const ProductDetail = ({ params }: any) => {
               textDecorationLine={"teal"}
               as={NextLink}
               key={product?.id}
-              href={cookie ? `/shop/payment/${product?.id}` : ''}
+              href={(!token && user) ?`/shop/payment/${product?.id}`:''}
               passHref
             >
               <Button
@@ -396,7 +395,7 @@ const ProductDetail = ({ params }: any) => {
                 width={"230px"}
                 borderRadius={0}
                 onClick={() => {
-                  if (!cookie) {
+                  if (!token && !user) {
                     return (
                       alert('CHALE GO AND SIGN IN')
                     )

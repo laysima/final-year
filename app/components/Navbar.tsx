@@ -49,19 +49,19 @@ export const Navbar = () => {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
 
-  const session = getCookie("session");
-  const nSession = session && JSON.parse(session);
+  const user = getCookie("user");
+  const nUser = user && JSON.parse(user);
 
   // TODO: get type from response
 
   // useEffect(()=> {
-  //   if (!session) {
+  //   if (!user) {
   //     router.replace('/login')
   //   }
   // }, [])
 
   const handleLogout = () => {
-    deleteCookie("session");
+    deleteCookie("user");
     router.replace("/login");
   };
 
@@ -270,10 +270,10 @@ export const Navbar = () => {
                 </Link>
 
                 <Button _hover={{bg:"#05abc4", color:"white"}} fontSize="17px" borderRadius={30} bg={"#05abc4"} color={"white"} as={NextLink} href="/login">             
-                  {getFirstLetter(nSession ? nSession?.username : "Login")}              
+                  {getFirstLetter(nUser ? nUser?.username : "Login")}              
                 </Button>
 
-                {nSession && (
+                {nUser && (
                   <IconButton aria-label={"logout"} colorScheme="red" onClick={handleLogout} type="submit"  icon={<BiLogOut />}></IconButton>
                 )}
               </Flex>
