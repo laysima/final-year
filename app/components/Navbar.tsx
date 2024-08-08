@@ -47,6 +47,7 @@ import { IoAddCircleOutline } from "react-icons/io5";
 export const Navbar = () => {
   const router = useRouter();
   const pathname = usePathname();
+  const { empty_cart } = useCartStore()
   const [isOpen, setIsOpen] = useState(false);
 
   const user = getCookie("user");
@@ -62,6 +63,8 @@ export const Navbar = () => {
 
   const handleLogout = () => {
     deleteCookie("user");
+    deleteCookie("token");
+    empty_cart()
     router.replace("/login");
   };
 
@@ -141,7 +144,7 @@ export const Navbar = () => {
       >
         <Container maxW={1200}>
           <Flex alignItems={"center"} >
-            <Flex alignItems={"center"} display={{ base: "flex", md:'flex', lg: "flex" }} grow={1}>
+            <Flex alignItems={"center"} display={{ base: "flex", md: 'flex', lg: "flex" }} grow={1}>
               <Image
                 width={"auto"}
                 h={"30px"}
@@ -151,24 +154,24 @@ export const Navbar = () => {
               ></Image>
             </Flex>
 
-            <Flex display={{ lg:'none'}} shrink={0}>
+            <Flex display={{ lg: 'none' }} shrink={0}>
               <Menu>
-                <MenuButton as={IconButton} aria-label="Options" icon={<MdOutlineMenu />} variant="outline"/>
+                <MenuButton as={IconButton} aria-label="Options" icon={<MdOutlineMenu />} variant="outline" />
                 <MenuList borderRadius={0}>
                   <MenuItem >
-                  <Link _hover={{background:"teal", transition:'0.5s'}} as={NextLink} href="/" p={2}>Home</Link>
+                    <Link _hover={{ background: "teal", transition: '0.5s' }} as={NextLink} href="/" p={2}>Home</Link>
                   </MenuItem>
                   <MenuItem  >
-                  <Link _hover={{background:"teal", transition:'0.5s'}} as={NextLink} href="/about" p={2} >About</Link>
+                    <Link _hover={{ background: "teal", transition: '0.5s' }} as={NextLink} href="/about" p={2} >About</Link>
                   </MenuItem>
                   <MenuItem >
-                  <Link _hover={{background:"teal", transition:'0.5s'}} as={NextLink} href="/signup" p={2} >Login</Link>
+                    <Link _hover={{ background: "teal", transition: '0.5s' }} as={NextLink} href="/signup" p={2} >Login</Link>
                   </MenuItem>
                   <MenuItem >
-                  <Link _hover={{background:"teal", transition:'0.5s'}} as={NextLink} href="/signup" p={2} >Signup</Link> 
+                    <Link _hover={{ background: "teal", transition: '0.5s' }} as={NextLink} href="/signup" p={2} >Signup</Link>
                   </MenuItem>
                   <MenuItem >
-                  <Link _hover={{background:"teal", transition:'0.5s'}} as={NextLink} href="/shop" p={2} >Shop</Link> 
+                    <Link _hover={{ background: "teal", transition: '0.5s' }} as={NextLink} href="/shop" p={2} >Shop</Link>
                   </MenuItem>
                 </MenuList>
               </Menu>
@@ -241,40 +244,40 @@ export const Navbar = () => {
             >
 
               <Flex gap={5} align={"center"}>
-                <Box position={"relative"}>
-                  <Link
-                    fontSize="26px"
-                    _hover={{ color: "#B8E0F7", transition: "0.2s" }}
-                    as={NextLink}
-                    className={`link ${
-                      pathname === "/shop/identifier/cart" ? "active" : ""
+                <Link
+                  fontSize="26px"
+                  _hover={{ color: "#B8E0F7", transition: "0.2s" }}
+                  as={NextLink}
+                  className={`link ${pathname === "/shop/identifier/cart" ? "active" : ""
                     }`}
-                    href="/shop/identifier/cart"
-                  >
+                  href="/shop/identifier/cart"
+                >
+                  <Box position={"relative"}>
                     <LiaShoppingBagSolid />
-                  </Link>
-                  {cart.map((product: any, index: any) => (
-                    <Flex key={index} justifyContent={"center"} align={"center"} position={"absolute"} bg={"#0881DE"} top={"-7px"} right={"-7px"}
-                      width="22px" height="22px" borderRadius="100%">
-                      <Text color={"white"} p={3} fontSize={"12px"}>
-                        {`${cart.reduce(
-                          (sum: number, current: any) => sum + current.quantity,
-                          0
-                        )}`}
-                      </Text>
-                    </Flex>
-                  ))}
-                </Box>
-                <Link fontSize="26px"  _hover={{ color: "#B8E0F7", transition: "0.2s" }} as={NextLink} className={`link ${pathname === "/shop" ? "active" : ""}`}href="/shop">
+                    {cart.map((product: any, index: any) => (
+                      <Flex key={index} justifyContent={"center"} align={"center"} position={"absolute"} bg={"#0881DE"} top={"-7px"} right={"-7px"}
+                        width="22px" height="22px" borderRadius="100%">
+                        <Text color={"white"} p={3} fontSize={"12px"}>
+                          {`${cart.reduce(
+                            (sum: number, current: any) => sum + current.quantity,
+                            0
+                          )}`}
+                        </Text>
+                      </Flex>
+                    ))}
+                  </Box>
+                </Link>
+
+                <Link fontSize="26px" _hover={{ color: "#B8E0F7", transition: "0.2s" }} as={NextLink} className={`link ${pathname === "/shop" ? "active" : ""}`} href="/shop">
                   <BsCart2 />
                 </Link>
 
-                <Button _hover={{bg:"#05abc4", color:"white"}} fontSize="17px" borderRadius={30} bg={"#05abc4"} color={"white"} as={NextLink} href="/login">             
-                  {getFirstLetter(nUser ? nUser?.username : "Login")}              
+                <Button _hover={{ bg: "#05abc4", color: "white" }} fontSize="17px" borderRadius={30} bg={"#05abc4"} color={"white"} as={NextLink} href="/login">
+                  {getFirstLetter(nUser ? nUser?.username : "Login")}
                 </Button>
 
                 {nUser && (
-                  <IconButton aria-label={"logout"} colorScheme="red" onClick={handleLogout} type="submit"  icon={<BiLogOut />}></IconButton>
+                  <IconButton aria-label={"logout"} colorScheme="red" onClick={handleLogout} type="submit" icon={<BiLogOut />}></IconButton>
                 )}
               </Flex>
             </Flex>
