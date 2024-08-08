@@ -142,7 +142,7 @@ export default function Home({ params }: any) {
                       fontFamily='"Outfit", sans-serif'
                       fontSize="4xl"
                     >
-                      GREETINGS, {nUser ? nUser?.username : "Login"}👋  <br />
+                      GREETINGS👋  <br />
                     </Heading>
                     <Text maxW={400} mt={10} color={""} mb={10} fontSize="lg">
                       Your Compassionate Ally in Navigating the Path to Optimal
@@ -650,6 +650,7 @@ export default function Home({ params }: any) {
                   objectFit={"cover"}
                   src="m3.jpg"
                   bgRepeat={"no-repeat"}
+                  alt="m3"
                 ></Image>
               </Box>
 
@@ -889,6 +890,7 @@ export default function Home({ params }: any) {
                       transform: "scale(1.05)",
                       transition: "transform 0.2s ease-in-out",
                     }}
+                    alt="image"
                   ></Image>
                   <Heading
                     mt={2}
@@ -916,6 +918,7 @@ export default function Home({ params }: any) {
                       transform: "scale(1.05)",
                       transition: "transform 0.2s ease-in-out",
                     }}
+                               alt="image"
                   ></Image>
                   <Heading
                     mt={2}
@@ -943,6 +946,7 @@ export default function Home({ params }: any) {
                       transform: "scale(1.05)",
                       transition: "transform 0.2s ease-in-out",
                     }}
+                               alt="image"
                   ></Image>
                   <Heading
                     mt={2}
@@ -970,6 +974,7 @@ export default function Home({ params }: any) {
                       transform: "scale(1.05)",
                       transition: "transform 0.2s ease-in-out",
                     }}
+                    alt="image"
                   ></Image>
                   <Heading
                     mt={2}
@@ -997,6 +1002,7 @@ export default function Home({ params }: any) {
                     objectFit={"cover"}
                     src="questions.jpg"
                     bgRepeat={"no-repeat"}
+                    alt="image"
                   ></Image>
                 </Box>
               </Flex>
@@ -1075,11 +1081,12 @@ export default function Home({ params }: any) {
                       align={"center"}
                       objectFit={"cover"}
                       src="w1.jpg"
+                      alt="w1"
                     ></Image>
                   </Box>
                   <Text textAlign={"center"}>
                     Pharmacy Web App is a game-changer in the pharmacy industry.
-                    It's easy to use, fast, and reliable. I can now order my
+                    It&apso;s easy to use, fast, and reliable. I can now order my
                     medications with just a few clicks, and service is also
                     top-notch. I highly recommend Pharmacy Web App to anyone who
                     wants to save time and money on their medications.
@@ -1119,11 +1126,12 @@ export default function Home({ params }: any) {
                       align={"center"}
                       objectFit={"cover"}
                       src="m2.jpg"
+                      alt="m2"
                     ></Image>
                   </Box>
                   <Text textAlign={"center"}>
                     Pharmacy Web App is a game-changer in the pharmacy industry.
-                    It's easy to use, fast, and reliable. I can now order my
+                    It&apos;s easy to use, fast, and reliable. I can now order my
                     medications with just a few clicks, and service is also
                     top-notch. I highly recommend Pharmacy Web App to anyone who
                     wants to save time and money on their medications.
@@ -1163,11 +1171,12 @@ export default function Home({ params }: any) {
                       align={"center"}
                       objectFit={"cover"}
                       src="m1.jpg"
+                      alt="m1"
                     ></Image>
                   </Box>
                   <Text textAlign={"center"}>
                     Pharmacy Web App is a game-changer in the pharmacy industry.
-                    It's easy to use, fast, and reliable. I can now order my
+                    It&apos;s easy to use, fast, and reliable. I can now order my
                     medications with just a few clicks, and service is also
                     top-notch. I highly recommend Pharmacy Web App to anyone who
                     wants to save time and money on their medications.

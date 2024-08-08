@@ -24,7 +24,7 @@ import { useCartStore } from "@/zustand/store";
 import { BiX } from "react-icons/bi";
 import { useQuery } from "@tanstack/react-query";
 
-const cart = ({ params }: any) => {
+const Cart = ({ params }: any) => {
   const id = params.id;
   const { data: product  } = useQuery({queryKey: [`product_${id}`, id], queryFn: async () => {
     const res = await fetch(`/api/products/${id}`)
@@ -52,7 +52,7 @@ const cart = ({ params }: any) => {
           color={"white"}
           fontSize={"5xl"}
         >
-          Your Shopping Cart
+          Your Cart
         </Heading>
         <Flex alignItems={"center"} textAlign={"center"}>
           {/* <Link as={NextLink} textDecoration={'none'} style={{color:'white', fontSize:'1.5em'}} href="/shop"> All </Link> */}
@@ -118,6 +118,7 @@ const cart = ({ params }: any) => {
                   justifyContent={"center"}
                   src={product.imageUrl}
                   boxSize={"60px"}
+                  alt="product"
                 />
                 <Text fontWeight={"bold"} ml={3}>{product.name}</Text>
               </Flex>
@@ -180,4 +181,4 @@ const cart = ({ params }: any) => {
   );
 };
 
-export default cart;
+export default Cart;

@@ -253,28 +253,26 @@ export const Footer = () => {
           >
             <Flex direction={"column"} p={5}>
               <Text fontSize={'lg'} fontStyle={'italic'}>
-                Chat With OpenAi
+                Chat With Infermedica
               </Text>
 
-              <Flex align={'baseline'} gap={5}>
-                <Text fontSize={"30px"} color={"#003060"} >
+              <Flex align={'baseline'} gap={2}>
+                <Text fontSize={"xl"} color={"#003060"} >
                   HELLO!!
                 </Text>
                 <Text fontSize={"lg"} mt={3}>
-                  SHAKUR{''}
+                  User{''}
                 </Text>
               </Flex>
               <Divider border={'0.5px solid grey'} />
             </Flex>
 
-            <Flex justify={"center"} direction={"column"} align={"center"}>
-              <Image src="openai.png" bgSize={"cover"} bgRepeat={'none'} bgPos={"center"} w={'30px'} />
-              <Text fontSize={"lg"} mt={3}>
+            <Flex justify={"center"} align={"center"} >
+              <Text fontSize={"lg"}>
                 How Can I Help You?
               </Text>
             </Flex>
 
-           
             <Flex direction={"column"} p={5} mt={'120px'} >
               <Grid templateColumns='repeat(1, 1fr)' gap={2} pb={5}>
 
@@ -308,7 +306,7 @@ export const Footer = () => {
                   </Flex>
                 </GridItem>
               </Grid>
-              <InputGroup>
+              <InputGroup bottom={0}>
               <Input
                 placeholder="type message here"
                 p={4}
@@ -316,7 +314,7 @@ export const Footer = () => {
                 fontSize={"lg"}
                 border={"0.5px solid black"}
               />
-               <InputRightElement as={'button'} borderRadius={0}>
+               <InputRightElement as={'button'} borderRadius={0} _hover={{bg:"#003060", transition:'0.3s'}}>
                   <FaTelegramPlane color='green.500' />
                 </InputRightElement>
               </InputGroup>
