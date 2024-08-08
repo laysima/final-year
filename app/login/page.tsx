@@ -1,12 +1,12 @@
 "use client";
-import {Text, Input, Box, FormControl, FormLabel, FormHelperText, Button, Link, Flex, InputRightElement,InputGroup,
-Image, useToast,} from "@chakra-ui/react";
+import {
+  Text, Input, Box, FormControl, FormLabel, FormHelperText, Link, Flex, InputRightElement, InputGroup,
+  Image, useToast,
+} from "@chakra-ui/react";
 
 import { Controller, useForm } from "react-hook-form";
 
-import {zodResolver} from '@hookform/resolvers/zod'
-
-import { FaAngleRight, FaArrowRight } from "react-icons/fa";
+import { zodResolver } from '@hookform/resolvers/zod'
 
 import { BsEye, BsEyeSlash } from "react-icons/bs";
 
@@ -20,49 +20,45 @@ import { LoginUser } from "@/app/api";
 import { useRouter } from "next/navigation";
 import { getCookie, setCookie } from "cookies-next";
 
-const login = () => {
+const Login = () => {
   const [show, setShow] = useState(false);
   const handleClick = () => setShow(!show);
   const toast = useToast()
   const router = useRouter();
-  const user  = getCookie('user');
+  const user = getCookie('user');
 
   const [loading, setLoading] = useState(false);
-  useEffect(()=> {
+  useEffect(() => {
     if (user) {
       router.replace('/')
     }
-  },[]) 
-  
+  }, [])
+
   //reat hook forms
 
-    const { control, handleSubmit, formState: { errors },} = useForm<LoginType>
+  const { control, handleSubmit, formState: { errors }, } = useForm<LoginType>
     (
       {
-        resolver:zodResolver(LoginSchema)
+        resolver: zodResolver(LoginSchema)
       }
     )
 
-  const onSubmit = async (payload:LoginType) => {
+  const onSubmit = async (payload: LoginType) => {
     setLoading(true)
 
-
     console.log('payload', payload)
-    
+
     try {
-    const data = await LoginUser(payload)
-    if (data) {
-      setCookie('user', JSON.stringify(data))
-      router.replace('/')
+      const data = await LoginUser(payload)
+      if (data) router.replace('/')
+      toast({
+        title: 'Success',
+        status: 'success',
+        isClosable: true,
+      })
+      setLoading(false)
     }
-     toast({
-      title: 'Success',
-      status: 'success',
-      isClosable: true,
-    })
-    setLoading(false)
-    } 
-    catch (e:any) {
+    catch (e: any) {
       toast({
         title: e.message,
         status: 'error',
@@ -109,22 +105,22 @@ const login = () => {
             <Flex mt={10} direction={"column"} w={"full"} align={"center"}>
               <Flex direction={"column"} align={"start"} w={"full"}>
                 <FormLabel>Username</FormLabel>
-                <Controller 
+                <Controller
                   control={control}
                   name={"username"}
                   render={({ field }) => (
                     <Input
-                    variant={'flushed'} bg={'#F0F8FF'}
-                    type="text"
-                    p={2}
-                    placeholder="example"
-                    value={field.value}
-                    onChange={(e) => field.onChange(e.target.value)}
-                  />
+                      variant={'flushed'} bg={'#F0F8FF'}
+                      type="text"
+                      p={2}
+                      placeholder="example"
+                      value={field.value}
+                      onChange={(e) => field.onChange(e.target.value)}
+                    />
                   )}
-                />              
-                <FormHelperText color={errors.username? 'red' : ''}>
-                  { errors.username ? errors.username.message: 'Please Enter Your Username'}
+                />
+                <FormHelperText color={errors.username ? 'red' : ''}>
+                  {errors.username ? errors.username.message : 'Please Enter Your Username'}
                 </FormHelperText>
               </Flex>
             </Flex>
@@ -134,20 +130,20 @@ const login = () => {
                 <FormLabel>Password</FormLabel>
                 <InputGroup size="md">
                   <Controller
-                  control={control}
-                  name={"password"}
-                  render={({field}) => (
-                    <Input
-                     variant={'flushed'} bg={'#F0F8FF'}
-                      pr="4.5rem"
-                      placeholder="*****"
-                      p={2}
-                      type={show ? "text" : "password"}
-                      value={field.value}
-                      onChange={(e) => field.onChange(e.target.value)}
-                    />
-                  )}
-                  
+                    control={control}
+                    name={"password"}
+                    render={({ field }) => (
+                      <Input
+                        variant={'flushed'} bg={'#F0F8FF'}
+                        pr="4.5rem"
+                        placeholder="*****"
+                        p={2}
+                        type={show ? "text" : "password"}
+                        value={field.value}
+                        onChange={(e) => field.onChange(e.target.value)}
+                      />
+                    )}
+
                   />
                   <InputRightElement width="4.5rem">
                     <button
@@ -162,15 +158,15 @@ const login = () => {
                     </button>
                   </InputRightElement>
                 </InputGroup>
-                <FormHelperText color={errors.password? 'red' : ''}>
-                  { errors.password ? errors.password.message: 'Please Enter Your Password'}
-                  </FormHelperText>
+                <FormHelperText color={errors.password ? 'red' : ''}>
+                  {errors.password ? errors.password.message : 'Please Enter Your Password'}
+                </FormHelperText>
               </Flex>
             </Flex>
 
             <Flex justify={"center"} mt={10}>
               <button
-              onClick={handleSubmit(onSubmit)}
+                onClick={handleSubmit(onSubmit)}
                 style={{
                   background: "#0881DE",
                   padding: "10px",
@@ -179,7 +175,7 @@ const login = () => {
                   width: "60%",
                 }}
               >
-                {loading? 'Signing In.....':  "Sign In"}
+                {loading ? 'Signing In.....' : "Sign In"}
               </button>
             </Flex>
 
@@ -205,4 +201,4 @@ const login = () => {
   );
 };
 
-export default login;
+export default Login;
