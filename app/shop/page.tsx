@@ -17,10 +17,11 @@ import {
   SimpleGrid,
   InputGroup,
   InputRightElement,
-  Link,
+  Link,Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton,
   HStack,
   useToast,
   Spinner,
+  useDisclosure,
 } from "@chakra-ui/react";
 import { FaHeart, FaAngleRight } from "react-icons/fa";
 import { usePathname, useRouter } from "next/navigation";
@@ -72,13 +73,15 @@ export default function Page({ searchParams, }: {
   const [getSearch, setSearch] = useState("");
   const [getFilter, setFilter] = useState("");
   const [getSort, setSort] = useState("");
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   const token = getCookie('token')
   const user = getCookie('user')
 
   const AddToCart = (product: any) => {
     if (!token || !user) {
-      return alert('CHALE GO AND SIGN IN')
+      onOpen(); // Open the modal
+      return;
     }
 
     add_to_cart({
@@ -149,78 +152,35 @@ export default function Page({ searchParams, }: {
   }, [products, getFilter, getSort, getSearch]);
 
 
-  // if(products) {
-  //   let searchedData = products?.filter((val:any) => {
-  //     if (getFilter?.toLowerCase() === '' ){ return val; }
-  //     else if (
-  //       val.name.toLowerCase().includes(getFilter.toLowerCase()) ||
-  //       val.description.toLowerCase().includes(getFilter.toLowerCase()) ||
-  //       val.category.toLowerCase().includes(getFilter.toLowerCase()) ||
-  //       val.weight.toLowerCase().includes(getFilter.toLowerCase()) ||
-  //       val.price.toLowerCase().includes(getFilter.toLowerCase()) ||
-  //       val.dosage.toLowerCase().includes(getFilter.toLowerCase())
-  //     ) {return val}
-  //   });
-  //   setData(searchedData)
-  // }
-
-
-
-
-
-
-  // const [loading, setLoading] = useState<boolean>(false);
-  //const [categories, setCategories] = useState<{[key: string]: ProductType[]}>({});
-
-  // useEffect(() => {
-  //   getAllProducts();
-  // }, []);
-
-  // const getAllProducts = async (): Promise<void> => {
-  //   setLoading(true);
-  //   try {
-  //     const data = await GetProducts();
-  //     if (data && typeof data === "object") {
-  //       setCategories(data);
-  //     } else {
-  //       setCategories({});
-  //     }
-  //   } catch (error) {
-  //     setCategories({});
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
-
-  //////// end ////////
-
-  // const handleSortChange = (event: any) => {
-  //   const sortValue = event.target.value;
-  //   let sortedProducts = [...products];
-
-  //   switch (sortValue) {
-  //     case "name-asc":
-  //       sortedProducts.sort((a, b) => a.name.localeCompare(b.name));
-  //       break;
-  //     case "name-desc":
-  //       sortedProducts.sort((a, b) => b.name.localeCompare(a.name));
-  //       break;
-  //     case "price-asc":
-  //       sortedProducts.sort((a, b) => a.price - b.price);
-  //       break;
-  //     case "price-desc":
-  //       sortedProducts.sort((a, b) => b.price - a.price);
-  //       break;
-  //     default:
-  //       // No default sorting or handle differently
-  //       break;
-  //   }
-
-  //   //setData(sortedProducts);
-  // };
 
   return (
     <>
+
+<Modal isOpen={isOpen} onClose={onClose}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Authentication Required</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            You need to be logged in to add products to the cart.
+          </ModalBody>
+
+          <ModalFooter>
+            <Flex gap={5}>
+            <Button colorScheme="blue" onClick={onClose}>
+              Close
+            </Button>
+            <Link as={NextLink} href="/login">
+              <Button borderRadius={5} colorScheme="blue" variant={"outline"}>
+                SignIn
+              </Button>
+            </Link>
+            </Flex>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
+
+
       <PageWrap>
         <Box mb={10}>
           <Center

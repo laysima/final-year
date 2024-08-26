@@ -13,9 +13,7 @@ import {
   IconButton,
   Icon,
   Link,
-  Image,
-  Grid,
-  GridItem
+  useDisclosure
 } from "@chakra-ui/react";
 import {
   FaPhoneAlt,
@@ -24,23 +22,28 @@ import {
   FaTwitter,
   FaFacebookF,
   FaInstagram,
-  FaYoutube,
-  FaTelegramPlane,
+  FaYoutube
 } from "react-icons/fa";
-import { IoIosArrowRoundUp, IoMdMail } from "react-icons/io";
+import { IoMdMail } from "react-icons/io";
 import { FaArrowUp } from "react-icons/fa6";
 import NextLink from "next/link";
 import { usePathname } from "next/navigation";
-import { CiChat1 } from "react-icons/ci";
-import { BiSearch, BiSolidUpArrow, BiUpArrow } from "react-icons/bi";
+import { BiSearch} from "react-icons/bi";
 import { SimpleGrid } from '@chakra-ui/react';
-import { MdCheckCircleOutline } from "react-icons/md";
+import Chatbot from "./Chatbot";
 
 export const Footer = () => {
   const pathname = usePathname();
+
   const [showScrollButton, setShowScrollButton] = useState(false);
+
   const [showChatBubble, setShowChatBubble] = useState(false);
+
   const [isHovered, setIsHovered] = useState(false);
+
+  const { isOpen, onOpen, onClose } = useDisclosure()
+
+  const btnRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     const checkScroll = () => {
@@ -110,7 +113,7 @@ export const Footer = () => {
 
           <Flex
             direction={"column"}
-            fontSize={"20px"}
+            fontSize={"md"}
             justifyContent={"space-around"}
           >
             <Heading fontWeight={900} fontSize={"30px"}>
@@ -148,7 +151,13 @@ export const Footer = () => {
             <Heading fontWeight={900} fontSize={"30px"}>
               Help & Support
             </Heading>
-            <Text>Support</Text>
+            <Link
+              _hover={{ color: "#A45F66", transition: "0.2s" }}
+              as={NextLink}
+              href="/support"
+            >
+              Support
+            </Link>            
             <Link
               _hover={{ color: "#A45F66", transition: "0.2s" }}
               as={NextLink}
@@ -239,103 +248,10 @@ export const Footer = () => {
           </Text>
         </Flex>
 
-        {showChatBubble && (
-          <Box
-            color={"black"}
-            position="fixed"
-            bottom="100px"
-            right="20px"
-            zIndex="50"
-            h={"70vh"}
-            w={"400px"}
-            border={'0.5px solid grey'}
-            bg={"white"}
-          >
-            <Flex direction={"column"} p={5}>
-              <Text fontSize={'lg'} fontStyle={'italic'}>
-                Chat With Infermedica
-              </Text>
+    {/* Chatbot with infermedica Ai */}
+        <Chatbot/>
 
-              <Flex align={'baseline'} gap={2}>
-                <Text fontSize={"xl"} color={"#003060"} >
-                  HELLO!!
-                </Text>
-                <Text fontSize={"lg"} mt={3}>
-                  User{''}
-                </Text>
-              </Flex>
-              <Divider border={'0.5px solid grey'} />
-            </Flex>
-
-            <Flex justify={"center"} align={"center"} >
-              <Text fontSize={"lg"}>
-                How Can I Help You?
-              </Text>
-            </Flex>
-
-            <Flex direction={"column"} p={5} mt={'120px'} >
-              <Grid templateColumns='repeat(1, 1fr)' gap={2} pb={5}>
-
-                <GridItem w='100%' border={'0.5px solid grey'} borderRadius={5} as={'button'}
-                onMouseEnter={()=> {setIsHovered(true)}} onMouseLeave={() => {setIsHovered(false)}}>
-                  <Flex align={"center"} justify={"center"}> 
-                  <Flex direction={"column"} p={3} >
-                  <Text fontSize={'sm'} fontWeight={500} >
-                      I have been coughing and vomitting
-                    </Text>
-                    <Text fontSize={'sm'} color={'grey'}>
-                      Can you give me tips
-                    </Text> 
-                  </Flex>
-                    {isHovered && (
-                      <IconButton aria-label="up"
-                      icon={<IoIosArrowRoundUp />}
-                       />
-                    )}
-                  </Flex>
-                </GridItem>
-
-                <GridItem w='100%' border={'0.5px solid grey'} borderRadius={5} as={'button'}>
-                  <Flex direction={"column"} p={3}> 
-                    <Text fontSize={'sm'} fontWeight={500} >
-                      I have been coughing and vomitting
-                    </Text>
-                    <Text fontSize={'sm'} color={'grey'}>
-                      Can you give me tips
-                    </Text> 
-                  </Flex>
-                </GridItem>
-              </Grid>
-              <InputGroup bottom={0}>
-              <Input
-                placeholder="type message here"
-                p={4}
-                borderRadius={5}
-                fontSize={"lg"}
-                border={"0.5px solid black"}
-              />
-               <InputRightElement as={'button'} borderRadius={0} _hover={{bg:"#003060", transition:'0.3s'}}>
-                  <FaTelegramPlane color='green.500' />
-                </InputRightElement>
-              </InputGroup>
-            </Flex>
-          </Box>
-        )}
-
-        <IconButton
-          onClick={() => setShowChatBubble((prev) => !prev)}
-          aria-label="chatbubble"
-          icon={<CiChat1 />}
-          isRound={true}
-          position="fixed"
-          bottom="20px"
-          right="20px"
-          zIndex="50"
-          colorScheme="blue"
-          size={"lg"}
-          borderRadius={"50%"}
-          color="white"
-        />
+ 
 
         {showScrollButton && (
           <IconButton
@@ -351,8 +267,10 @@ export const Footer = () => {
             borderRadius={"50%"}
             color="white"
             size={"lg"}
-          />
+              />
         )}
+
+    
       </Box>
     </footer>
   );

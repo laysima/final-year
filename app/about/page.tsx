@@ -17,20 +17,15 @@ import {
 } from "@chakra-ui/react";
 import { FaCheck } from "react-icons/fa";
 import NextLink from "next/link";
-import { PiHandshakeLight } from "react-icons/pi";
-import { IoMdHeartEmpty } from "react-icons/io";
-import { GoPersonAdd } from "react-icons/go";
-import { IoTrophyOutline } from "react-icons/io5";
 import { TbDentalBroken } from "react-icons/tb";
 import { FaDumbbell } from "react-icons/fa";
 import { FaHandsHoldingChild } from "react-icons/fa6";
 import { MdOutlineHealthAndSafety } from "react-icons/md";
-import Head from "next/head";
-import page from "../shop/page";
 import { motion, useScroll } from "framer-motion";
 
 
 const about = () => {
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   const { scrollYProgress } = useScroll();
 
   return (
@@ -41,7 +36,7 @@ const about = () => {
         <Flex p={30} gap={10}>
           <Box position={"relative"} display={{base:'none', md:'none', lg:'none'}}>
             <Box width={"600px"}>
-              <Image borderRadius={10} src="healthprof.jpg" w={"full"}></Image>
+              <Image borderRadius={10} src="healthprof.jpg" w={"full"} alt="health"></Image>
             </Box>
 
             <Box
@@ -312,7 +307,7 @@ const about = () => {
               SEND
             </Button>
           </Flex>
-          <Image display={{base:'none', md:'none', lg:'flex'}} src="reach.jpg" mr={12} height={"70vh"}></Image>
+          <Image display={{base:'none', md:'none', lg:'flex'}} src="reach.jpg" alt="reach" mr={12} height={"70vh"}></Image>
         </Flex>
       </Container>
     </>

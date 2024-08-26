@@ -4,6 +4,15 @@ import { useEffect, useRef, useState } from "react";
 import NextLink from "next/link";
 import { useRouter } from "next/navigation";
 import { usePathname } from "next/navigation";
+import { ProductType } from "@/schemas";
+import { FaAngleRight } from "react-icons/fa";
+import { IoStar } from "react-icons/io5";
+import { IoMdHeartEmpty, IoIosAdd, IoMdClose } from "react-icons/io";
+import { TbTruckDelivery } from "react-icons/tb";
+import { FiMinus } from "react-icons/fi";
+import { useQuery } from "@tanstack/react-query";
+import { getCookie } from "cookies-next";
+import IdModal from "@/app/components/IdModal/page";
 import {
   Box,
   Text,
@@ -30,53 +39,42 @@ import {
   DrawerFooter,
   Drawer,
   SimpleGrid,
+  Skeleton,
+  SkeletonText,
+  Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton,
 } from "@chakra-ui/react";
 
 
 ////////////////////////////////////// APIs /////////////////////////////////////////////////
 // import { GetProducts } from "@/app/api";
-import { ProductType } from "@/schemas";
-////////////////////////////////////// APIs /////////////////////////////////////////////////
 
-import { FaAngleRight } from "react-icons/fa";
-import { IoStar } from "react-icons/io5";
-import { IoMdHeartEmpty, IoIosAdd, IoMdClose } from "react-icons/io";
-import { TbTruckDelivery } from "react-icons/tb";
-import { FiMinus } from "react-icons/fi";
-import { useQuery } from "@tanstack/react-query";
-import { getCookie } from "cookies-next";
 
 const ProductDetail = ({ params }: any) => {
   const pathname = usePathname();
+
   const id = params.id;
 
   const token = getCookie('token')
+  
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
+  const { isOpen: isModalOpen, onOpen: openModal, onClose: closeModal } = useDisclosure();
+
   const user = getCookie('user')
 
+  const btnRef = useRef<HTMLButtonElement>(null);
 
-  const { data: product } = useQuery({
+  const { add_to_cart } = useCartStore();
+
+  const [counter, setCounter] = useState(1);
+
+
+  const { data: product , isLoading } = useQuery({
     queryKey: [`product_${id}`, id], queryFn: async () => {
       const res = await fetch(`/api/products/${id}`)
       return res?.ok ? res.json() : []
     }, ...{ enabled: !!id }
   })
-
-  console.log('id:', id)
-
-
-  // const products = require("../../datasource.json");
-
-  // const product = products.find((product: any) => product.id === id);
-  //////// settin the states of the description , reviews and Additiinal information section /////////////////
-
-  const [loading, setLoading] = useState<boolean>(false);
-  const [categories, setCategories] = useState<{
-    [key: string]: ProductType[];
-  }>({});
-
-  const { add_to_cart } = useCartStore();
-
-  const [counter, setCounter] = useState(1);
 
 
   const doubleSubtotal = () => {
@@ -120,24 +118,34 @@ const ProductDetail = ({ params }: any) => {
       subtotal: product.price * counter,
     });
   };
-  //wishlist section
-  // const { isOpen, onToggle, onClose } = useDisclosure();
 
-  const { isOpen, onOpen, onClose } = useDisclosure();
-  const btnRef = useRef<HTMLButtonElement>(null);
 
   return (
     <>
-      {/*<Text>we are good: {id}</Text*/}
-      {/* {Object.keys(categories).map((category) => (  
-        <Box key={category}>                     
-        {categories[category].map((product: ProductType) => ( 
-          <Box></Box>
-             ))}
+      <Modal isOpen={isOpen}  onClose={onClose}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Authentication Required</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            You need to be logged in to add products to the cart.
+          </ModalBody>
 
-        </Box>
+          <ModalFooter>
+            <Flex gap={5}>
+            <Button colorScheme="blue" onClick={onClose}>
+              Close
+            </Button>
+            <Link as={NextLink} href="/login">
+              <Button borderRadius={5} colorScheme="blue" variant={"outline"}>
+                SignIn
+              </Button>
+            </Link>
+            </Flex>
+          </ModalFooter>
+        </ModalContent>
+        </Modal>
 
-         ))} */}
       <Box className="diff">
         <Center
           flexDirection={"column"}
@@ -148,6 +156,7 @@ const ProductDetail = ({ params }: any) => {
           bgSize={"cover"}
           bgRepeat={"no-repeat"}
         >
+          <Skeleton isLoaded={!isLoading}>
           <Heading
             fontFamily={'"Outfit", sans-serif'}
             color={"white"}
@@ -155,6 +164,7 @@ const ProductDetail = ({ params }: any) => {
           >
             {product?.name}
           </Heading>
+          </Skeleton>
           <Flex alignItems={"center"} textAlign={"center"}>
             {/* <Link as={NextLink} textDecoration={'none'} style={{color:'white', fontSize:'1.5em'}} href="/shop"> All </Link> */}
             <Link
@@ -173,24 +183,28 @@ const ProductDetail = ({ params }: any) => {
           </Flex>
         </Center>
 
-        <Flex p={30} justifyContent={"center"} gap={20} fontSize={"18px"}>
-          <SimpleGrid columns={{ base: 1, md: 2, xl: 2 }} gap={20}>
-            <Image src={product?.image} h={"70vh"}></Image>
+        <Flex p={30} justifyContent={"center"} fontSize={"18px"} gap={10}>
+          <SimpleGrid columns={{ base: 1, md: 2, xl: 2 }} gap={10}>
+            <Skeleton isLoaded={!isLoading}>
+              <Flex ml={'50%'}>
+                <Image w={'100%'} src={product?.image} h={'55dvh'} alt="product"></Image>
+              </Flex>
+            </Skeleton>
 
             <Flex direction={"column"} gap={4} mt={"50px"}>
+            <SkeletonText isLoaded={!isLoading}>
               <Text fontSize={"3xl"} fontWeight={500}>
                 {product?.name}
               </Text>
-              <Text fontWeight={"bold"}>₵{product?.price}</Text>
-              <Flex gap={2}>
-                <Icon as={IoStar} color={"gold"} fontSize={"20px"} />
-                <Icon as={IoStar} color={"gold"} fontSize={"20px"} />
-                <Icon as={IoStar} color={"gold"} fontSize={"20px"} />
-                <Icon as={IoStar} color={"gold"} fontSize={"20px"} />
-              </Flex>
-              <Text maxW={"500px"}>
-                {product?.description}
-              </Text>
+                <Text fontWeight={"bold"}>₵{product?.price}</Text>
+                <Flex gap={2}>
+                  <Icon as={IoStar} color={"gold"} fontSize={"20px"} />
+                  <Icon as={IoStar} color={"gold"} fontSize={"20px"} />
+                  <Icon as={IoStar} color={"gold"} fontSize={"20px"} />
+                  <Icon as={IoStar} color={"gold"} fontSize={"20px"} />
+                </Flex>
+              </SkeletonText>
+              <SkeletonText isLoaded={!isLoading} noOfLines={4}>
               <Text fontWeight={"bold"}>Availability:</Text>
 
               <Flex gap={3}>
@@ -202,6 +216,7 @@ const ProductDetail = ({ params }: any) => {
                 <Text fontWeight={"bold"}>Vendor:</Text>
                 <Text>Laysima industries</Text>
               </Flex>
+              </SkeletonText>
 
               <Flex
                 alignItems={"center"}
@@ -222,9 +237,9 @@ const ProductDetail = ({ params }: any) => {
                       colorScheme="blue"
                       onClick={() => {
                         if (!token || !user) {
-                          return alert('CHALE GO AND SIGN IN')
+                          openModal()
+                          return;
                         }
-
                         onOpen()
                       }}
                       width={"230px"}
@@ -233,6 +248,7 @@ const ProductDetail = ({ params }: any) => {
                     >
                       ADD TO CART
                     </Button>
+                    <IdModal isOpen={isModalOpen} onClose={closeModal}/>
 
                     <Drawer
                       size={"sm"}
@@ -264,6 +280,7 @@ const ProductDetail = ({ params }: any) => {
                               src={product?.image}
                               w={"30%"}
                               h={"15vh"}
+                              alt={'product'}
                             ></Image>
 
                             <Flex direction={"column"} gap={4}>
@@ -364,7 +381,12 @@ const ProductDetail = ({ params }: any) => {
                       _hover={{ colorScheme: "blue" }}
                       icon={<FiMinus />}
                       aria-label="Decrease quantity"
-                      onClick={halveSubtotal}
+                      onClick={() => {
+                        if (!token || !user) {
+                          return alert('SIGN IN');
+                        }
+                        halveSubtotal();
+                      }}
                     />
                     <Text px={2}>{counter}</Text>
                     <IconButton
@@ -373,7 +395,12 @@ const ProductDetail = ({ params }: any) => {
                       _hover={{ colorScheme: "blue" }}
                       icon={<IoIosAdd />}
                       aria-label="Increase quantity"
-                      onClick={doubleSubtotal}
+                      onClick={() => {
+                        if (!token || !user) {
+                          return alert('SIGN IN');
+                        }
+                        doubleSubtotal();
+                      }}
                     />
                   </Flex>
                 </SimpleGrid>
@@ -395,7 +422,8 @@ const ProductDetail = ({ params }: any) => {
                   borderRadius={0}
                   onClick={() => {
                     if (!token || !user) {
-                      return alert('CHALE GO AND SIGN IN')
+                      openModal()
+                      return;
                     }
 
                     buyItNow()
@@ -403,6 +431,7 @@ const ProductDetail = ({ params }: any) => {
                 >
                   BUY IT NOW
                 </Button>
+                <IdModal isOpen={isModalOpen} onClose={closeModal} />
               </Link>
               <Divider orientation="horizontal" border={"0.5px solid ash"} />
 
@@ -415,9 +444,9 @@ const ProductDetail = ({ params }: any) => {
               </Flex>
 
               <Flex alignItems={"center"} justifyContent={"space-between"}>
-                <Image boxSize={"30px"} src="../../cash.png"></Image>
-                <Image boxSize={"30px"} src="../../mastercard.jpeg"></Image>
-                <Image boxSize={"30px"} src="../../visa.png"></Image>
+                <Image alt="image" boxSize={"30px"} src="../../cash.png"></Image>
+                <Image alt="image" boxSize={"30px"} src="../../mastercard.jpeg"></Image>
+                <Image alt="image" boxSize={"30px"} src="../../visa.png"></Image>
               </Flex>
             </Flex>
           </SimpleGrid>
