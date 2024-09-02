@@ -14,7 +14,7 @@ import {
   Grid,
   GridItem
 } from "@chakra-ui/react";
-import { FaAngleRight } from "react-icons/fa";
+import { FaAngleRight, FaRegTrashAlt } from "react-icons/fa";
 import { LiaShoppingBagSolid } from "react-icons/lia";
 import { GoDash } from "react-icons/go";
 import { GoLock } from "react-icons/go";
@@ -23,6 +23,9 @@ import { useState, useEffect } from "react";
 import { useCartStore } from "@/zustand/store";
 import { BiX } from "react-icons/bi";
 import { useQuery } from "@tanstack/react-query";
+import { FiMinus } from "react-icons/fi";
+import { IoIosAdd } from "react-icons/io";
+import { getCookie } from "cookies-next";
 
 const Cart = ({ params }: any) => {
   const id = params.id;
@@ -32,7 +35,27 @@ const Cart = ({ params }: any) => {
     }, ...{enabled:!!id}})
 
 
-  const { cart, remove_from_cart } = useCartStore();
+  const { cart, remove_from_cart, add_to_cart} = useCartStore();
+
+  const [counter, setCounter] = useState(1);
+
+  const token = getCookie('token')
+
+   const user = getCookie('user')
+
+   const updateQuantity = (productId: any, newQuantity: number) => {
+    // Find the product in the cart
+    const product = cart.find((item: { id: any; }) => item.id === productId);
+  
+    if (product) {
+      // Update the product's quantity and subtotal
+      add_to_cart({
+        ...product,
+        quantity: newQuantity,
+        subtotal: product.price * newQuantity,
+      });
+    }
+  };
 
   console.log(cart);
 
@@ -109,7 +132,7 @@ const Cart = ({ params }: any) => {
         <Divider border={"1px solid grey.100"} mb={10} />
 
         {cart.map((product: any, index: any) => (
-          <Box key={index} mt={10}>
+          <Box key={index} mt={10} >
             <Grid templateColumns='repeat(5, 1fr)' gap={2}>
           <GridItem  colSpan={2} w='100%' fontWeight={"bold"} justifyContent={"center"} alignItems={"center"} >
           <Flex fontWeight={"bold"}>
@@ -125,21 +148,51 @@ const Cart = ({ params }: any) => {
           </Flex>
           </GridItem>
 
-          <GridItem  colStart={4} w='100%' fontWeight={"bold"}>
+          <GridItem colStart={4} w='100%' fontWeight={"bold"}>
             <Flex fontWeight={"bold"} justify={"right"} align={"right"}>
-              <Flex align={"center"}>
-                <Text>{product.quantity}</Text>
-                <IconButton
-                  borderRadius={0}
-                  ml={3}
-                  icon={<GoDash />}
-                  aria-label="Decrease quantity"
-                  onClick={() => {
-                    remove_from_cart(product.id);
-                  }}
-                />
-                </Flex>
-              </Flex>
+              <Flex align={"center"} justify={"center"} >
+                  <IconButton
+                    borderRadius={0}
+                    variant={"outline"}
+                    colorScheme="blue"
+                    icon={<FiMinus />}
+                    aria-label="Decrease quantity"
+                    onClick={() => {
+                      if (!token || !user) {
+                        return alert('SIGN IN');
+                      }
+                      if (product.quantity > 1) {
+                        updateQuantity(product.id, product.quantity - 1);
+                      }
+                    }}
+                  />
+                  <Text px={2}>{product.quantity}</Text>
+                  <IconButton
+                    borderRadius={0}
+                    variant={"outline"}
+                    colorScheme="blue"
+                    icon={<IoIosAdd />}
+                    aria-label="Increase quantity"
+                    onClick={() => {
+                      if (!token || !user) {
+                        return alert('SIGN IN');
+                      }
+                      updateQuantity(product.id, product.quantity + 1);
+                    }}
+                  />
+                    <IconButton
+                      borderRadius={0}
+                      ml={3}
+                      icon={<FaRegTrashAlt />}
+                      aria-label="Decrease quantity"
+                      onClick={() => {
+                        remove_from_cart(product.id);
+                      }}
+                    />
+            </Flex>
+          </Flex>
+
+
             </GridItem>
             
           <GridItem  colSpan={1} w='100%' fontWeight={"bold"} justifyContent={"center"} alignItems={"center"} >

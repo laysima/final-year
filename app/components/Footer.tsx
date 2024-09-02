@@ -37,8 +37,6 @@ export const Footer = () => {
 
   const [showScrollButton, setShowScrollButton] = useState(false);
 
-  const [showChatBubble, setShowChatBubble] = useState(false);
-
   const [isHovered, setIsHovered] = useState(false);
 
   const { isOpen, onOpen, onClose } = useDisclosure()

@@ -31,6 +31,8 @@ import "./globals.css";
 
 import { getCookie } from "cookies-next";
 import { motion } from "framer-motion";
+import Chatbot from "./components/Chatbot";
+import ProductModal from "./components/ModalAlert";
 
 export default function Home() {
   const [openedItemId, setOpenedItemId] = useState(null);
@@ -114,12 +116,13 @@ export default function Home() {
                         fontFamily='"Outfit", sans-serif'
                         fontSize="4xl"
                       >
-                        GREETINGS, {nUser ? nUser?.username : "Login"}👋  <br />
+                        GREETINGS {nUser ? nUser?.username : ""}👋  <br />
                       </Heading>
                       <Text maxW={400} mt={10} color={""} mb={10} fontSize="lg">
                         Your Compassionate Ally in Navigating the Path to Optimal
                         Health and Wellness is here.
                       </Text>
+                      
                     </Box>
                   </Flex>
                 </Flex>
@@ -132,11 +135,7 @@ export default function Home() {
                     </Button>
                   </Link>
 
-                  <Link as={NextLink} href="/">
-                    <Button colorScheme="blue" variant="outline" borderRadius={5}>
-                      Chat With A Bot
-                    </Button>
-                  </Link>
+                  <Chatbot/>
                 </Flex>
               </Box>
 

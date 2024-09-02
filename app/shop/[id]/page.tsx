@@ -214,7 +214,7 @@ const ProductDetail = ({ params }: any) => {
 
               <Flex gap={3}>
                 <Text fontWeight={"bold"}>Vendor:</Text>
-                <Text>Laysima industries</Text>
+                <Text>Pharma industries</Text>
               </Flex>
               </SkeletonText>
 

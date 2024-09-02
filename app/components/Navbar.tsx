@@ -272,7 +272,7 @@ export const Navbar = () => {
                   <BsCart2 />
                 </Link>
 
-                <Button _hover={{ bg: "#05abc4", color: "white" }} fontSize="17px" borderRadius={30} bg={"#05abc4"} color={"white"} as={NextLink} href="/login">
+                <Button fontSize="17px" borderRadius={5} colorScheme="blue" variant={"outline"}  as={NextLink} href="/login">
                   {getFirstLetter(nUser ? nUser?.username : "Login")}
                 </Button>
 

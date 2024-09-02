@@ -22,7 +22,8 @@ import {
   ListItem,
   UnorderedList,
   Icon,
-  Input
+  Input,
+  LinkOverlay
 } from '@chakra-ui/react';
 import { HiOutlineChatBubbleLeftRight } from 'react-icons/hi2';
 import { MdCheckCircle } from 'react-icons/md';
@@ -38,8 +39,6 @@ const Chatbot = () => {
   });
 
   const [age, setAge] = useState("");
-
-  const [showError, setShowError] = useState(false);
   
   const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -179,7 +178,7 @@ const Chatbot = () => {
          <Text pb={10} fontWeight={300} fontSize={'30px'}>How old are you?</Text>
          <Text fontWeight={300} fontSize={'20px'}>Type your age</Text>
          <Text pb={5} fontWeight={300} fontSize={'10px'}>Age must be between 18 and 120</Text>
-         <Input type='number' border={'1px solid black'} placeholder='Enter Age' size='md' />
+         <Input type='number' border={'1px solid black'} borderRadius={0} placeholder='Enter Age' size='md' />
 
         </Box>),
     }
@@ -199,10 +198,11 @@ const Chatbot = () => {
     setStep(prevStep => Math.max(prevStep - 1, 0));
   };
 
-
-
   return (
     <>
+        <Button ref={btnRef} onClick={onOpen} colorScheme="blue" variant="outline" borderRadius={5}>
+        Chat With A Bot
+        </Button>
       <Flex position="fixed" bottom="80px" right="20px" zIndex="50">
         <IconButton
           aria-label="Open Chatbot"
@@ -230,9 +230,13 @@ const Chatbot = () => {
               <Box>{pages[step].content}</Box>
             </DrawerBody>
             <DrawerFooter>
+                <Link mr={10} href='https://infermedica.com/' isExternal>
+                    Powered by 2024 Infermedica
+                </Link>
               <Button variant="outline" mr={3} onClick={onClose}>
                 Cancel
               </Button>
+
               <Button
                 colorScheme="teal"
                 onClick={handleBack}

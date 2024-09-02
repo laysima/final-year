@@ -182,11 +182,10 @@ const about = () => {
             </Button>
           </Flex>
           <Box w={'100%'} border={0} display={{base:'none', md:'flex', lg:'flex'}}>
-          <iframe
-            id="section 1"
-            style={{ width: "100%", border: "0" , height: "70dvh"}}
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3963.952912260219!2d3.375295414770757!3d6.5276316452784755!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x103b8b2ae68280c1%3A0xdc9e87a367c3d9cb!2sLagos!5e0!3m2!1sen!2sng!4v1567723392506!5m2!1sen!2sng"
-          />
+
+
+          <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3970.431350241399!2d-0.19879932497302927!3d5.650567332691439!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xfdf9c7ebaeabe93%3A0xd78257e67498c1a0!2sUniversity%20of%20Ghana!5e0!3m2!1sen!2sgh!4v1724794987494!5m2!1sen!2sgh"  width="600" height="70dvh"></iframe>
+
           </Box>
         </Flex>
       </Container>
