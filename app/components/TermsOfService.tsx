@@ -34,7 +34,7 @@ const TermsOfService = ({ isOpen, onClose }: ServiceInModalProps) => {
       <DrawerCloseButton />
       <DrawerBody>
 
-    <Text pb={5}>Welcome to PharmaInc. By accessing or using our web app, you agree to comply with and be bound by the following Terms of Service ("Terms"). Please read them carefully.</Text>
+    <Text pb={5}>Welcome to PharmaInc. By accessing or using our web app, you agree to comply with and be bound by the following Terms of Service. Please read them carefully.</Text>
 
     <Text fontSize={'20px'} fontWeight={500}>1. Acceptance of Terms</Text>
     <Text pb={2} >By using our web app, you agree to these Terms. If you do not agree, you may not use our services. We may modify these Terms at any time, and such modifications will be effective immediately upon posting.</Text>

@@ -33,6 +33,7 @@ import { getCookie } from "cookies-next";
 import { motion } from "framer-motion";
 import Chatbot from "./components/Chatbot";
 import ProductModal from "./components/ModalAlert";
+import ScrollProgressBar from "./components/ScrollProgressBar";
 
 export default function Home() {
   const [openedItemId, setOpenedItemId] = useState(null);
@@ -102,6 +103,8 @@ export default function Home() {
 
   return (
     <>
+      <ScrollProgressBar />
+     
       <PageWrap>
         <Box>
           <Container maxW={1200} pb={40}>
