@@ -12,7 +12,7 @@ import { TbTruckDelivery } from "react-icons/tb";
 import { FiMinus } from "react-icons/fi";
 import { useQuery } from "@tanstack/react-query";
 import { getCookie } from "cookies-next";
-import IdModal from "@/app/components/IdModal/page";
+import IdModal from "@/app/components/IdModal";
 import {
   Box,
   Text,
@@ -58,7 +58,7 @@ const ProductDetail = ({ params }: any) => {
   
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  const { isOpen: isModalOpen, onOpen: openModal, onClose: closeModal } = useDisclosure();
+  const { isOpen: isIdModalOpen, onOpen: openIdModal, onClose: closeIdModal } = useDisclosure();
 
   const user = getCookie('user')
 
@@ -122,30 +122,6 @@ const ProductDetail = ({ params }: any) => {
 
   return (
     <>
-      <Modal isOpen={isOpen}  onClose={onClose}>
-        <ModalOverlay />
-        <ModalContent>
-          <ModalHeader>Authentication Required</ModalHeader>
-          <ModalCloseButton />
-          <ModalBody>
-            You need to be logged in to add products to the cart.
-          </ModalBody>
-
-          <ModalFooter>
-            <Flex gap={5}>
-            <Button colorScheme="blue" onClick={onClose}>
-              Close
-            </Button>
-            <Link as={NextLink} href="/login">
-              <Button borderRadius={5} colorScheme="blue" variant={"outline"}>
-                SignIn
-              </Button>
-            </Link>
-            </Flex>
-          </ModalFooter>
-        </ModalContent>
-        </Modal>
-
       <Box className="diff">
         <Center
           flexDirection={"column"}
@@ -214,7 +190,7 @@ const ProductDetail = ({ params }: any) => {
 
               <Flex gap={3}>
                 <Text fontWeight={"bold"}>Vendor:</Text>
-                <Text>Pharma industries</Text>
+                <Text>PharmaInc industries</Text>
               </Flex>
               </SkeletonText>
 
@@ -237,7 +213,7 @@ const ProductDetail = ({ params }: any) => {
                       colorScheme="blue"
                       onClick={() => {
                         if (!token || !user) {
-                          openModal()
+                          openIdModal()
                           return;
                         }
                         onOpen()
@@ -248,7 +224,7 @@ const ProductDetail = ({ params }: any) => {
                     >
                       ADD TO CART
                     </Button>
-                    <IdModal isOpen={isModalOpen} onClose={closeModal}/>
+                    {/* <IdModal isOpen={isIdModalOpen} onClose={closeIdModal}/> */}
 
                     <Drawer
                       size={"sm"}
@@ -422,7 +398,7 @@ const ProductDetail = ({ params }: any) => {
                   borderRadius={0}
                   onClick={() => {
                     if (!token || !user) {
-                      openModal()
+                      openIdModal()
                       return;
                     }
 
@@ -431,7 +407,7 @@ const ProductDetail = ({ params }: any) => {
                 >
                   BUY IT NOW
                 </Button>
-                <IdModal isOpen={isModalOpen} onClose={closeModal} />
+                <IdModal isOpen={isIdModalOpen} onClose={closeIdModal} />
               </Link>
               <Divider orientation="horizontal" border={"0.5px solid ash"} />
 
