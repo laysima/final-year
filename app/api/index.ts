@@ -7,10 +7,10 @@ const client = axios.create({
     baseURL: process.env.NEXT_PUBLIC_API_BASE_URL,
 })
 
-export const LoginUser = async ({ username, password }: LoginType) => {
+export const LoginUser = async ({ email, password }: LoginType) => {
     const URL = '/v1/user/login';
     try {
-        const response = await client.post(URL, { username, password })
+        const response = await client.post(URL, { email, password })
         const { data } = response.data;
         setCookie('token', data.token)
         setCookie('user', JSON.stringify(data))
@@ -22,10 +22,41 @@ export const LoginUser = async ({ username, password }: LoginType) => {
 
 }
 
-export const SignInUser = async ({ name, email, username, password }: SignupType) => {
+export const SendOtp = async ({ email }: { email: string }) => {
+    const URL = '/v1/password/reset/otp/send';
+    try {
+        const response = await client.post(URL, { email })
+                
+        return { data: response.data.data, success: response.data.success }
+    } catch (e: any) {
+        throw new Error(e.response.data.error.message)
+    }
+}
+
+export const VerifyOtp = async ({ email, code }: { email: string, code: string }) => {
+    const URL = '/v1/password/reset/otp/verify';
+    try {
+        const response = await client.post(URL, { email, code })
+        return { data: response.data.data, success: response.data.success }
+    } catch (e: any) {
+        throw new Error(e.response.data.error.message)
+    }
+}
+
+export const ResetPassword = async ({ email, newPassword }: { email: string, newPassword: string }) => {
+    const URL = '/v1/password/reset';
+    try {
+        const response = await client.post(URL, { email, newPassword })
+        return { data: response.data.data, success: response.data.success }    } catch (e: any) {
+        throw new Error(e.response.data.error.message)
+    }
+}
+
+
+export const SignInUser = async ({ name, email, password }: SignupType) => {
     const URL = '/v1/user/register';
     try {
-        const response = await client.post(URL, { name, email, username, password })
+        const response = await client.post(URL, { name, email, password })
         const { data } = response.data;
         setCookie('token', data.token)
         setCookie('user', JSON.stringify(data))
@@ -42,7 +73,7 @@ export const ParseInitialRequest = async ({ age, sex, text }: ParseInitialReques
         age: { value: parseInt(age) },
         sex,
         text,
-      };
+      };      
 
     try {
         const response = await client.post(URL, payload);

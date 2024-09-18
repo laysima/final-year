@@ -162,269 +162,261 @@ const ProductDetail = ({ params }: any) => {
         <Flex p={30} justifyContent={"center"} fontSize={"18px"} gap={10}>
           <SimpleGrid columns={{ base: 1, md: 2, xl: 2 }} gap={10}>
             <Skeleton isLoaded={!isLoading}>
-              <Flex ml={'50%'}>
-                <Image w={'100%'} src={product?.image} h={'55dvh'} alt="product"></Image>
+              <Flex>
+                <Image src={product?.image} h={'55dvh'} alt="product"></Image>
               </Flex>
             </Skeleton>
 
-            <Flex direction={"column"} gap={4} mt={"50px"}>
-            <SkeletonText isLoaded={!isLoading}>
-              <Text fontSize={"3xl"} fontWeight={500}>
-                {product?.name}
-              </Text>
-                <Text fontWeight={"bold"}>₵{product?.price}</Text>
-                <Flex gap={2}>
-                  <Icon as={IoStar} color={"gold"} fontSize={"20px"} />
-                  <Icon as={IoStar} color={"gold"} fontSize={"20px"} />
-                  <Icon as={IoStar} color={"gold"} fontSize={"20px"} />
-                  <Icon as={IoStar} color={"gold"} fontSize={"20px"} />
-                </Flex>
-              </SkeletonText>
-              <SkeletonText isLoaded={!isLoading} noOfLines={4}>
-              <Text fontWeight={"bold"}>Availability:</Text>
-
-              <Flex gap={3}>
-                <Text fontWeight={"bold"}>Sub Total:</Text>
-                <Text>₵{(product?.price * counter).toFixed(2)}</Text>
-              </Flex>
-
-              <Flex gap={3}>
-                <Text fontWeight={"bold"}>Vendor:</Text>
-                <Text>PharmaInc industries</Text>
-              </Flex>
-              </SkeletonText>
-
-              <Flex
-                alignItems={"center"}
-                _hover={{ color: "teal", cursor: "pointer" }}
-              >
-                <Flex alignItems={"center"}>
-                  <Icon as={IoMdHeartEmpty} />
-                  <Text>Add to Wishlist</Text>
-                </Flex>
-                {/* <Text ml={5} fontWeight={'bold'}>Quantity:{counter} </Text> */}
-              </Flex>
-
-              <Flex alignItems={"center"}>
-                <SimpleGrid columns={{ base: 1, md: 1, xl: 2 }} gap={5}>
-                  <Box>
-                    <Button
-                      ref={btnRef}
-                      colorScheme="blue"
-                      onClick={() => {
-                        if (!token || !user) {
-                          openIdModal()
-                          return;
-                        }
-                        onOpen()
-                      }}
-                      width={"230px"}
-                      fontSize={"17px"}
-                      borderRadius={0}
-                    >
-                      ADD TO CART
-                    </Button>
-                    {/* <IdModal isOpen={isIdModalOpen} onClose={closeIdModal}/> */}
-
-                    <Drawer
-                      size={"sm"}
-                      isOpen={isOpen}
-                      placement="right"
-                      onClose={onClose}
-                      finalFocusRef={btnRef}
-                    >
-                      <DrawerOverlay />
-
-                      <DrawerContent>
-                        <DrawerCloseButton />
-
-                        <DrawerHeader>
-                          <Flex mt={5}>
-                            <Text fontSize="2xl" mb="4">
-                              Shopping Cart
-                            </Text>
-                          </Flex>
-                          <Divider
-                            orientation="horizontal"
-                            border={"0.5px solid ash"}
-                          />
-                        </DrawerHeader>
-
-                        <DrawerBody>
-                          <Flex p={30} gap={10}>
-                            <Image
-                              src={product?.image}
-                              w={"30%"}
-                              h={"15vh"}
-                              alt={'product'}
-                            ></Image>
-
-                            <Flex direction={"column"} gap={4}>
-                              <Heading
-                                fontSize={"lg"}
-                                fontFamily={'"Outfit", sans-serif'}
-                              >
-                                {product?.name}
-                              </Heading>
-                              <Text fontWeight={"bold"}>
-                                ₵{(product?.price * counter).toFixed(2)}
-                              </Text>
-                              <Flex alignItems={"center"}>
-                                <IconButton
-                                  borderRadius={0}
-                                  icon={<FiMinus />}
-                                  aria-label="Decrease quantity"
-                                  onClick={halveSubtotal}
-                                />
-                                <Text paddingX="2">{counter}</Text>
-                                <IconButton
-                                  borderRadius={0}
-                                  icon={<IoIosAdd />}
-                                  aria-label="Increase quantity"
-                                  onClick={doubleSubtotal}
-                                />
-                              </Flex>
-                            </Flex>
-                          </Flex>
-                        </DrawerBody>
-
-                        <DrawerFooter>
-                          <Flex direction={"column"} w={"100%"} p={5}>
-                            <Flex direction={"column"}>
-                              <Divider
-                                mt={"60px"}
-                                orientation="horizontal"
-                                border={"0.5px solid ash"}
-                              />
-                              <Flex gap={3} mt={5}>
-                                <Text fontWeight={"bold"}>Sub Total:</Text>
-                                <Text fontWeight={"bold"}>
-                                  ₵{(product?.price * counter).toFixed(2)}
-                                </Text>
-                              </Flex>
-                              <Text>Everything is calculated at checkout</Text>
-                            </Flex>
-
-                            <Flex direction={"column"}>
-                              <Link
-                                as={NextLink}
-                                key={product?.id}
-                                href={`/shop/payment/${product?.id}`}
-                                passHref
-                              >
-                                <Button
-                                  mt={"15px"}
-                                  p={5}
-                                  fontSize={"17px"}
-                                  colorScheme="blue"
-                                  borderRadius={0}
-                                  w={"full"}
-                                >
-                                  CHECKOUT
-                                </Button>
-                              </Link>
-
-                              <Link
-                                as={NextLink}
-                                // key={product?.id}
-                                href={`/shop/${id}/cart/`}
-                                passHref
-                              >
-                                <Button
-                                  mt={"15px"}
-                                  p={5}
-                                  fontSize={"17px"}
-                                  colorScheme="blue"
-                                  borderRadius={0}
-                                  onClick={buyItNow}
-                                  w={"full"}
-                                >
-                                  VIEW CART
-                                </Button>
-                              </Link>
-                            </Flex>
-                          </Flex>
-                        </DrawerFooter>
-                      </DrawerContent>
-                    </Drawer>
-                  </Box>
-                  {/* ////////////////////////// End of Chakra whishlist ////////////////////////////// */}
-
-                  <Flex alignItems={"center"} border={'1px solid grey'} ml={2} w={'110px'}>
-                    <IconButton
-                      borderRadius={0}
-                      bg={"white"}
-                      _hover={{ colorScheme: "blue" }}
-                      icon={<FiMinus />}
-                      aria-label="Decrease quantity"
-                      onClick={() => {
-                        if (!token || !user) {
-                          return alert('SIGN IN');
-                        }
-                        halveSubtotal();
-                      }}
-                    />
-                    <Text px={2}>{counter}</Text>
-                    <IconButton
-                      borderRadius={0}
-                      bg={"white"}
-                      _hover={{ colorScheme: "blue" }}
-                      icon={<IoIosAdd />}
-                      aria-label="Increase quantity"
-                      onClick={() => {
-                        if (!token || !user) {
-                          return alert('SIGN IN');
-                        }
-                        doubleSubtotal();
-                      }}
-                    />
+            <Flex direction={"column"} gap={4} justifyContent="space-between" h="100%">
+              <Box>
+                <SkeletonText isLoaded={!isLoading}>
+                  <Text fontSize={"3xl"} fontWeight={500} mb={2}>
+                    {product?.name}
+                  </Text>
+                  <Text fontWeight={"bold"} mb={2}>₵{product?.price}</Text>
+                  <Flex gap={2} mb={4}>
+                    <Icon as={IoStar} color={"gold"} fontSize={"20px"} />
+                    <Icon as={IoStar} color={"gold"} fontSize={"20px"} />
+                    <Icon as={IoStar} color={"gold"} fontSize={"20px"} />
+                    <Icon as={IoStar} color={"gold"} fontSize={"20px"} />
                   </Flex>
-                </SimpleGrid>
-              </Flex>
+                </SkeletonText>
+                <SkeletonText isLoaded={!isLoading} noOfLines={4}>
+                  <Text fontWeight={"bold"} mb={2}>Availability:</Text>
 
-              <Link
-                textDecorationLine={"teal"}
-                as={NextLink}
-                key={product?.id}
-                href={(!token && user) ? `/shop/payment/${product?.id}` : ''}
-                passHref
-              >
-                <Button
-                  colorScheme="blue"
-                  p={5}
-                  fontSize={"17px"}
-                  color={"white"}
-                  width={"230px"}
-                  borderRadius={0}
-                  onClick={() => {
-                    if (!token || !user) {
-                      openIdModal()
-                      return;
-                    }
+                  <Flex gap={3} mb={2}>
+                    <Text fontWeight={"bold"}>Sub Total:</Text>
+                    <Text>₵{(product?.price * counter).toFixed(2)}</Text>
+                  </Flex>
 
-                    buyItNow()
-                  }}
+                  <Flex gap={3} mb={4}>
+                    <Text fontWeight={"bold"}>Vendor:</Text>
+                    <Text>PharmaInc industries</Text>
+                  </Flex>
+                </SkeletonText>
+
+                <Flex
+                  alignItems={"center"}
+                  _hover={{ color: "teal", cursor: "pointer" }}
+                  mb={4}
                 >
-                  BUY IT NOW
-                </Button>
-                <IdModal isOpen={isIdModalOpen} onClose={closeIdModal} />
-              </Link>
-              <Divider orientation="horizontal" border={"0.5px solid ash"} />
-
-              <Flex alignItems={"center"}>
-                <Flex alignItems={"center"}>
-                  <Icon mr={2} as={TbTruckDelivery} />
-                  <Text fontWeight={"bold"}>Shipping status:</Text>
+                  <Flex alignItems={"center"}>
+                    <Icon as={IoMdHeartEmpty} mr={2} />
+                    <Text>Add to Wishlist</Text>
+                  </Flex>
                 </Flex>
-                <Text ml={3}>To be communicated</Text>
-              </Flex>
+              </Box>
 
-              <Flex alignItems={"center"} justifyContent={"space-between"}>
-                <Image alt="image" boxSize={"30px"} src="../../cash.png"></Image>
-                <Image alt="image" boxSize={"30px"} src="../../mastercard.jpeg"></Image>
-                <Image alt="image" boxSize={"30px"} src="../../visa.png"></Image>
-              </Flex>
+              <Box>
+                <Flex direction="column" gap={4}>
+                  <Flex alignItems={"center"}>
+                    <SimpleGrid columns={{ base: 1, md: 2 }} gap={5} w="100%">
+                      <Button
+                        ref={btnRef}
+                        colorScheme="blue"
+                        onClick={() => {
+                          if (!token || !user) {
+                            openIdModal()
+                            return;
+                          }
+                          onOpen()
+                        }}
+                        width={"100%"}
+                        fontSize={"17px"}
+                        borderRadius={0}
+                      >
+                        ADD TO CART
+                      </Button>
+                      <Flex alignItems={"center"} border={'1px solid grey'} justifyContent="space-between" w={'100%'}>
+                        <IconButton
+                          borderRadius={0}
+                          bg={"white"}
+                          _hover={{ colorScheme: "blue" }}
+                          icon={<FiMinus />}
+                          aria-label="Decrease quantity"
+                          onClick={() => {
+                            if (!token || !user) {
+                              return alert('SIGN IN');
+                            }
+                            halveSubtotal();
+                          }}
+                        />
+                        <Text px={2}>{counter}</Text>
+                        <IconButton
+                          borderRadius={0}
+                          bg={"white"}
+                          _hover={{ colorScheme: "blue" }}
+                          icon={<IoIosAdd />}
+                          aria-label="Increase quantity"
+                          onClick={() => {
+                            if (!token || !user) {
+                              return alert('SIGN IN');
+                            }
+                            doubleSubtotal();
+                          }}
+                        />
+                      </Flex>
+                    </SimpleGrid>
+                  </Flex>
+
+                  <Button
+                    colorScheme="blue"
+                    p={5}
+                    fontSize={"17px"}
+                    color={"white"}
+                    width={"100%"}
+                    borderRadius={0}
+                    onClick={() => {
+                      if (!token || !user) {
+                        openIdModal()
+                        return;
+                      }
+                      buyItNow()
+                    }}
+                  >
+                    BUY IT NOW
+                  </Button>
+                </Flex>
+
+                <Divider orientation="horizontal" border={"0.5px solid ash"} my={4} />
+
+                <Flex alignItems={"center"} mb={4}>
+                  <Flex alignItems={"center"}>
+                    <Icon mr={2} as={TbTruckDelivery} />
+                    <Text fontWeight={"bold"}>Shipping status:</Text>
+                  </Flex>
+                  <Text ml={3}>To be communicated</Text>
+                </Flex>
+
+                <Flex alignItems={"center"} justifyContent={"space-between"}>
+                  <Image alt="image" boxSize={"30px"} src="../../cash.png"></Image>
+                  <Image alt="image" boxSize={"30px"} src="../../mastercard.jpeg"></Image>
+                  <Image alt="image" boxSize={"30px"} src="../../visa.png"></Image>
+                </Flex>
+              </Box>
             </Flex>
+
+            <Drawer
+              size={"sm"}
+              isOpen={isOpen}
+              placement="right"
+              onClose={onClose}
+              finalFocusRef={btnRef}
+            >
+              <DrawerOverlay />
+
+              <DrawerContent>
+                <DrawerCloseButton />
+
+                <DrawerHeader>
+                  <Flex mt={5}>
+                    <Text fontSize="2xl" mb="4">
+                      Shopping Cart
+                    </Text>
+                  </Flex>
+                  <Divider
+                    orientation="horizontal"
+                    border={"0.5px solid ash"}
+                  />
+                </DrawerHeader>
+
+                <DrawerBody>
+                  <Flex p={30} gap={10}>
+                    <Image
+                      src={product?.image}
+                      w={"30%"}
+                      h={"15vh"}
+                      alt={'product'}
+                    ></Image>
+
+                    <Flex direction={"column"} gap={4}>
+                      <Heading
+                        fontSize={"lg"}
+                        fontFamily={'"Outfit", sans-serif'}
+                      >
+                        {product?.name}
+                      </Heading>
+                      <Text fontWeight={"bold"}>
+                        ₵{(product?.price * counter).toFixed(2)}
+                      </Text>
+                      <Flex alignItems={"center"}>
+                        <IconButton
+                          borderRadius={0}
+                          icon={<FiMinus />}
+                          aria-label="Decrease quantity"
+                          onClick={halveSubtotal}
+                        />
+                        <Text paddingX="2">{counter}</Text>
+                        <IconButton
+                          borderRadius={0}
+                          icon={<IoIosAdd />}
+                          aria-label="Increase quantity"
+                          onClick={doubleSubtotal}
+                        />
+                      </Flex>
+                    </Flex>
+                  </Flex>
+                </DrawerBody>
+
+                <DrawerFooter>
+                  <Flex direction={"column"} w={"100%"} p={5}>
+                    <Flex direction={"column"}>
+                      <Divider
+                        mt={"60px"}
+                        orientation="horizontal"
+                        border={"0.5px solid ash"}
+                      />
+                      <Flex gap={3} mt={5}>
+                        <Text fontWeight={"bold"}>Sub Total:</Text>
+                        <Text fontWeight={"bold"}>
+                          ₵{(product?.price * counter).toFixed(2)}
+                        </Text>
+                      </Flex>
+                      <Text>Everything is calculated at checkout</Text>
+                    </Flex>
+
+                    <Flex direction={"column"}>
+                      <Link
+                        as={NextLink}
+                        key={product?.id}
+                        href={`/shop/payment/${product?.id}`}
+                        passHref
+                      >
+                        <Button
+                          mt={"15px"}
+                          p={5}
+                          fontSize={"17px"}
+                          colorScheme="blue"
+                          borderRadius={0}
+                          w={"full"}
+                        >
+                          CHECKOUT
+                        </Button>
+                      </Link>
+
+                      <Link
+                        as={NextLink}
+                        href={`/shop/${id}/cart/`}
+                        passHref
+                      >
+                        <Button
+                          mt={"15px"}
+                          p={5}
+                          fontSize={"17px"}
+                          colorScheme="blue"
+                          borderRadius={0}
+                          onClick={buyItNow}
+                          w={"full"}
+                        >
+                          VIEW CART
+                        </Button>
+                      </Link>
+                    </Flex>
+                  </Flex>
+                </DrawerFooter>
+              </DrawerContent>
+            </Drawer>
+            <IdModal isOpen={isIdModalOpen} onClose={closeIdModal} />
           </SimpleGrid>
         </Flex>
 

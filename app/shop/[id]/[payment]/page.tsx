@@ -29,7 +29,7 @@ import { useState, useEffect } from "react";
 import { useCartStore } from "@/zustand/store";
 import { BiTrash, BiX } from "react-icons/bi";
 
-export default function payment({ params }: any) {
+export default function Payment({ params }: any) {
   // const id = params.payment;
   // const products = require("../../../datasource.json");
   // const product = products.find((product: any) => product.id === id);
@@ -200,18 +200,18 @@ export default function payment({ params }: any) {
               <Text mt={3}>All rights reserved dt-pharmify</Text>
             </GridItem>
 
-            <GridItem w={"full"}  bg={"white"} borderRadius={20}>
+            <GridItem w={"full"} bg={"white"} borderRadius={20} maxH="100dvh" overflowY="auto">
               {/* <Button onClick={() => {add_to_cart()}}>Add to cart</Button> */}
               <Flex p={5}>
-              <Button
-                onClick={() => {
-                  empty_cart();
-                }}
-                mb={5}
-                colorScheme="red"
-              >
-                Empty cart
-              </Button>
+                <Button
+                  onClick={() => {
+                    empty_cart();
+                  }}
+                  mb={5}
+                  colorScheme="red"
+                >
+                  Empty cart
+                </Button>
               </Flex>
               {cart.map((product: any, index: any) => (
                 <Box key={index} alignItems={"center"} mb={5}>
@@ -255,7 +255,7 @@ export default function payment({ params }: any) {
                     </Flex>
                     <Flex alignItems={"center"}>
                       <Text fontWeight={"bold"} flexShrink={0}>
-                      ₵{product?.price}
+                        ₵{product?.price}
                       </Text>
                       <IconButton
                         borderRadius={0}
@@ -269,7 +269,7 @@ export default function payment({ params }: any) {
                     </Flex>
                   </Flex>
 
-                  <Flex p={5} >
+                  <Flex p={5}>
                     <Text fontWeight={"bold"} flexGrow={1}>
                       Subtotal
                     </Text>
@@ -277,14 +277,13 @@ export default function payment({ params }: any) {
                       {product.price * product.quantity}
                     </Text>
                   </Flex>
-                  <Divider mt={3}
-                border={"0.5px solid #EEEEE"}
-                orientation="horizontal"
-              />
+                  <Divider
+                    mt={3}
+                    border={"0.5px solid #EEEEE"}
+                    orientation="horizontal"
+                  />
                 </Box>
-                
               ))}
-              
 
               <Flex p={5}>
                 <Text fontWeight={"bold"} flexGrow={1}>

@@ -60,177 +60,141 @@ const Cart = ({ params }: any) => {
   console.log(cart);
 
   return (
-    <Box>
-      <Center
-        flexDirection={"column"}
-        p={"100px"}
-        bgImage={"../../../dna2.o.jpg"}
-        textAlign={"center"}
-        bgPos={"center"}
-        bgSize={"cover"}
-        bgRepeat={"no-repeat"}
-      >
-        <Heading
-          fontFamily={'"Outfit", sans-serif'}
-          color={"white"}
-          fontSize={"5xl"}
-        >
-          Your Cart
-        </Heading>
-        <Flex alignItems={"center"} textAlign={"center"}>
-          {/* <Link as={NextLink} textDecoration={'none'} style={{color:'white', fontSize:'1.5em'}} href="/shop"> All </Link> */}
-          <Link
-            fontSize={"1.5em"}
-            color={"white"}
-            _hover={{ color: "teal", transition: "0.2s" }}
-            as={NextLink}
-            href="/shop"
+    <>
+            <Box mb={10}>
+          <Center
+            flexDirection={"column"}
+            p={20}
+            bgImage={"../../dna2.o.jpg"}
+            bgPos={"center"}
+            textAlign={"center"}
+            bgSize={"cover"}
+            bgRepeat={"no-repeat"}
           >
-            All{" "}
-          </Link>
-          <FaAngleRight style={{ color: "white", fontSize: "1em" }} />
-          <Text color={"white"} fontSize={"1.2em"}>
-            {product?.name}
+            <Heading
+              fontFamily={'"PT Sans", sans-serif'}
+              color={"white"}
+              fontSize={"5xl"}
+            >
+               Your Cart
+            </Heading>
+            <Flex mt={3} alignItems={"center"}>
+              <Link
+                color={"white"}
+                _hover={{ color: "teal", transition: "0.2s" }}
+                as={NextLink}
+                href="/"
+              >
+                Home{" "}
+              </Link>
+              <FaAngleRight color="white" />
+              <Text color={"white"} fontSize={"1.2em"}>
+                Shop
+              </Text>
+            </Flex>
+          </Center>
+        </Box>
+
+    <Box maxWidth="1200px" margin="0 auto" padding="20px">
+      <Heading as="h1" size="xl" mb="8">
+       
+      </Heading>
+
+      {cart.length === 0 ? (
+        <Center flexDirection="column" py={20}>
+          <LiaShoppingBagSolid size={60} color="gray.300" />
+          <Text fontSize="xl" fontWeight="bold" mt={4}>
+            Your cart is empty
           </Text>
-        </Flex>
-      </Center>
+          <Text color="gray.500" mt={2}>
+            Add some items to your cart and they will appear here.
+          </Text>
+          <Link as={NextLink} href="/shop" mt={6}>
+            <Button colorScheme="blue">Continue Shopping</Button>
+          </Link>
+        </Center>
+      ) : (
+        <>
+          <Grid templateColumns="repeat(12, 1fr)" gap={4} mb={2}>
+            <GridItem colSpan={6} fontWeight="bold">PRODUCT</GridItem>
+            <GridItem colSpan={2} fontWeight="bold" textAlign="center">PRICE</GridItem>
+            <GridItem colSpan={2} fontWeight="bold" textAlign="center">QUANTITY</GridItem>
+            <GridItem colSpan={2} fontWeight="bold" textAlign="right">TOTAL</GridItem>
+          </Grid>
+          <Divider border={'0.5px solid grey'} mb={5}/>
 
-      <Box p={30} px={"100px"}>
-        {/* <Flex>
-          <Flex grow={1}>
-            <Text fontWeight={"bold"}>PRODUCT</Text>
-          </Flex>
-
-          <Flex shrink={0} mx={"200px"}>
-            <Text fontWeight={"bold"}>QUANTITY</Text>
-          </Flex>
-
-          <Flex shrink={0}>
-            <Text fontWeight={"bold"}>TOTAL</Text>
-          </Flex>
-        </Flex> */}
-
-        <Grid templateColumns='repeat(5, 1fr)' gap={2}>
-          <GridItem  colSpan={2} w='100%' fontWeight={"bold"} justifyContent={"center"} alignItems={"center"} >
-          <Flex fontWeight={"bold"}>
-          PRODUCT
-          </Flex>
-          </GridItem>
-
-          <GridItem  colStart={4} w='100%' fontWeight={"bold"}>
-            <Flex fontWeight={"bold"} justify={"right"} align={"right"}>
-            QUANTITY
-            </Flex>
-            </GridItem>
-            
-          <GridItem  colSpan={1} w='100%' fontWeight={"bold"} justifyContent={"center"} alignItems={"center"} >
-          <Flex fontWeight={"bold"} justify={"right"} align={"right"}>
-          TOTAL
-            </Flex>
-          </GridItem>
-        </Grid>
-        <Divider border={"1px solid grey.100"} mb={10} />
-
-        {cart.map((product: any, index: any) => (
-          <Box key={index} mt={10} >
-            <Grid templateColumns='repeat(5, 1fr)' gap={2}>
-          <GridItem  colSpan={2} w='100%' fontWeight={"bold"} justifyContent={"center"} alignItems={"center"} >
-          <Flex fontWeight={"bold"}>
-          <Flex alignItems={"center"}>
-                <Image
-                  justifyContent={"center"}
-                  src={product.imageUrl}
-                  boxSize={"60px"}
-                  alt="product"
-                />
-                <Text fontWeight={"bold"} ml={3}>{product.name}</Text>
-              </Flex>
-          </Flex>
-          </GridItem>
-
-          <GridItem colStart={4} w='100%' fontWeight={"bold"}>
-            <Flex fontWeight={"bold"} justify={"right"} align={"right"}>
-              <Flex align={"center"} justify={"center"} >
+          {cart.map((product: any, index: any) => (
+            <Grid key={index} templateColumns="repeat(12, 1fr)" gap={4} alignItems="center" mb={4}>
+              <GridItem colSpan={6}>
+                <Flex alignItems="center">
+                  <Image src={product.imageUrl} boxSize="60px" mr={3} alt={product.name} />
+                  <Text fontWeight="medium">{product.name}</Text>
+                </Flex>
+              </GridItem>
+              <GridItem colSpan={2} textAlign="center">
+                <Text>₵{product.price.toFixed(2)}</Text>
+              </GridItem>
+              <GridItem colSpan={2}>
+                <Flex justify="center" align="center">
                   <IconButton
-                    borderRadius={0}
-                    variant={"outline"}
-                    colorScheme="blue"
+                    size="sm"
                     icon={<FiMinus />}
                     aria-label="Decrease quantity"
                     onClick={() => {
-                      if (!token || !user) {
-                        return alert('SIGN IN');
-                      }
-                      if (product.quantity > 1) {
-                        updateQuantity(product.id, product.quantity - 1);
-                      }
+                      if (!token || !user) return alert('SIGN IN');
+                      if (product.quantity > 1) updateQuantity(product.id, product.quantity - 1);
                     }}
                   />
                   <Text px={2}>{product.quantity}</Text>
                   <IconButton
-                    borderRadius={0}
-                    variant={"outline"}
-                    colorScheme="blue"
+                    size="sm"
                     icon={<IoIosAdd />}
                     aria-label="Increase quantity"
                     onClick={() => {
-                      if (!token || !user) {
-                        return alert('SIGN IN');
-                      }
+                      if (!token || !user) return alert('SIGN IN');
                       updateQuantity(product.id, product.quantity + 1);
                     }}
                   />
-                    <IconButton
-                      borderRadius={0}
-                      ml={3}
-                      icon={<FaRegTrashAlt />}
-                      aria-label="Decrease quantity"
-                      onClick={() => {
-                        remove_from_cart(product.id);
-                      }}
-                    />
-            </Flex>
+                </Flex>
+              </GridItem>
+              <GridItem colSpan={2} textAlign="right">
+                <Text fontWeight="medium">₵{(product.price * product.quantity).toFixed(2)}</Text>
+              </GridItem>
+              <GridItem colSpan={12}>
+                <Button
+                  size="sm"
+                  leftIcon={<FaRegTrashAlt />}
+                  variant="ghost"
+                  colorScheme="red"
+                  onClick={() => remove_from_cart(product.id)}
+                >
+                  Remove
+                </Button>
+              </GridItem>
+            </Grid>
+          ))}
+
+          <Divider my={8} />
+
+          <Flex justify="space-between" align="center" mb={8}>
+            <Text fontSize="xl" fontWeight="bold">Total:</Text>
+            <Text fontSize="xl" fontWeight="bold">
+              ₵{cart.reduce((sum: number, current: any) => sum + (current.price * current.quantity), 0).toFixed(2)}
+            </Text>
           </Flex>
 
-
-            </GridItem>
-            
-          <GridItem  colSpan={1} w='100%' fontWeight={"bold"} justifyContent={"center"} alignItems={"center"} >
-          <Flex fontWeight={"bold"} justify={"right"} align={"right"}>
-                <Text>{product.price * product.quantity}</Text>
-              </Flex>
-          </GridItem>
-        </Grid>
-
-          </Box>
-        ))}
-        <Divider border={"1px solid grey.100"} borderColor={""} mt={10} />
-
-        <Flex justify={"right"} mt={10} alignItems={"center"} gap={3}>
-        <Text fontWeight={500} fontSize={'xl'}>TOTAL:</Text>
-        <Text fontWeight={500}>{`₵${cart
-                  .reduce(
-                    (sum: any, current: any) =>
-                      sum +
-                      parseFloat(String(current.price * current.quantity)),
-                    0
-                  )
-                  .toFixed(2)}`}</Text>
-        </Flex>
-
-        <Flex justify={"right"} mt={10}>
-            <Link as={NextLink} href={`/shop/payment/${product?.id}`}>
-            <Button p={7} colorScheme="blue" fontSize={'l'}>Proceed To Payment</Button>
-            </Link>
-        </Flex>
-
-        <Flex justify={"right"} mt={5}>
+          <Flex justify="space-between">
             <Link as={NextLink} href="/shop">
-            <Button p={7}  colorScheme="blue" fontSize={'xl'}>Continue Shopping</Button>
+              <Button variant="outline" colorScheme="blue">Continue Shopping</Button>
             </Link>
-        </Flex>
-      </Box>
+            <Link as={NextLink} href={`/shop/payment/${product?.id}`}>
+              <Button colorScheme="blue">Proceed To Payment</Button>
+            </Link>
+          </Flex>
+        </>
+      )}
     </Box>
+    </>
   );
 };
 

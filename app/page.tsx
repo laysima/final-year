@@ -31,9 +31,11 @@ import "./globals.css";
 
 import { getCookie } from "cookies-next";
 import { motion } from "framer-motion";
-import Chatbot from "./components/Chatbot";
-import ProductModal from "./components/ModalAlert";
+import dynamic from 'next/dynamic'
 import ScrollProgressBar from "./components/ScrollProgressBar";
+
+const DynamicChatbot = dynamic(() => import('./components/Chatbot'), { ssr: false })
+const DynamicTermsOfService = dynamic(() => import('./components/TermsOfService'))
 
 export default function Home() {
   const [openedItemId, setOpenedItemId] = useState(null);
@@ -114,12 +116,14 @@ export default function Home() {
                   <Flex>
                     <Box>
                       <Heading
-                        as="div"
-                        // className="typewriter-text"
                         fontFamily='"Outfit", sans-serif'
                         fontSize="4xl"
                       >
-                        GREETINGS {nUser ? nUser?.username : ""}👋  <br />
+                        {nUser ? (
+                          <>Welcome, {nUser.name}! 👋</>
+                        ) : (
+                          <>Welcome to PharmaInc! 👋</>
+                        )}
                       </Heading>
                       <Text maxW={400} mt={10} color={""} mb={10} fontSize="lg">
                         Your Compassionate Ally in Navigating the Path to Optimal
@@ -138,7 +142,7 @@ export default function Home() {
                     </Button>
                   </Link>
 
-                  <Chatbot/>
+                  <DynamicChatbot/>
                 </Flex>
               </Box>
 

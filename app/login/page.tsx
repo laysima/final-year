@@ -1,30 +1,30 @@
 "use client";
 import {
   Text, Input, Box, FormControl, FormLabel, FormHelperText, Link, Flex, InputRightElement, InputGroup,
-  Image, useToast,
+  useToast,
+  Button,
 } from "@chakra-ui/react";
 
 import { Controller, useForm } from "react-hook-form";
-
 import { zodResolver } from '@hookform/resolvers/zod'
-
 import { BsEye, BsEyeSlash } from "react-icons/bs";
-
-// import Link from 'next/link'
 import { useEffect, useState } from "react";
 import NextLink from "next/link";
-
 import React from "react";
 import { LoginSchema, LoginType } from "@/schemas";
 import { LoginUser } from "@/app/api";
 import { useRouter } from "next/navigation";
-import { getCookie, setCookie } from "cookies-next";
+import { getCookie } from "cookies-next";
 
 const Login = () => {
   const [show, setShow] = useState(false);
+
   const handleClick = () => setShow(!show);
+
   const toast = useToast()
+
   const router = useRouter();
+
   const user = getCookie('user');
 
   const [loading, setLoading] = useState(false);
@@ -32,21 +32,14 @@ const Login = () => {
     if (user) {
       router.replace('/')
     }
-  }, [])
+  }, [user, router])
 
-  //reat hook forms
-
-  const { control, handleSubmit, formState: { errors }, } = useForm<LoginType>
-    (
-      {
-        resolver: zodResolver(LoginSchema)
-      }
-    )
+  const { control, handleSubmit, formState: { errors }, } = useForm<LoginType>({
+    resolver: zodResolver(LoginSchema)
+  })
 
   const onSubmit = async (payload: LoginType) => {
     setLoading(true)
-
-    console.log('payload', payload)
 
     try {
       const data = await LoginUser(payload)
@@ -56,7 +49,6 @@ const Login = () => {
         status: 'success',
         isClosable: true,
       })
-      setLoading(false)
     }
     catch (e: any) {
       toast({
@@ -65,7 +57,16 @@ const Login = () => {
         isClosable: true,
       })
     }
+    finally {
+      setLoading(false)  // Reset loading state regardless of success or failure
+    }
   }
+
+  const handleKeyPress = (event: React.KeyboardEvent) => {
+    if (event.key === 'Enter') {
+      handleSubmit(onSubmit)();
+    }
+  };
 
   return (
     <>
@@ -77,18 +78,13 @@ const Login = () => {
         objectFit={"cover"}
         bgRepeat={"no-repeat"}
       >
-        {/* <Flex justify={"center"} w={"full"}>
-          <Box w={"200px"} mt={"60px"}>
-            <Image objectFit={"cover"} src="pharmainc.svg"></Image>
-          </Box>
-        </Flex> */}
-
         <Flex justify={"center"} w={"full"} mt={5} mb={10}>
           <FormControl
             w={"30rem"}
             boxShadow={"1px 1px 8px 5px #EAEFF2, 0 0 10px #EAEFF2"}
             p={"62px 28px"}
             borderRadius={7}
+            onKeyDown={handleKeyPress}
           >
             <Flex textAlign={"center"} direction={"column"} gap={1}>
               <Text
@@ -99,15 +95,15 @@ const Login = () => {
               >
                 Sign In
               </Text>
-              <Text>Welcome Back! Please enter your details</Text>
+              <Text>Welcome! Please enter your details</Text>
             </Flex>
 
             <Flex mt={10} direction={"column"} w={"full"} align={"center"}>
               <Flex direction={"column"} align={"start"} w={"full"}>
-                <FormLabel>Username</FormLabel>
+                <FormLabel>Email </FormLabel>
                 <Controller
                   control={control}
-                  name={"username"}
+                  name={"email"}
                   render={({ field }) => (
                     <Input
                       variant={'flushed'} bg={'#F0F8FF'}
@@ -116,11 +112,12 @@ const Login = () => {
                       placeholder="example"
                       value={field.value}
                       onChange={(e) => field.onChange(e.target.value)}
+                      onKeyDown={handleKeyPress}
                     />
                   )}
                 />
-                <FormHelperText color={errors.username ? 'red' : ''}>
-                  {errors.username ? errors.username.message : 'Please Enter Your Username'}
+                <FormHelperText color={errors.email ? 'red' : ''}>
+                  {errors.email ? errors.email.message : 'Please Enter Your Email'}
                 </FormHelperText>
               </Flex>
             </Flex>
@@ -141,9 +138,9 @@ const Login = () => {
                         type={show ? "text" : "password"}
                         value={field.value}
                         onChange={(e) => field.onChange(e.target.value)}
+                        onKeyDown={handleKeyPress}
                       />
                     )}
-
                   />
                   <InputRightElement width="4.5rem">
                     <button
@@ -164,19 +161,17 @@ const Login = () => {
               </Flex>
             </Flex>
 
+
+            <Flex mt={10}>
+              <Link href='/forgotpassword'>
+              Forgot Password?
+              </Link>
+            </Flex>
+
             <Flex justify={"center"} mt={10}>
-              <button
-                onClick={handleSubmit(onSubmit)}
-                style={{
-                  background: "#0881DE",
-                  padding: "10px",
-                  borderRadius: "7px",
-                  color: "white",
-                  width: "60%",
-                }}
-              >
-                {loading ? 'Signing In.....' : "Sign In"}
-              </button>
+              <Button onClick={handleSubmit(onSubmit)} type="submit" isLoading={loading} colorScheme="blue">
+              {loading? 'Signing In.....':  "Sign In"}
+              </Button>
             </Flex>
 
             <Flex justify={"center"} mt={10}>

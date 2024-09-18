@@ -343,14 +343,27 @@ export const Navbar = () => {
                   <BsCart2 />
                 </Link>
 
-                <Button
-                  fontSize="17px"
-                  borderRadius={5}
-                  colorScheme="blue"
-                  variant={"outline"} 
-                >
-                  {getFirstLetter(nUser ? nUser?.username : "Login")}
-                </Button>
+                {nUser ? (
+                  <Button
+                    fontSize="17px"
+                    borderRadius={5}
+                    colorScheme="blue"
+                    variant={"outline"}
+                  >
+                    {getFirstLetter(nUser.name)}
+                  </Button>
+                ) : (
+                  <Link as={NextLink} href="/login">
+                    <Button
+                      fontSize="17px"
+                      borderRadius={5}
+                      colorScheme="blue"
+                      variant={"outline"}
+                    >
+                      Login
+                    </Button>
+                  </Link>
+                )}
 
                 {nUser && (
                   <IconButton

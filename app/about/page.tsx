@@ -14,6 +14,8 @@ import {
   Divider,
   Container,
   SimpleGrid,
+  Circle,
+  VStack,
 } from "@chakra-ui/react";
 import { FaCheck } from "react-icons/fa";
 import NextLink from "next/link";
@@ -22,17 +24,17 @@ import { FaDumbbell } from "react-icons/fa";
 import { FaHandsHoldingChild } from "react-icons/fa6";
 import { MdOutlineHealthAndSafety } from "react-icons/md";
 import { motion, useScroll } from "framer-motion";
+import ScrollProgressBar from "../components/ScrollProgressBar";
 
-
-const about = () => {
-  // eslint-disable-next-line react-hooks/rules-of-hooks
-  const { scrollYProgress } = useScroll();
+const About = ({ icon, title, description }: { icon: React.ReactNode; title: string; description: string }) => {
+  // No need for eslint-disable comment as we're not using hooks here
 
   return (
     <>
       {/* ///////////////////////////////some other section  part 1/////////////////////////*/}
+      <ScrollProgressBar/>
       <Container maxW={1200} as={motion.div} initial={{ opacity: 0 }}
-  whileInView={{ opacity: 1 }}>
+        whileInView={{ opacity: 1 }}>
         <Flex p={30} gap={10}>
           <Box position={"relative"} display={{base:'none', md:'none', lg:'none'}}>
             <Box width={"600px"}>
@@ -107,145 +109,59 @@ const about = () => {
           </Flex>
         </Flex>
 
-        {/*/////////////////////////////// Core Values ///////////////////////////////////////*/}
-        <Box p={30} mt={"100px"}>
-          <Heading
-            fontFamily={'"Outfit", sans-serif'}
-            color={"#175873"}
-            fontSize={"3xl"}
-            textAlign={"center"}
-          >
-            Our Core Values
-          </Heading>
-          <Text fontSize={"l"} textAlign={"center"}>
-            Mauris porttitor condimentum libero, quis elementum nisi tempor ut.
-            Nulla facilisi. Aenean<br></br> ante nisl, cursus a pretium eget
-            gravida eget sem. Nunc quis purus.
-          </Text>
-
-          <Flex mt={10} gap={4}>
-          <SimpleGrid columns={{base:1, md:2, xl:4}} gap={20}>
-            <Box
-              alignItems={"center"}
-              borderRadius={7}
-              boxShadow={"1px 1px 2px #EAEFF2, 0 0 25px #EAEFF2"}
-            >
-              <Flex
-                p={3}
-                alignItems={"center"}
-                gap={3}
-                justifyContent={"center"}
-                fontSize={"50px"}
-                bg={"#378ba4"}
-                color={"white"}
+        {/* /////////////////////////////// Core Values ///////////////////////////////////////*/}
+        <Box py={16} bg="gray.50">
+          <Container maxW="container.xl">
+            <VStack spacing={8} mb={12}>
+              <Heading
+                fontFamily='"Outfit", sans-serif'
+                color="#175873"
+                fontSize={{ base: "2xl", md: "3xl" }}
+                textAlign="center"
               >
-                <Icon as={TbDentalBroken} />
-                <Heading
-                  mt={3}
-                  fontFamily={'"Outfit", sans-serif'}
-                  alignItems={"center"}
-                  fontSize={"2xl"}
-                >
-                  Medicines
-                </Heading>
-              </Flex>
-              <Text p={5} textAlign={"center"} fontSize={"l"}>
-                Mauris porttitor condimentum libero, quis elementum nisi tempor
-                ut. Nulla facilisi.
+                Our Core Values
+              </Heading>
+              <Text fontSize="lg" textAlign="center" maxW="2xl">
+                Mauris porttitor condimentum libero, quis elementum nisi tempor ut.
+                Nulla facilisi. Aenean ante nisl, cursus a pretium eget gravida eget sem. Nunc quis purus.
               </Text>
-            </Box>
+            </VStack >
 
-            <Box
-              alignItems={"center"}
-              boxShadow={"1px 1px 2px #EAEFF2, 0 0 25px #EAEFF2"}
-              borderRadius={7}
-            >
-              <Flex
-                p={3}
-                alignItems={"center"}
-                gap={3}
-                justifyContent={"center"}
-                fontSize={"50px"}
-                bg={"#378ba4"}
-                color={"white"}
-              >
-                <Icon as={FaHandsHoldingChild} />
-                <Heading
-                  mt={3}
-                  fontFamily={'"Outfit", sans-serif'}
-                  alignItems={"center"}
-                  fontSize={"2xl"}
+            <SimpleGrid columns={{ base: 1, md: 2, lg: 4 }} spacing={8}>
+              {[
+                { icon: TbDentalBroken, title: "Medicines" },
+                { icon: FaHandsHoldingChild, title: "Beauty Care" },
+                { icon: MdOutlineHealthAndSafety, title: "Health Products" },
+                { icon: FaDumbbell, title: "Cardio Care" },
+              ].map((item, index) => (
+                <Box
+                  key={index}
+                  bg="white"
+                  borderRadius="lg"
+                  boxShadow="md"
+                  overflow="hidden"
+                  transition="transform 0.3s"
+                  _hover={{ transform: "translateY(-5px)" }}
                 >
-                  Beauty Care
-                </Heading>
-              </Flex>
-              <Text p={5} fontSize={"l"} mt={5} textAlign={"center"}>
-                Mauris porttitor condimentum libero, quis elementum nisi tempor
-                ut. Nulla facilisi.
-              </Text>
-            </Box>
-
-            <Box
-              alignItems={"center"}
-              boxShadow={"1px 1px 2px #EAEFF2, 0 0 25px #EAEFF2"}
-              borderRadius={7}
-            >
-              <Flex
-                p={3}
-                alignItems={"center"}
-                gap={3}
-                justifyContent={"center"}
-                fontSize={"50px"}
-                bg={"#378ba4"}
-                color={"white"}
-              >
-                <Icon as={MdOutlineHealthAndSafety} />
-                <Heading
-                  mt={3}
-                  fontFamily={'"Outfit", sans-serif'}
-                  alignItems={"center"}
-                  fontSize={"2xl"}
-                >
-                  Health Products
-                </Heading>
-              </Flex>
-              <Text p={5} fontSize={"l"} mt={5} textAlign={"center"}>
-                Mauris porttitor condimentum libero, quis elementum nisi tempor
-                ut. Nulla facilisi.
-              </Text>
-            </Box>
-
-            <Box
-              alignItems={"center"}
-              boxShadow={"1px 1px 2px #EAEFF2, 0 0 25px #EAEFF2"}
-              borderRadius={7}
-            >
-              <Flex
-                p={3}
-                alignItems={"center"}
-                gap={3}
-                justifyContent={"center"}
-                fontSize={"50px"}
-                bg={"#378ba4"}
-                color={"white"}
-              >
-                <Icon as={FaDumbbell} />
-                <Heading
-                  mt={3}
-                  fontFamily={'"Outfit", sans-serif'}
-                  alignItems={"center"}
-                  fontSize={"2xl"}
-                >
-                  Cardio Care
-                </Heading>
-              </Flex>
-              <Text fontSize={"l"} p={5} mt={5} textAlign={"center"}>
-                Mauris porttitor condimentum libero, quis elementum nisi tempor
-                ut. Nulla facilisi.
-              </Text>
-            </Box>
+                  <VStack spacing={4} p={6}>
+                    <Circle size="80px" bg="#378ba4" color="white">
+                      <Icon as={item.icon} fontSize="3xl" />
+                    </Circle>
+                    <Heading
+                      fontFamily='"Outfit", sans-serif'
+                      fontSize="xl"
+                      color="#175873"
+                    >
+                      {item.title}
+                    </Heading>
+                    <Text fontSize="md" textAlign="center">
+                      Mauris porttitor condimentum libero, quis elementum nisi tempor ut. Nulla facilisi.
+                    </Text>
+                  </VStack>
+                </Box>
+              ))}
             </SimpleGrid>
-          </Flex>
+          </Container>
         </Box>
 
         {/* /////////////////////////////// Staff Reach Out/////////////////////////*/}
@@ -314,4 +230,4 @@ const about = () => {
   );
 };
 
-export default about;
+export default About;
