@@ -167,13 +167,12 @@ const About = ({ icon, title, description }: { icon: React.ReactNode; title: str
         {/* /////////////////////////////// Staff Reach Out/////////////////////////*/}
         <Flex mt={20} gap={10} pb={10}>
           <Flex direction={"column"}>
-            <Heading
-              color={"#175873"}
-              fontFamily={'"Outfit", sans-serif'}
+            <Text
+            fontWeight={500}
               fontSize={"3xl"}
             >
               Reach Out To Our Staff
-            </Heading>
+            </Text>
             <Text mt={5} fontSize={"l"}>
               Tristique senectus et netus et malesuada fames ac turpis. Turpis
               massa tincidunt dui ut ornare lectus sit amet. Viverra orci
@@ -185,14 +184,14 @@ const About = ({ icon, title, description }: { icon: React.ReactNode; title: str
               <Input
                 placeholder="Name*"
                 h={"7.5vh"}
-                bg={"#B8E0F7"}
+                variant={"filled"}
                 borderRadius={"none"}
                 border={"none"}
               />
               <Input
                 placeholder="Email*"
                 h={"7.5vh"}
-                bg={"#B8E0F7"}
+                variant={"filled"}
                 borderRadius={"none"}
                 border={"none"}
               />
@@ -200,14 +199,14 @@ const About = ({ icon, title, description }: { icon: React.ReactNode; title: str
                 placeholder="Phone Number*"
                 type="tel"
                 h={"7.5vh"}
-                bg={"#B8E0F7"}
+                variant={"filled"}
                 borderRadius={"none"}
                 border={"none"}
               />
               <Input
                 placeholder="Comment*"
                 h={"7.5vh"}
-                bg={"#B8E0F7"}
+                variant={"filled"}
                 borderRadius={"none"}
                 border={"none"}
               />
@@ -216,14 +215,12 @@ const About = ({ icon, title, description }: { icon: React.ReactNode; title: str
             <Button
               borderRadius={"none"}
               mt={5}
-              w={"70px"}
-              color={"white"}
-              bg="#0394ED"
+              colorScheme="blackAlpha"
             >
               SEND
             </Button>
           </Flex>
-          <Image display={{base:'none', md:'none', lg:'flex'}} src="reach.jpg" alt="reach" mr={12} height={"70vh"}></Image>
+          <Image display={{base:'none', md:'none', lg:'flex'}} src="/reach.jpg" alt="reach" mr={12} height={"70vh"}></Image>
         </Flex>
       </Container>
     </>

@@ -162,7 +162,7 @@ export const Navbar = () => {
                     h={"30px"}
                     objectFit={"contain"}
                     alt="pharmainc"
-                    src="pharmainc.svg"
+                    src="/pharmainc.svg"
                   ></Image>
                 </LinkOverlay>
               </LinkBox>

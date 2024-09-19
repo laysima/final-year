@@ -132,7 +132,7 @@ const Cart = ({ params }: any) => {
                 </Flex>
               </GridItem>
               <GridItem colSpan={2} textAlign="center">
-                <Text>₵{product.price.toFixed(2)}</Text>
+                <Text>{product.price.toFixed(2)}</Text>
               </GridItem>
               <GridItem colSpan={2}>
                 <Flex justify="center" align="center">
@@ -158,7 +158,7 @@ const Cart = ({ params }: any) => {
                 </Flex>
               </GridItem>
               <GridItem colSpan={2} textAlign="right">
-                <Text fontWeight="medium">₵{(product.price * product.quantity).toFixed(2)}</Text>
+                <Text fontWeight="medium">{(product.price * product.quantity).toFixed(2)}</Text>
               </GridItem>
               <GridItem colSpan={12}>
                 <Button
@@ -179,7 +179,7 @@ const Cart = ({ params }: any) => {
           <Flex justify="space-between" align="center" mb={8}>
             <Text fontSize="xl" fontWeight="bold">Total:</Text>
             <Text fontSize="xl" fontWeight="bold">
-              ₵{cart.reduce((sum: number, current: any) => sum + (current.price * current.quantity), 0).toFixed(2)}
+              {cart.reduce((sum: number, current: any) => sum + (current.price * current.quantity), 0).toFixed(2)}
             </Text>
           </Flex>
 

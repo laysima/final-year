@@ -12,6 +12,7 @@ import {
   Icon,
   Container,
   SimpleGrid,
+  VStack,
 } from "@chakra-ui/react";
 import { FaLocationDot, FaPhone } from "react-icons/fa6";
 import { MdMail } from "react-icons/md";
@@ -113,8 +114,7 @@ const about = () => {
             <Button
               borderRadius={"none"}
               mt={5}
-              w={"70px"}
-              bg="#0394ED"
+              colorScheme="blackAlpha"
               color={"white"}
             >
               SEND
@@ -127,87 +127,100 @@ const about = () => {
       </Container>
 
       {/* ////////////////////////////////////our Branches At section ///////////////////////////////// */}
-      <Container maxW={1200}>
-        <Box mt={15}>
-          <Heading
-          mt={20}
-            fontFamily={'"Outfit", sans-serif'}
-            color={"#175873"}
-            fontSize={"3xl"}
-            textAlign={"center"}
-          >
-            Our Branches At
-          </Heading>
-          <Text fontSize={"xl"} textAlign={"center"}>
-            Yet to be commuincated
-          </Text>
-
-          <Flex gap={5} justifyContent={"center"} mt={3} p={12}>
-          <SimpleGrid columns={{base:1, md:2, xl:2}} gap={20}>
-            <Box
-              border={"1px solid #0881DE"}
-              p={"50px"}
-              bg={"#D9EEFA"}
-              borderRadius={"5px"}
-              _hover={{
-                border: "2px solid #0881DE",
-                cursor: "pointer",
-                transform: "scale(1.05)",
-                transition: "transform 0.2s ease-in-out",
-              }}
+      <Container maxW={1200} py={20}>
+        <VStack spacing={12} align="stretch">
+          <Box textAlign="center">
+            <Heading
+              fontFamily='"Outfit", sans-serif'
+              color="#175873"
+              fontSize="4xl"
+              mb={4}
             >
-              <Heading
-                textColor={"teal"}
-                fontSize={"2xl"}
-                fontFamily={'"Outfit", sans-serif'}
+              Our Locations
+            </Heading>
+            <Text fontSize="xl" maxW="2xl" mx="auto">
+              Find us at these convenient locations to serve you better.
+            </Text>
+          </Box>
+
+          <SimpleGrid columns={{ base: 1, md: 2, lg: 3 }} spacing={10}>
+            {[
+              {
+                title: "Main Branch",
+                address: "58 A, East Madison Street, Baltimore, MD, USA 4508",
+                phone: "000 - 123 - 45678",
+                email: "info@example.com",
+              },
+              {
+                title: "Downtown Office",
+                address: "123 City Center, New York, NY, USA 10001",
+                phone: "000 - 987 - 65432",
+                email: "downtown@example.com",
+              },
+              {
+                title: "West Coast Branch",
+                address: "456 Ocean Avenue, San Francisco, CA, USA 94122",
+                phone: "000 - 789 - 01234",
+                email: "westcoast@example.com",
+              },
+            ].map((branch, index) => (
+              <Box
+                key={index}
+                bg={'#EAEFF2'}
+                p={6}
+                transition="all 0.3s"
+                _hover={{
+                  transform: "translateY(-5px)",
+                  boxShadow: "xl",
+                }}
               >
-                Address
-              </Heading>
+                <Heading
+                  fontSize="2xl"
+                  fontFamily='"Outfit", sans-serif'
+                  mb={4}
+                >
+                  {branch.title}
+                </Heading>
+                <VStack align="start" spacing={3}>
+                  <Flex align="center">
+                    <Icon as={FaLocationDot}  mr={2} />
+                    <Text fontSize="md">{branch.address}</Text>
+                  </Flex>
+                  <Flex align="center">
+                    <Icon as={FaPhone}  mr={2} />
+                    <Text fontSize="md">{branch.phone}</Text>
+                  </Flex>
+                  <Flex align="center">
+                    <Icon as={MdMail}  mr={2} />
+                    <Text fontSize="md">{branch.email}</Text>
+                  </Flex>
+                </VStack>
+              </Box>
+            ))}
+          </SimpleGrid>
 
-              <Flex alignItems={"center"} gap={2}>
-                <Icon as={FaLocationDot} />
-                <Text fontSize={"20px"}>
-                  {" "}
-                  No: 58 A, East Madison Street, Baltimore, MD, USA 4508
-                </Text>
-              </Flex>
-
-              <Flex alignItems={"center"} gap={2}>
-                <Icon as={FaPhone} />
-                <Text fontSize={"20px"}>000 - 123 - 45678</Text>
-              </Flex>
-
-              <Flex alignItems={"center"} gap={2}>
-                <Icon as={MdMail} />
-                <Text fontSize={"20px"}>info@example.com</Text>
-              </Flex>
-            </Box>
-
-            <Box
-              border={"1px solid teal"}
-              p={"50px"}
-              bg={"#D9EEFA"}
-              borderRadius={"5px"}
-              _hover={{
-                border: "2px solid #29A0B1",
-                cursor: "pointer",
-                transform: "scale(1.05)",
-                transition: "transform 0.2s ease-in-out",
-              }}
+          <Box textAlign="center">
+            <Heading
+              fontFamily='"Outfit", sans-serif'
+              color="#175873"
+              fontSize="3xl"
+              mb={4}
             >
-              <Heading
-                textColor={"teal"}
-                fontSize={"2xl"}
-                fontFamily={'"Outfit", sans-serif'}
-              >
-                Call Us
-              </Heading>
-              <Text fontSize={"20px"}>+233 50 924 6726</Text>
-              <Text fontSize={"20px"}>+233 59 811 9295</Text>
-            </Box>
-            </SimpleGrid>
-          </Flex>
-        </Box>
+              Need Assistance?
+            </Heading>
+            <Text fontSize="xl" mb={6}>
+              Our customer support team is available 24/7 to help you.
+            </Text>
+            <Button
+              colorScheme="blue"
+              size="lg"
+              leftIcon={<FaPhone />}
+              onClick={() => window.location.href = 'tel:+233509246726'}
+            >
+              Call Us Now
+            </Button>
+          </Box>
+        </VStack>
       </Container>
     </>
   );

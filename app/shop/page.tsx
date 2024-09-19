@@ -30,7 +30,7 @@ import { BiSearch } from "react-icons/bi";
 import { useCartStore } from "@/zustand/store";
 import PageWrap from "../components/PageWrap";
 // import { GetProducts } from "@/app/api";
-import { useQuery } from "@tanstack/react-query";
+import { focusManager, useQuery } from "@tanstack/react-query";
 import { getCookie } from "cookies-next";
 
 const variants = {
@@ -48,7 +48,7 @@ function formatString(name: string): string {
   return name.replace(
     /\w\S*/g,
     (word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
-  );
+  ).replace(/_/g, ' ');
 }
 
 export default function Page({ searchParams, }: {
@@ -62,21 +62,38 @@ export default function Page({ searchParams, }: {
   })
 
   const page = searchParams["page"] ?? "1";
+
   const per_page = searchParams["per_page"] ?? "8";
+
   const start = (Number(page) - 1) * Number(per_page); // 0, 5, 10 ...
+
   const end = start + Number(per_page); // 5, 10, 15 ... 
 
   const [showText, setShowText] = useState(false);
+
   const { add_to_cart, cart } = useCartStore();
+
   const [counter, setCounter] = useState(1);
+
   const [getData, setData] = useState<[]>(products || [])
+
   const [getSearch, setSearch] = useState("");
+
   const [getFilter, setFilter] = useState("");
+
   const [getSort, setSort] = useState("");
+
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const token = getCookie('token')
+
   const user = getCookie('user')
+
+
+  function formatNumber(num: number) {
+    return num.toLocaleString('en-US', { style: 'currency', currency: 'GHS' });
+  }
+
 
   const AddToCart = (product: any) => {
     if (!token || !user) {
@@ -287,6 +304,7 @@ export default function Page({ searchParams, }: {
                     >
                       <motion.image variants={images}>
                         <Image
+                          alt="image"
                           src={product.image}
                           boxSize="200px"
                           objectFit="cover"
@@ -337,9 +355,9 @@ export default function Page({ searchParams, }: {
 
                     <Box p="5">
                       <Text colorScheme="teal" fontWeight="bold">
-                        {product.name}
+                        {formatString(product.name)}
                       </Text>
-                      <Text>₵{product.price}</Text>
+                      <Text>{formatNumber(product.price)}</Text>
                     </Box>
                   </motion.div>
                 </Box>

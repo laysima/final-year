@@ -30,10 +30,8 @@ import {
   Spinner,
   RadioGroup,
   Radio,
-  FormControl,
-  FormLabel,
-  VStack,
   Heading,
+  Progress,
 } from '@chakra-ui/react';
 import { HiOutlineChatBubbleLeftRight } from 'react-icons/hi2';
 import { MdCheckCircle } from 'react-icons/md';
@@ -85,6 +83,11 @@ const Chatbot = () => {
     'App-Key': '19bec17ce7f699fc0ce1a4da40155808',
     'Content-Type': 'application/json',
   };
+
+  function validateAge(age: string) {
+    const ageInt = parseInt(age);
+    return !isNaN(ageInt) && ageInt >= 18 && ageInt <= 120;
+  }
 
   const startDiagnosis = async () => {
     setLoading(true);
@@ -211,7 +214,7 @@ const Chatbot = () => {
               </Box>
             </Flex>
             <Flex p={6} justify={'center'} align={'center'}>
-              <Image src="ai.jpg" alt='reach' boxSize={'300px'} />
+              <Image src="/ai.jpg" alt='reach' boxSize={'300px'} />
             </Flex>
           </Flex>
         </Box>
@@ -254,7 +257,7 @@ const Chatbot = () => {
             </Stack>
           </Flex>
           <Flex p={6}>
-            <Image src="policy.png" alt='reach' boxSize={'300px'} />
+            <Image src="/policy.png" alt='reach' boxSize={'300px'} />
           </Flex>
         </Flex>
       ),
@@ -262,28 +265,46 @@ const Chatbot = () => {
     {
       content: (
         <Box>
-            <Text fontWeight={300} fontSize={'30px'}>What is your Sex</Text>
+          <Flex justify={'center'} align={'center'} p={10}>
+            <Text fontWeight={500} fontSize={'2xl'} mb={8}>Select your biological sex</Text>
+          </Flex>
 
-            <Flex gap={10} justify={'center'} align={'center'} pt={100} >
+            <Flex gap={6} p={10} justify={'center'} align={'center'}>
                 <Button 
                    onClick={() => setSex('male')}
-                   border={sex === 'male' ? '1px solid blue' : 'none'} boxSize={'200px'} _hover={{
-                    bgColor: '#F7FAFC', transform: '0.2s linear', transition:'0.5s'
-                }}>
+                   bg={sex === 'male' ? 'blue.500' : 'gray.100'}
+                   color={sex === 'male' ? 'white' : 'gray.800'}
+                   _hover={{
+                    bg: sex === 'male' ? 'blue.600' : 'gray.200',
+                   }}
+                   size="lg"
+                   width="150px"
+                   height="150px"
+                   borderRadius="md"
+                   transition="all 0.3s"
+                >
                     <Flex direction={'column'} justify={'center'} align={'center'}>
-                        <Icon fontSize={'70px'} as={IoIosMale} />
-                        <Text fontWeight={300} fontSize={'20px'}>Male</Text>
+                        <Icon fontSize={'50px'} as={IoIosMale} mb={2} />
+                        <Text fontWeight={400} fontSize={'lg'}>Male</Text>
                     </Flex>
                 </Button>
 
                 <Button 
                   onClick={() => setSex('female')}
-                  border={sex === 'female' ? '1px solid blue ' : 'none'} boxSize={'200px'} _hover={{
-                  bgColor: '#F7FAFC', transform: '0.2s linear', transition:'0.5s'
-                }}>
+                  bg={sex === 'female' ? 'pink.500' : 'gray.100'}
+                  color={sex === 'female' ? 'white' : 'gray.800'}
+                  _hover={{
+                    bg: sex === 'female' ? 'pink.600' : 'gray.200',
+                  }}
+                  size="lg"
+                  width="150px"
+                  height="150px"
+                  borderRadius="md"
+                  transition="all 0.3s"
+                >
                     <Flex direction={'column'} justify={'center'} align={'center'}>
-                        <Icon fontSize={'70px'} as={IoIosFemale} />
-                        <Text fontWeight={300} fontSize={'20px'}>Female</Text>
+                        <Icon fontSize={'50px'} as={IoIosFemale} mb={2} />
+                        <Text fontWeight={400} fontSize={'lg'}>Female</Text>
                     </Flex>
                 </Button>
             </Flex>
@@ -313,7 +334,7 @@ const Chatbot = () => {
         <Box>
           <Flex justify={'center'} align={'center'} direction={'column'}>
             <Text fontWeight={300} fontSize={'30px'}>How are you feeling today?</Text>
-            <Image pt={7} src="chatbot-removed.png" alt='reach' boxSize={'300px'} />
+            <Image pt={7} src="/chatbot-removed.png" alt='reach' boxSize={'300px'} />
           </Flex>
 
           <Flex direction={'column'} pt={5} justify={'center'} align={'center'}>
@@ -378,6 +399,9 @@ const Chatbot = () => {
     }
   ];
 
+  const totalSteps = pages.length;
+  const progressPercentage = ((step + 1) / totalSteps) * 100;
+
   const handleNext = () => {
     if (step === 1 && (!termsAccepted.termsOfService || !termsAccepted.privacyPolicy)) {
       alert('Please accept all checkboxes before proceeding.');
@@ -419,7 +443,15 @@ const Chatbot = () => {
           <DrawerOverlay />
           <DrawerContent bg={'#edf2f3'}>
             <DrawerCloseButton />
-            <DrawerHeader bg={'blue.100'}><strong>INFERMEDICA</strong> Chatbot</DrawerHeader>
+            <DrawerHeader bg={'blue.100'}>
+              AI Heath Assistant
+              <Progress 
+                value={progressPercentage} 
+                size="sm" 
+                colorScheme="blue" 
+                mt={2}
+              />
+            </DrawerHeader>
             <DrawerBody>
               <Box>{pages[step].content}</Box>
             </DrawerBody>

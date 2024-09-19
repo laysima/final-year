@@ -255,7 +255,7 @@ export default function Payment({ params }: any) {
                     </Flex>
                     <Flex alignItems={"center"}>
                       <Text fontWeight={"bold"} flexShrink={0}>
-                        ₵{product?.price}
+                        {product?.price}
                       </Text>
                       <IconButton
                         borderRadius={0}
@@ -290,7 +290,7 @@ export default function Payment({ params }: any) {
                   Total
                 </Text>
                 {/* <Text fontWeight={'bold'} flexShrink={0}>${cart.reduce(function (sum: any, current: any) { return (parseFloat(sum) + parseFloat(current.price)).toFixed(2) }, 0)}</Text> */}
-                <Text fontWeight={"bold"} flexShrink={0}>{`₵${cart
+                <Text fontWeight={"bold"} flexShrink={0}>{`${cart
                   .reduce(
                     (sum: any, current: any) =>
                       sum +

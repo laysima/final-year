@@ -16,6 +16,7 @@ import {
   Link,
   Icon,
   Container,
+  Avatar,
 } from "@chakra-ui/react";
 import { PiHandshakeLight } from "react-icons/pi";
 import { IoMdHeartEmpty } from "react-icons/io";
@@ -524,311 +525,133 @@ export default function Home() {
           </Box>
 
           {/* ///////////////////////////////some other section  part 1/////////////////////////*/}
-          <Container maxW={1200} pt={40} pb={10}>
-            <Flex gap={5}>
-              <Flex direction={"column"} display={{ base: "flex", lg: "flex" }}>
-                <Box bg={"#0881DE"}>
+          <Container maxW={1200} py={20}>
+            <SimpleGrid columns={{ base: 1, lg: 2 }} spacing={10}>
+              <Box>
+                <Box bg={"#0881DE"} mb={6}>
                   <Text
                     color={"white"}
                     p={5}
-                    fontWeight={500}
+                    fontWeight={600}
                     fontFamily={'"Outfit", sans-serif'}
                     fontSize={"xl"}
                   >
                     Excellent Medical Professionals With Significant Experience
                   </Text>
                 </Box>
-                <Text mt={5} fontSize={"lg"}>
+                <Text fontSize={"lg"} mb={6}>
                   Tristique senectus et netus et malesuada fames ac turpis. Turpis
                   massa tincidunt dui ut ornare lectus sit amet. Viverra orci
-                  sagittis eu volutpat odio facilisis mauris sit amet. Imperdiet
-                  proin fermentum leo vel orci porta non pulvinar.
+                  sagittis eu volutpat odio facilisis mauris sit amet.
                 </Text>
-                <Link as={NextLink} href="/">
+                <Link as={NextLink} href="/shop">
                   <Button
                     fontSize={"sm"}
-                    mt={5}
-                    width={"150px"}
-                    bgColor="#B8E0F7"
-                    borderRadius={"0px"}
+                    mb={8}
+                    px={8}
+                    py={4}  
+                    variant={"outline"}
+                    colorScheme="blue"
                   >
                     SHOP NOW
                   </Button>
                 </Link>
 
-                <Flex mt={5} gap={"50px"}>
-                  <Flex alignItems={"center"} gap={2}>
-                    <PiHandshakeLight fontSize={"45px"} />
-                    <Flex direction={"column"}>
-                      <Heading
-                        color={"#175873"}
-                        fontSize={"2xl"}
-                        fontFamily={'"Outfit", sans-serif'}
-                      >
-                        200k +
-                      </Heading>
-                      <Text color={"ash"}>Happy clients</Text>
+                <SimpleGrid columns={2} spacing={8}>
+                  {[
+                    { icon: PiHandshakeLight, title: "200k +", subtitle: "Happy clients" },
+                    { icon: IoMdHeartEmpty, title: "50k +", subtitle: "Orders delivered" },
+                    { icon: GoPersonAdd, title: "80 +", subtitle: "Area Served" },
+                    { icon: IoTrophyOutline, title: "5L", subtitle: "Medicines" },
+                  ].map((item, index) => (
+                    <Flex key={index} alignItems={"center"} gap={4}>
+                      <Icon as={item.icon} fontSize={"3xl"} color={"#0881DE"} />
+                      <Box>
+                        <Heading
+                          color={"#175873"}
+                          fontSize={"2xl"}
+                          fontFamily={'"Outfit", sans-serif'}
+                        >
+                          {item.title}
+                        </Heading>
+                        <Text color={"gray.600"}>{item.subtitle}</Text>
+                      </Box>
                     </Flex>
-                  </Flex>
+                  ))}
+                </SimpleGrid>
+              </Box>
 
-                  <Flex alignItems={"center"} gap={2}>
-                    <IoMdHeartEmpty fontSize={"45px"} />
-                    <Flex direction={"column"}>
-                      <Heading
-                        color={"#175873"}
-                        fontSize={"2xl"}
-                        fontFamily={'"Outfit", sans-serif'}
-                      >
-                        50k +
-                      </Heading>
-                      <Text color={"ash"}>Orders delivered</Text>
-                    </Flex>
-                  </Flex>
-                </Flex>
-
-                <Flex mt={5} gap={"60px"}>
-                  <Flex alignItems={"center"} gap={2}>
-                    <GoPersonAdd fontSize={"45px"} />
-                    <Flex direction={"column"}>
-                      <Heading
-                        color={"#175873"}
-                        fontSize={"2xl"}
-                        fontFamily={'"Outfit", sans-serif'}
-                      >
-                        80 +
-                      </Heading>
-                      <Text color={"ash"}>Area Served</Text>
-                    </Flex>
-                  </Flex>
-
-                  <Flex alignItems={"center"} gap={2}>
-                    <IoTrophyOutline fontSize={"45px"} />
-                    <Flex direction={"column"}>
-                      <Heading
-                        color={"#175873"}
-                        fontSize={"2xl"}
-                        fontFamily={'"Outfit", sans-serif'}
-                      >
-                        5L
-                      </Heading>
-                      <Text color={"ash"}>Medicines</Text>
-                    </Flex>
-                  </Flex>
-                </Flex>
-              </Flex>
-              <Box
-                position="relative"
-                borderRadius={"5px"}
-                display={{ base: "none", lg: "flex" }}
-              >
-                <Box width={"700px"} height={"auto"}>
-                  <Image
-                    borderRadius={"5%"}
-                    width={"full"}
-                    objectFit={"cover"}
-                    src="m3.jpg"
-                    bgRepeat={"no-repeat"}
-                    alt='image'
-                  />
-                </Box>
-
-                <Box
+              <Box position="relative">
+                <Image
+                  borderRadius={"lg"}
+                  w={"full"}
+                  h={"60dvh"}
+                  objectFit={"cover"}
+                  src="m3.jpg"
+                  alt='Medical professionals'
+                />
+                <Flex
                   position="absolute"
-                  top="-60px"
-                  right="-5"
+                  top={-10}
+                  right={-5}
                   bg="white"
-                  color="black"
                   borderRadius="full"
-                  boxSize={"250px"}
-                  display="flex"
+                  boxSize={"200px"}
+                  flexDirection="column"
                   alignItems="center"
                   justifyContent="center"
-                  fontSize="sm"
+                  boxShadow="lg"
                 >
-                  <Flex
-                    direction={"column"}
-                    color={""}
-                    textAlign={"center"}
-                    fontWeight={500}
-                  >
-                    <Text color={"#0881DE"} fontSize={"3xl"}>
-                      25 +
-                    </Text>
-                    <Text fontSize={"2xl"}>Years of Experience</Text>
-                  </Flex>
-                </Box>
+                  <Text color={"#0881DE"} fontSize={"3xl"} fontWeight="bold">
+                    Beginner+
+                  </Text>
+                  <Text fontSize={"xl"} textAlign="center">
+                    Company
+                  </Text>
+                </Flex>
               </Box>
-            </Flex>
+            </SimpleGrid>
           </Container>
 
-          {/* //////////////////////////////// hover list section ///////////////////////////////////////*/}
-          <Container maxW={1200}>
-            <Box>
-              <Flex gap={5} textColor={"#0C1446"} _hover={{ cursor: "pointer" }}>
-                <SimpleGrid columns={{ base: 1, md: 2, xl: 4 }} gap={20}>
-                  {/* float 1 */}
+          {/* Services Section */}
+          <Box bg="gray.50" py={20}>
+            <Container maxW={1200}>
+              <SimpleGrid columns={{ base: 1, md: 2, lg: 4 }} spacing={8}>
+                {[
+                  { icon: TbDentalBroken, title: "Dental Wellness" },
+                  { icon: FaHandsHoldingChild, title: "Accessibility" },
+                  { icon: MdOutlineHealthAndSafety, title: "Health Products" },
+                  { icon: FaDumbbell, title: "Wellness Products" },
+                ].map((service, index) => (
                   <Flex
-                    position="relative"
-                    height={"10vh"}
-                    _before={{
-                      content: '""',
-                      position: "absolute",
-                      right: 0,
-                      height: "100%",
-                      width: "0%",
-                      bgColor: "#ECECEB",
-                      transition: "width 0.5s ease-in-out",
-                      zIndex: 0,
-                    }}
-                    _hover={{ border: "0.5px solid", _before: { width: "100%" } }}
+                    key={index}
+                    direction="column"
+                    align="center"
+                    p={6}
+                    borderRadius="lg"
+                    bg="white"
+                    boxShadow="md"
+                    transition="all 0.3s"
+                    _hover={{ transform: "translateY(-5px)", boxShadow: "xl" }}
                   >
-                    <Flex p={2} alignItems={"center"}>
-                      <Flex
-                        position={"relative"}
-                        borderRadius={"50%"}
-                        mr={3}
-                        p={3}
-                        alignItems={"center"}
-                        fontSize={"50px"}
-                        bg={"#05abc4"}
-                        color={"white"}
-                      >
-                        <TbDentalBroken />
-                      </Flex>
-                      <Text w={200} fontWeight={500} fontSize={"2xl"} zIndex={1}>
-                        Dental Wellness
-                      </Text>
+                    <Flex
+                      borderRadius={"full"}
+                      mb={4}
+                      p={4}
+                      fontSize={"3xl"}
+                      bg={"#05abc4"}
+                      color={"white"}
+                    >
+                      <Icon as={service.icon} />
                     </Flex>
-                    <Divider
-                      orientation="vertical"
-                      borderColor={"black"}
-                      height={"10vh"}
-                    />
+                    <Text fontWeight={600} fontSize={"xl"} textAlign="center">
+                      {service.title}
+                    </Text>
                   </Flex>
-
-                  {/* Float 2 */}
-                  <Flex
-                    position="relative"
-                    height={"10vh"}
-                    _before={{
-                      content: '""',
-                      position: "absolute",
-                      right: 0,
-                      height: "100%",
-                      width: "0%",
-                      bgColor: " #ECECEB",
-                      transition: "width 0.5s ease-in-out",
-                      zIndex: 0,
-                    }}
-                    _hover={{ border: "0.5px solid", _before: { width: "100%" } }}
-                  >
-                    <Flex p={2} alignItems={"center"}>
-                      <Flex
-                        position={"relative"}
-                        borderRadius={"50%"}
-                        mr={3}
-                        p={3}
-                        alignItems={"center"}
-                        fontSize={"50px"}
-                        bg={"#05abc4"}
-                        color={"white"}
-                      >
-                        <FaHandsHoldingChild />
-                      </Flex>
-                      <Text w={200} fontWeight={500} fontSize={"2xl"} zIndex="1">
-                        Acessibily Easier
-                      </Text>
-                    </Flex>
-                    <Divider
-                      orientation="vertical"
-                      borderColor={"black"}
-                      height={"10vh"}
-                    />
-                  </Flex>
-
-                  {/* float 3 */}
-                  <Flex
-                    position="relative"
-                    height={"10vh"}
-                    _before={{
-                      content: '""',
-                      position: "absolute",
-                      right: 0,
-                      height: "100%",
-                      width: "0%",
-                      bgColor: " #ECECEB",
-                      transition: "width 0.5s ease-in-out",
-                      zIndex: 0,
-                    }}
-                    _hover={{ border: "0.5px solid", _before: { width: "100%" } }}
-                  >
-                    <Flex p={2} alignItems={"center"}>
-                      <Flex
-                        position={"relative"}
-                        borderRadius={"50%"}
-                        mr={3}
-                        p={3}
-                        alignItems={"center"}
-                        fontSize={"50px"}
-                        bg={"#05abc4"}
-                        color={"white"}
-                      >
-                        <MdOutlineHealthAndSafety />
-                      </Flex>
-                      <Text w={200} fontWeight={500} fontSize={"2xl"} zIndex="1">
-                        Health Products
-                      </Text>
-                    </Flex>
-                    <Divider
-                      orientation="vertical"
-                      borderColor={"black"}
-                      height={"10vh"}
-                    />
-                  </Flex>
-
-                  {/* float 4 */}
-                  <Flex
-                    position="relative"
-                    height={"10vh"}
-                    _before={{
-                      content: '""',
-                      position: "absolute",
-                      right: 0,
-                      height: "100%",
-                      width: "0%",
-                      bgColor: " #ECECEB",
-                      transition: "width 0.5s ease-in-out",
-                      zIndex: 0,
-                    }}
-                    _hover={{ border: "0.5px solid", _before: { width: "100%" } }}
-                  >
-                    <Flex p={2} zIndex="1" alignItems={"center"}>
-                      <Flex
-                        position={"relative"}
-                        borderRadius={"50%"}
-                        mr={3}
-                        p={3}
-                        alignItems={"center"}
-                        fontSize={"50px"}
-                        bg={"#05abc4"}
-                        color={"white"}
-                      >
-                        <FaDumbbell />
-                      </Flex>
-                      <Text w={200} fontWeight={500} fontSize={"2xl"}>
-                        Wellness Products
-                      </Text>
-                    </Flex>
-                    <Divider
-                      orientation="vertical"
-                      borderColor={"black"}
-                      height={"10vh"}
-                    />
-                  </Flex>
-                </SimpleGrid>
-              </Flex>
-            </Box>
-          </Container>
+                ))}
+              </SimpleGrid>
+            </Container>
+          </Box>
 
           {/* ////////////////////////////////////Other products ////////////////////////// */}
           <Container maxW={1200} pt={40}>
@@ -997,7 +820,7 @@ export default function Home() {
                         cursor="pointer"
                       >
                         <Box>
-                          <Text>{item.question}</Text>
+                          <Text fontSize={'lg'}>{item.question}</Text>
                         </Box>
                         <FaCheckCircle />
                       </Flex>
@@ -1005,8 +828,7 @@ export default function Home() {
                         <Box
                           p={"30px"}
                           bg={"#F9F9F8"}
-                          color={"#0394ED"}
-                          fontSize={"xl"}
+                          fontSize={"sm"}
                         >
                           {item.answer}
                         </Box>
@@ -1043,144 +865,59 @@ export default function Home() {
               </Text>
             </ScrollAnimationBox>
 
-            <Flex gap={4} mb={5} justifyContent={"center"} id="section 2">
-              <SimpleGrid columns={{ base: 1, md: 3, xl: 3 }} gap={10}>
-                <Flex
-                  borderRadius={10}
-                  p={"30px"}
-                  bg={"#F9F9F8"}
-                  alignItems={"center"}
-                >
-                  <Flex direction={"column"} alignItems={"center"}>
-                    <Box border={"2px solid blue"} p={0.5} borderRadius={100}>
-                      <Image
-                        boxSize={50}
-                        borderRadius={"100%"}
-                        align={"center"}
-                        objectFit={"cover"}
-                        src="w1.jpg"
-                        alt='image'
+            <Box py={10}>
+              <SimpleGrid columns={{ base: 1, md: 3 }} spacing={8}>
+                {[
+                  {
+                    name: "Shakur",
+                    country: "Ghana",
+                    image: "w1.jpg",
+                    review: "Pharmacy Web App is a game-changer in the pharmacy industry. It's easy to use, fast, and reliable. I can now order my medications with just a few clicks, and the service is top-notch. Highly recommended for saving time and money on medications."
+                  },
+                  {
+                    name: "Calvin",
+                    country: "United Kingdom",
+                    image: "m2.jpg",
+                    review: "I'm impressed with the efficiency of Pharmacy Web App. The user interface is intuitive, and the delivery is always on time. It has made managing my prescriptions so much easier. A must-try for anyone looking for a hassle-free pharmacy experience."
+                  },
+                  {
+                    name: "Jessie",
+                    country: "United States of America",
+                    image: "m1.jpg",
+                    review: "As someone with chronic health issues, Pharmacy Web App has been a lifesaver. The ability to set up recurring orders and the helpful reminders ensure I never run out of my essential medications. The customer service is exceptional too!"
+                  }
+                ].map((testimonial, index) => (
+                  <Box
+                    key={index}
+                    bg="white"
+                    boxShadow="lg"
+                    borderRadius="lg"
+                    p={6}
+                    transition="all 0.3s"
+                    _hover={{ transform: "translateY(-5px)" }}
+                  >
+                    <Flex direction="column" align="center">
+                      <Avatar
+                        size="xl"
+                        src={testimonial.image}
+                        mb={4}
+                        border="4px solid"
+                        borderColor="blue.500"
                       />
-                    </Box>
-                    <Text textAlign={"center"}>
-                      Pharmacy Web App is a game-changer in the pharmacy industry.
-                      It&apos;s easy to use, fast, and reliable. I can now order my
-                      medications with just a few clicks, and service is also
-                      top-notch. I highly recommend Pharmacy Web App to anyone who
-                      wants to save time and money on their medications.
-                    </Text>
-
-                    <Text
-                      mt={5}
-                      fontStyle={"italic"}
-                      fontWeight={500}
-                      textAlign={"center"}
-                    >
-                      Shakur
-                    </Text>
-
-                    <Text
-                      fontStyle={"italic"}
-                      color={"#0881DE"}
-                      fontWeight={500}
-                      textAlign={"center"}
-                    >
-                      Ghana
-                    </Text>
-                  </Flex>
-                </Flex>
-
-                <Flex
-                  borderRadius={10}
-                  p={"30px"}
-                  bg={"#F9F9F8"}
-                  alignItems={"center"}
-                >
-                  <Flex direction={"column"} alignItems={"center"}>
-                    <Box border={"2px solid blue"} p={0.5} borderRadius={100}>
-                      <Image
-                        boxSize={50}
-                        borderRadius={"100%"}
-                        align={"center"}
-                        objectFit={"cover"}
-                        src="m2.jpg"
-                        alt='m2'
-                      />
-                    </Box>
-                    <Text textAlign={"center"}>
-                      Pharmacy Web App is a game-changer in the pharmacy industry.
-                      It&apos;s easy to use, fast, and reliable. I can now order my
-                      medications with just a few clicks, and service is also
-                      top-notch. I highly recommend Pharmacy Web App to anyone who
-                      wants to save time and money on their medications.
-                    </Text>
-
-                    <Text
-                      mt={5}
-                      fontStyle={"italic"}
-                      fontWeight={500}
-                      textAlign={"center"}
-                    >
-                      Calvin
-                    </Text>
-
-                    <Text
-                      fontStyle={"italic"}
-                      color={"#0881DE"}
-                      fontWeight={500}
-                      textAlign={"center"}
-                    >
-                      United Kingdom
-                    </Text>
-                  </Flex>
-                </Flex>
-
-                <Flex
-                  borderRadius={10}
-                  p={"30px"}
-                  bg={"#F9F9F8"}
-                  alignItems={"center"}
-                >
-                  <Flex direction={"column"} alignItems={"center"}>
-                    <Box border={"2px solid blue"} p={0.5} borderRadius={100}>
-                      <Image
-                        boxSize={50}
-                        borderRadius={"100%"}
-                        align={"center"}
-                        objectFit={"cover"}
-                        src="m1.jpg"
-                        alt='image'
-                      />
-                    </Box>
-                    <Text textAlign={"center"}>
-                      Pharmacy Web App is a game-changer in the pharmacy industry.
-                      It&apos;s easy to use, fast, and reliable. I can now order my
-                      medications with just a few clicks, and service is also
-                      top-notch. I highly recommend Pharmacy Web App to anyone who
-                      wants to save time and money on their medications.
-                    </Text>
-
-                    <Text
-                      mt={5}
-                      fontStyle={"italic"}
-                      fontWeight={500}
-                      textAlign={"center"}
-                    >
-                      Jessie
-                    </Text>
-
-                    <Text
-                      fontStyle={"italic"}
-                      color={"#0881DE"}
-                      fontWeight={500}
-                      textAlign={"center"}
-                    >
-                      United States Of America
-                    </Text>
-                  </Flex>
-                </Flex>
+                      <Text fontSize="lg" fontWeight="bold" mb={2}>
+                        {testimonial.name}
+                      </Text>
+                      <Text fontSize="sm" color="gray.500" mb={4}>
+                        {testimonial.country}
+                      </Text>
+                      <Text textAlign="center" fontSize="sm" color="gray.600">
+                        &quot;{testimonial.review}&quot;
+                      </Text>
+                    </Flex>
+                  </Box>
+                ))}
               </SimpleGrid>
-            </Flex>
+            </Box>
           </Container>
 
           {/* <Box p={5}>

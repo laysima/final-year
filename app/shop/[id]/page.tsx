@@ -68,6 +68,17 @@ const ProductDetail = ({ params }: any) => {
 
   const [counter, setCounter] = useState(1);
 
+  function formatNumber(num: number) {
+    return num.toLocaleString('en-US', { style: 'currency', currency: 'GHS' });
+  }
+  
+  function formatString(name: string | undefined): string {
+    if (!name) return '';
+    return name.replace(
+      /\w\S*/g,
+      (word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
+    ).replace(/_/g, ' ');
+  }
 
   const { data: product , isLoading } = useQuery({
     queryKey: [`product_${id}`, id], queryFn: async () => {
@@ -138,7 +149,7 @@ const ProductDetail = ({ params }: any) => {
             color={"white"}
             fontSize={"5xl"}
           >
-            {product?.name}
+            {formatString(product?.name)}
           </Heading>
           </Skeleton>
           <Flex alignItems={"center"} textAlign={"center"}>
@@ -154,7 +165,7 @@ const ProductDetail = ({ params }: any) => {
             </Link>
             <FaAngleRight style={{ color: "white", fontSize: "xl" }} />
             <Text color={"white"} fontSize={"1.2em"}>
-              {product?.name}
+              {formatString(product?.name)}
             </Text>
           </Flex>
         </Center>
@@ -171,9 +182,9 @@ const ProductDetail = ({ params }: any) => {
               <Box>
                 <SkeletonText isLoaded={!isLoading}>
                   <Text fontSize={"3xl"} fontWeight={500} mb={2}>
-                    {product?.name}
+                    {formatString(product?.name)}
                   </Text>
-                  <Text fontWeight={"bold"} mb={2}>₵{product?.price}</Text>
+                  <Text fontWeight={"bold"} mb={2}>{formatNumber(Number(product?.price))}</Text>
                   <Flex gap={2} mb={4}>
                     <Icon as={IoStar} color={"gold"} fontSize={"20px"} />
                     <Icon as={IoStar} color={"gold"} fontSize={"20px"} />
@@ -186,7 +197,7 @@ const ProductDetail = ({ params }: any) => {
 
                   <Flex gap={3} mb={2}>
                     <Text fontWeight={"bold"}>Sub Total:</Text>
-                    <Text>₵{(product?.price * counter).toFixed(2)}</Text>
+                    <Text>{formatNumber(Number((product?.price * counter).toFixed(2)))}</Text>
                   </Flex>
 
                   <Flex gap={3} mb={4}>
@@ -334,10 +345,10 @@ const ProductDetail = ({ params }: any) => {
                         fontSize={"lg"}
                         fontFamily={'"Outfit", sans-serif'}
                       >
-                        {product?.name}
+                        {formatString(product?.name)}
                       </Heading>
                       <Text fontWeight={"bold"}>
-                        ₵{(product?.price * counter).toFixed(2)}
+                        {(product?.price * counter).toFixed(2)}
                       </Text>
                       <Flex alignItems={"center"}>
                         <IconButton
@@ -369,7 +380,7 @@ const ProductDetail = ({ params }: any) => {
                       <Flex gap={3} mt={5}>
                         <Text fontWeight={"bold"}>Sub Total:</Text>
                         <Text fontWeight={"bold"}>
-                          ₵{(product?.price * counter).toFixed(2)}
+                          {(product?.price * counter).toFixed(2)}
                         </Text>
                       </Flex>
                       <Text>Everything is calculated at checkout</Text>
