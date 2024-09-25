@@ -1,6 +1,6 @@
 import axios from "axios";
 import { setCookie } from "cookies-next";
-import { LoginType, SignupType, ParseInitialRequestType, DiagnosisRequestType } from '@/schemas';
+import { LoginType, SignupType, ParseInitialRequestType, DiagnosisRequestType, CreateOrderType } from '@/schemas';
 
 
 const client = axios.create({
@@ -104,6 +104,40 @@ export const GetDiagnosis = async ({ age, sex, text, evidence }: DiagnosisReques
         
         return data
     } catch (e: any) {
+        throw new Error(e.response.data.error.message)
+    }
+}
+
+export const orderHistory = async ({ customerEmail }: {customerEmail:string}) => {
+    const URL = `/v1/orders/history?customerEmail=${customerEmail}`;
+
+    try {
+        const response = await client.get(URL);
+        const { data } = response.data;
+        
+        return data
+    } catch (e: any) {
+        throw new Error(e.response.data.error.message)
+    }
+}
+
+export const CreateOrder = async ({ customerEmail, products, totalCost }: CreateOrderType) => {
+    const URL = '/v1/order/create';
+    
+    const payload = { products, customerEmail, totalCost: Number(totalCost) }
+
+    console.log('CREATE PAYLOAD', payload)
+
+    try {
+        const response = await client.post(URL, payload);
+        const { data } = response.data;
+
+        console.log('RESPONSE FROM CREATE', data)
+        
+        return data
+    } catch (e: any) {
+        console.log('ERROR FROM CREATE', e.response.data)
+
         throw new Error(e.response.data.error.message)
     }
 }

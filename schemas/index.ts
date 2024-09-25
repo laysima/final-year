@@ -46,9 +46,21 @@ category: z.string({required_error: 'Required'}),
   image: z.string({required_error: 'Required'})
 })
 
+const OrderProductSchema = z.object({
+  productCategory: z.string(),
+  productName: z.string(),
+  quantity: z.number().positive(),
+});
+
+const CreateOrderSchema = z.object({
+  products: z.array(ProductSchema),
+  totalCost: z.number().positive(),
+  customerEmail: z.string().email(),
+});
 
 export type ProductType = z.infer<typeof ProductSchema>
 export type LoginType = z.infer<typeof LoginSchema>
 export type SignupType = z.infer<typeof SignupSchema>
 export type ParseInitialRequestType = z.infer<typeof ParseInitialRequestSchema>
 export type DiagnosisRequestType = z.infer<typeof DiagnosisRequestSchema>
+export type CreateOrderType = z.infer<typeof CreateOrderSchema>

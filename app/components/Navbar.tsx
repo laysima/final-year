@@ -37,18 +37,14 @@ import {
   MdOutlineAccountCircle,
   MdOutlineMenu,
 } from "react-icons/md";
-import { GoPerson } from "react-icons/go";
+import { GoClock, GoPerson } from "react-icons/go";
 import { AiOutlineMenu } from "react-icons/ai";
 import { LiaShoppingBagSolid } from "react-icons/lia";
 import { BiSearch, BiFilter, BiLogOut, BiRepeat } from "react-icons/bi";
 import { Button, Input, InputGroup, Stack } from "@chakra-ui/react";
-import Home from "../page";
 import { deleteCookie, getCookie } from "cookies-next";
-import { redirect } from "next/navigation";
-
 import { useCartStore } from "@/zustand/store";
-import cart from "../shop/[id]/cart/page";
-import { IoAddCircleOutline } from "react-icons/io5";
+import History from "./History";
 
 export const Navbar = () => {
   const router = useRouter();
@@ -332,16 +328,10 @@ export const Navbar = () => {
                     ))}
                   </Box>
                 </Link>
-
-                <Link
-                  fontSize="26px"
-                  _hover={{ color: "#B8E0F7", transition: "0.2s" }}
-                  as={NextLink}
-                  className={`link ${pathname === "/shop" ? "active" : ""}`}
-                  href="/shop"
-                >
-                  <BsCart2 />
-                </Link>
+                  
+                  {/* history drawer */}
+                  <History/>
+     
 
                 {nUser ? (
                   <Button
@@ -349,6 +339,7 @@ export const Navbar = () => {
                     borderRadius={5}
                     colorScheme="blue"
                     variant={"outline"}
+                    isDisabled
                   >
                     {getFirstLetter(nUser.name)}
                   </Button>

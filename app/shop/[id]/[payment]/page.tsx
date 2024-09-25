@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import {
   Box,
   Text,
@@ -19,36 +19,107 @@ import {
   FormControl,
   SimpleGrid,
   Container,
+  Toast,
+  useToast,
+  Spinner,
 } from "@chakra-ui/react";
 import { FaCreditCard } from "react-icons/fa";
 import { LiaShoppingBagSolid } from "react-icons/lia";
 import { GoDash } from "react-icons/go";
 import { GoLock } from "react-icons/go";
 import NextLink from "next/link";
-import { useState, useEffect } from "react";
 import { useCartStore } from "@/zustand/store";
 import { BiTrash, BiX } from "react-icons/bi";
+import { usePaystackPayment } from 'react-paystack';
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { CreateOrder } from "@/app/api";
+import { useRouter } from "next/navigation";
 
 export default function Payment({ params }: any) {
-  // const id = params.payment;
-  // const products = require("../../../datasource.json");
-  // const product = products.find((product: any) => product.id === id);
-
   const { cart, empty_cart, remove_from_cart } = useCartStore();
+  const toast = useToast()
+  const {push} = useRouter()
 
-  console.log(cart);
+  const [email, setEmail] = useState("");
 
-  const [show, setShow] = useState(false);
+  const amount = cart
+    .reduce(
+      (sum: number, current: any) =>
+        sum + parseFloat(String(current.price * current.quantity)),
+      0
+    )
+    .toFixed(2);
 
-  const [blogs, setBlogs] = useState(null);
 
-  const [ispending, setIspending] = useState(true);
+  const config = {
+    amount: (parseFloat(amount) * 100) | 0,
+    email: email,
+    publicKey: "pk_live_dfe5c7d1805624dbd6a1038b029f87fd65dc3554",
+    currency: "GHS",
+  };
 
+  const initializePayment = usePaystackPayment(config);
+  const { data: productsFromApi, isPending } = useQuery({
+    queryKey: ['products'], 
+    queryFn: async () => {
+      const res = await fetch('/api/products')
+      return res?.ok ? res.json() : []
+    }
+  })
+
+  const { mutate: handleCreateOrder, isPending: creatingOrder } = useMutation({
+    mutationKey: ['createOrder'],
+    mutationFn: CreateOrder,
+    onSuccess: () => {
+      toast({
+        title: "Order created successfully!",
+        status: "success",
+        isClosable: true,
+      });
+
+      push('/')
+    }
+  })
+
+  const products = cart.map(prod => ({
+    productName: prod.name,
+    productCategory: productsFromApi?.length > 0 && productsFromApi.filter(item => item.name === prod.name)[0].category,
+    quantity: prod.quantity
+  }))
+
+  console.log('PRODUCTS', products);
+
+  const onSuccess = (response: any) => {
+    setEmail("");
+    empty_cart();
+
+    // show toast saying payment success
+    if (response.status === 'success') {
+      toast({
+        title: "Payment successful!",
+        status: "success",
+        isClosable: true,
+      });
+  
+      toast({
+        title: "We are creating your order, sit tight!",
+        status: "info",
+        isClosable: true,
+      });
+      
+      handleCreateOrder({ products, totalCost: amount, customerEmail: email });
+    }
+  };
+
+  const onClose = (response: any) => {
+    console.log('paystack response: ', response);
+    setEmail("");
+  }
 
 
   return (
     <>
-      <Box bg="rgb(224,240,247)">
+      <Box bg="rgb(224,240,247)" h={"70dvh"}>
         <Container maxW={1200}>
           <Button
             as={Link}
@@ -73,123 +144,36 @@ export default function Payment({ params }: any) {
                   >
                     Contact
                   </Heading>
-                  <Link flexShrink={0} href="/login">
-                    Log in
-                  </Link>
+   
                 </Flex>
                 <Input
                   h={"6vh"}
                   mt={4}
                   placeholder="Email"
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                   bg={"white"}
                   borderRadius={0}
                 />
 
-                <Heading mt={4} fontFamily={'"PT Sans", sans-serif'} size="lg">
-                  Delivery
-                </Heading>
-                <Flex mt={4} gap={4}>
-                  <Input
-                    h={"6vh"}
-                    placeholder="First name"
-                    bg={"white"}
-                    borderRadius={0}
-                  />
-                  <Input
-                    h={"6vh"}
-                    placeholder="Last name"
-                    bg={"white"}
-                    borderRadius={0}
-                  />
-                </Flex>
-                <Input
-                  h={"6vh"}
-                  mt={4}
-                  placeholder="Address"
-                  bg={"white"}
-                  borderRadius={0}
-                />
-
-                <Heading mt={4} fontFamily={'"PT Sans", sans-serif'} size="lg">
-                  Payment
-                </Heading>
-                <Text>All transaction are seecure and Encrypted </Text>
-              </Box>
-
-              <Box
-                mt={2}
-                bg={"#f6f6f6"}
-                border={"0.5px solid black"}
-                borderRadius={"5px"}
-              >
-                <Flex
-                  p={5}
-                  bg={"white"}
-                  border={"0.5px solid black"}
-                  borderRadius={"2px"}
-                >
-                  <Text fontWeight={"bold"} flexGrow={1}>
-                    Credit Card
-                  </Text>
-                  <Icon flexShrink={0} fontSize={"20px"} as={FaCreditCard} />
-                </Flex>
-                <FormControl p={4} isRequired>
-                  <InputGroup alignItems={"center"}>
-                    <Input
-                      type="text"
-                      maxLength={16}
-                      required
-                      p={5}
-                      bg={"white"}
-                      borderRadius={0}
-                    />
-                    <InputRightElement alignItems={"center"}>
-                      <Icon as={GoLock} />
-                    </InputRightElement>
-                  </InputGroup>
-
-                  <Flex mt={4} gap={4}>
-                    <Input
-                      h={"6vh"}
-                      placeholder="Select Date"
-                      size="md"
-                      type="date"
-                      bg={"white"}
-                      borderRadius={0}
-                    />
-                    <InputGroup>
-                      <Input
-                        h={"6vh"}
-                        bg={"white"}
-                        borderRadius={0}
-                        type={show ? "text" : "password"}
-                        placeholder="Security Code"
-                      />
-                    </InputGroup>
-                  </Flex>
-                  <Input
-                    h={"6vh"}
-                    mt={4}
-                    placeholder="Name on Card"
-                    bg={"white"}
-                    borderRadius={0}
-                  />
-                </FormControl>
-              </Box>
-              <Button
-                h={"5vh"}
-                mt={4}
-                w={"100%"}
-                _hover={{
-                  color: "black",
-                  background: "#D9EEFA",
-                  transition: "0.2s",
+                <Button
+                onClick={() => {
+                  initializePayment({onSuccess, onClose});
                 }}
-                color={"white"}
-                bg={"#055C9D"}
-              >
-                Pay Now
-              </Button>
+                  h={"6vh"}
+                  mt={5}
+                  w={"full"}
+                  isDisabled={!email || isPending}
+                  colorScheme="blue"
+                  borderRadius={0}>
+                    Pay Now
+                  </Button>
+                
+              </Box>
+
+
+
 
               <Divider
                 mt={12}
@@ -202,7 +186,13 @@ export default function Payment({ params }: any) {
 
             <GridItem w={"full"} bg={"white"} borderRadius={20} maxH="100dvh" overflowY="auto">
               {/* <Button onClick={() => {add_to_cart()}}>Add to cart</Button> */}
-              <Flex p={5}>
+              {creatingOrder ? (
+                <div>
+                  <Spinner />
+                  <p>Creating order...</p>
+                </div>
+              ) : (
+                <Flex p={5}>
                 <Button
                   onClick={() => {
                     empty_cart();
@@ -213,6 +203,7 @@ export default function Payment({ params }: any) {
                   Empty cart
                 </Button>
               </Flex>
+              )}
               {cart.map((product: any, index: any) => (
                 <Box key={index} alignItems={"center"} mb={5}>
                   <Flex p={5}>
@@ -290,14 +281,7 @@ export default function Payment({ params }: any) {
                   Total
                 </Text>
                 {/* <Text fontWeight={'bold'} flexShrink={0}>${cart.reduce(function (sum: any, current: any) { return (parseFloat(sum) + parseFloat(current.price)).toFixed(2) }, 0)}</Text> */}
-                <Text fontWeight={"bold"} flexShrink={0}>{`${cart
-                  .reduce(
-                    (sum: any, current: any) =>
-                      sum +
-                      parseFloat(String(current.price * current.quantity)),
-                    0
-                  )
-                  .toFixed(2)}`}</Text>
+                <Text fontWeight={"bold"} flexShrink={0}>{`${amount}`}</Text>
               </Flex>
             </GridItem>
           </SimpleGrid>

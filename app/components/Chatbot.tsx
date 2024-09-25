@@ -252,7 +252,7 @@ const Chatbot = () => {
                 isChecked={termsAccepted.privacyPolicy}
                 onChange={(e) => setTermsAccepted(prev => ({ ...prev, privacyPolicy: e.target.checked }))}
               >
-                I agree for my health information to be used for the interview. More information in the <Link color={'teal.500'}>Privacy Policy</Link>
+                I agree for my health information to be used for the interview.
               </Checkbox>
             </Stack>
           </Flex>
@@ -420,7 +420,7 @@ const Chatbot = () => {
   return (
     <>
       <Button ref={btnRef} onClick={onOpen} colorScheme="blue" variant="outline" borderRadius={5}>
-        Chat With A Bot
+        Chat With A HealthCare Bot
       </Button>
       <Flex position="fixed" bottom="80px" right="20px" zIndex="50">
         <IconButton
