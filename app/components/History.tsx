@@ -95,7 +95,7 @@ const History: React.FC = () => {
 
   const filteredOrders = orders?.filter((order:any) => 
       (filterStatus === 'all' || order.fulfilmentStatus === filterStatus) &&
-      order?.products?.map(p => p.productName.toLowerCase().includes(searchTerm.toLowerCase()))
+      order?.products?.map((p: { productName: string; }) => p.productName.toLowerCase().includes(searchTerm.toLowerCase()))
     )
 
     function formatString(name: string): string {

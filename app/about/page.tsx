@@ -26,7 +26,7 @@ import { MdOutlineHealthAndSafety } from "react-icons/md";
 import { motion, useScroll } from "framer-motion";
 import ScrollProgressBar from "../components/ScrollProgressBar";
 
-const About = ({ icon, title, description }: { icon: React.ReactNode; title: string; description: string }) => {
+const About = () => {
   // No need for eslint-disable comment as we're not using hooks here
 
   return (

@@ -81,9 +81,9 @@ export default function Payment({ params }: any) {
     }
   })
 
-  const products = cart.map(prod => ({
+  const products = cart.map((prod: { name: any; quantity: any; }) => ({
     productName: prod.name,
-    productCategory: productsFromApi?.length > 0 && productsFromApi.filter(item => item.name === prod.name)[0].category,
+    productCategory: productsFromApi?.length > 0 && productsFromApi.filter((item: { name: any; }) => item.name === prod.name)[0].category,
     quantity: prod.quantity
   }))
 
